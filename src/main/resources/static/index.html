@@ -129,6 +129,9 @@
         }
 
         .job-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 10px;
@@ -138,6 +141,9 @@
             gap: 12px;
             transition: border-color 0.2s, transform 0.15s;
             animation: fadeUp 0.4s ease both;
+
+            position: relative;
+            z-index: 2;
         }
         .job-card:hover { border-color: var(--amber); transform: translateY(-2px); }
 
@@ -183,15 +189,23 @@
 
         .card-meta {
             display: flex;
-            gap: 12px;
+            flex-direction: column;
+            gap: 5px;
             font-family: var(--mono);
             font-size: 11px;
             color: var(--muted);
+            margin-top: auto;
+            padding-top: 15px;
         }
         .card-meta span { display: flex; align-items: center; gap: 4px; }
         .card-meta .val { color: var(--amber); font-weight: 500; }
 
-        .card-actions { display: flex; gap: 8px; }
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+            padding-top: 10px;
+        }
 
         .btn {
             flex: 1;
@@ -215,6 +229,8 @@
         .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 
         .btn-outline {
+            white-space: nowrap;
+            flex-shrink: 0;
             background: transparent;
             color: var(--text);
             border: 1px solid var(--border);
@@ -231,9 +247,10 @@
             padding: 16px;
             animation: slideDown 0.25s ease;
             margin-top: -10px;
+            z-index: 1;
         }
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-8px); }
+            from { opacity: 0; transform: translateY(-20px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
@@ -274,6 +291,10 @@
         .fl-rate { font-family: var(--mono); font-size: 12px; color: var(--amber); }
         .fl-match { font-family: var(--mono); font-size: 11px; color: var(--green); }
 
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
+
         .proposal-row {
             display: flex;
             gap: 8px;
@@ -281,10 +302,12 @@
             padding-top: 14px;
             border-top: 1px solid var(--border);
             margin-top: 4px;
+            width: 100%
         }
 
         .proposal-input {
             flex: 1;
+            min-width: 0;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 6px;
@@ -355,15 +378,15 @@
 <div class="shell">
 
     <header>
-        <div class="logo-mark"><span>FM</span></div>
+        <div class="logo-mark"><span>PP</span></div>
         <div class="header-text">
             <h1>FreelanceMatch</h1>
-            <p>Freelancer Project Matching Platform — DB Systems 2</p>
+            <p>Freelancer Project Matching Platform - Pied Piper</p>
         </div>
         <div class="header-badge" id="conn-badge">⬤ connecting…</div>
     </header>
 
-    <p class="section-label">// available projects</p>
+    <p class="section-label">available projects</p>
 
     <div id="loader">
         <div class="spinner"></div>
@@ -482,7 +505,7 @@
 
             const freelancers = body.data || [];
 
-            panel.innerHTML = `<div class="panel-title">// ${freelancers.length} matching freelancer(s) — job #${jobId}</div>`;
+            panel.innerHTML = `<div class="panel-title">${freelancers.length} matching freelancer(s) — job #${jobId}</div>`;
 
             if (freelancers.length === 0) {
                 panel.innerHTML += `<p style="color:var(--muted);font-family:var(--mono);font-size:12px;padding:8px 0">
@@ -508,10 +531,10 @@
             panel.innerHTML += `
         <div class="proposal-row">
           <input class="proposal-input" type="number" min="1"
-            placeholder="Enter Proposal ID to accept…" id="pid-${jobId}" />
+            placeholder="Enter Proposal ID" id="pid-${jobId}" />
           <button class="btn btn-outline" style="flex:0 0 auto;white-space:nowrap"
             onclick="acceptProposal(${jobId})">
-            ✓ Accept Proposal
+            Accept Proposal
           </button>
         </div>`;
 
