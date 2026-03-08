@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FreelanceMatch — Project Board</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ═══════════════════════════════════════════════════════════
+           DESIGN: Industrial / editorial – dark slate + electric amber
+           Typeface: Syne (geometric grotesque) + DM Mono
+        ═══════════════════════════════════════════════════════════ */
+        :root {
+            --bg:        #0d0f12;
+            --surface:   #161a20;
+            --border:    #252a33;
+            --amber:     #f5a623;
+            --amber-dim: #c47d0e;
+            --green:     #3ecf8e;
+            --red:       #f55a4e;
+            --blue:      #4ea8de;
+            --text:      #e8eaf0;
+            --muted:     #6b7280;
+            --mono:      'DM Mono', monospace;
+            --sans:      'Syne', sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── Grid noise texture ─────────────────────────────────── */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image:
+                    repeating-linear-gradient(0deg,   transparent, transparent 39px, var(--border) 39px, var(--border) 40px),
+                    repeating-linear-gradient(90deg,  transparent, transparent 39px, var(--border) 39px, var(--border) 40px);
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Layout ─────────────────────────────────────────────── */
+        .shell { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; }
+
+        /* ── Header ─────────────────────────────────────────────── */
+        header {
+            padding: 40px 0 32px;
+            display: flex;
+            align-items: flex-end;
+            gap: 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+
+        .logo-mark {
+            width: 44px; height: 44px;
+            background: var(--amber);
+            border-radius: 6px;
+            display: grid; place-items: center;
+            flex-shrink: 0;
+        }
+        .logo-mark span {
+            font-family: var(--mono);
+            font-size: 18px;
+            font-weight: 500;
+            color: #000;
+        }
+
+        .header-text h1 {
+            font-size: clamp(22px, 4vw, 32px);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+        .header-text p {
+            font-size: 13px;
+            color: var(--muted);
+            font-family: var(--mono);
+            margin-top: 4px;
+        }
+
+        .header-badge {
+            margin-left: auto;
+            background: rgba(245, 166, 35, 0.12);
+            border: 1px solid rgba(245, 166, 35, 0.3);
+            color: var(--amber);
+            font-family: var(--mono);
+            font-size: 11px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        /* ── Section label ──────────────────────────────────────── */
+        .section-label {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        /* ── Loader ─────────────────────────────────────────────── */
+        #loader {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 13px;
+            padding: 40px 0;
+        }
+        .spinner {
+            width: 18px; height: 18px;
+            border: 2px solid var(--border);
+            border-top-color: var(--amber);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Job grid ────────────────────────────────────────────── */
+        #jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 16px;
+        }
+
+        .job-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: border-color 0.2s, transform 0.15s;
+            animation: fadeUp 0.4s ease both;
+        }
+        .job-card:hover { border-color: var(--amber); transform: translateY(-2px); }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+            flex: 1;
+        }
+
+        .status-badge {
+            font-family: var(--mono);
+            font-size: 10px;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 3px;
+            flex-shrink: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .status-OPEN        { background: rgba(62,207,142,0.15); color: var(--green); border: 1px solid rgba(62,207,142,0.3); }
+        .status-IN_PROGRESS { background: rgba(78,168,222,0.15); color: var(--blue);  border: 1px solid rgba(78,168,222,0.3); }
+        .status-COMPLETED   { background: rgba(107,114,128,0.15);color: var(--muted); border: 1px solid var(--border); }
+        .status-CANCELLED   { background: rgba(245,90,78,0.12);  color: var(--red);  border: 1px solid rgba(245,90,78,0.25); }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 12px;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--muted);
+        }
+        .card-meta span { display: flex; align-items: center; gap: 4px; }
+        .card-meta .val { color: var(--amber); font-weight: 500; }
+
+        /* ── Buttons ────────────────────────────────────────────── */
+        .card-actions { display: flex; gap: 8px; }
+
+        .btn {
+            flex: 1;
+            font-family: var(--sans);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            padding: 9px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s;
+        }
+
+        .btn-primary {
+            background: var(--amber);
+            color: #000;
+        }
+        .btn-primary:hover { background: var(--amber-dim); }
+        .btn-primary:active { transform: scale(0.97); }
+        .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-outline:hover { border-color: var(--text); }
+        .btn-outline:active { transform: scale(0.97); }
+        .btn-outline:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+        /* ── Match panel (expands below card) ───────────────────── */
+        .match-panel {
+            background: #0a0c10;
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            padding: 16px;
+            animation: slideDown 0.25s ease;
+            margin-top: -10px;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .match-panel .panel-title {
+            font-family: var(--mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+        .freelancer-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .freelancer-row:last-child { border-bottom: none; }
+
+        .avatar {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--amber), var(--blue));
+            display: grid; place-items: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: #000;
+            flex-shrink: 0;
+        }
+
+        .fl-info { flex: 1; min-width: 0; }
+        .fl-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .fl-email { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+        .fl-right { text-align: right; flex-shrink: 0; }
+        .fl-rate { font-family: var(--mono); font-size: 12px; color: var(--amber); }
+        .fl-match { font-family: var(--mono); font-size: 11px; color: var(--green); }
+
+        /* ── Proposal input row ─────────────────────────────────── */
+        .proposal-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+            margin-top: 4px;
+        }
+
+        .proposal-input {
+            flex: 1;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 13px;
+            padding: 8px 12px;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+        .proposal-input:focus { border-color: var(--amber); }
+        .proposal-input::placeholder { color: var(--muted); }
+
+        /* ── Toast notifications ────────────────────────────────── */
+        #toast-container {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 999;
+        }
+
+        .toast {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 18px;
+            max-width: 340px;
+            font-size: 13px;
+            line-height: 1.5;
+            animation: toastIn 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+        .toast.success { border-color: rgba(62,207,142,0.4); }
+        .toast.error   { border-color: rgba(245,90,78,0.4);  }
+
+        .toast-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 4px;
+        }
+        .toast.success .toast-dot { background: var(--green); }
+        .toast.error   .toast-dot { background: var(--red); }
+
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ── Empty / error states ───────────────────────────────── */
+        .state-msg {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+        .state-msg span { display: block; font-size: 32px; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="shell">
+
+    <!-- ── Header ─────────────────────────────────────────── -->
+    <header>
+        <div class="logo-mark"><span>FM</span></div>
+        <div class="header-text">
+            <h1>FreelanceMatch</h1>
+            <p>Freelancer Project Matching Platform — DB Systems 2</p>
+        </div>
+        <div class="header-badge" id="conn-badge">⬤ connecting…</div>
+    </header>
+
+    <!-- ── Jobs section ───────────────────────────────────── -->
+    <p class="section-label">// available projects</p>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        Fetching jobs from API…
+    </div>
+
+    <div id="jobs-grid" style="display:none;"></div>
+    <div id="jobs-error" class="state-msg" style="display:none;">
+        <span>⚠️</span>
+        Could not connect to the Spring Boot API.<br>
+        Make sure it is running on <code>http://localhost:8080</code>
+    </div>
+
+</div>
+
+<!-- ── Toast container ──────────────────────────────────── -->
+<div id="toast-container"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     JAVASCRIPT  –  vanilla ES2022, no frameworks
+═══════════════════════════════════════════════════════ -->
+<script>
+    const API = 'http://localhost:8080/api';
+
+    // ── Toast helper ─────────────────────────────────────────
+    function toast(msg, type = 'success') {
+        const el = document.createElement('div');
+        el.className = `toast ${type}`;
+        el.innerHTML = `<div class="toast-dot"></div><div>${msg}</div>`;
+        document.getElementById('toast-container').prepend(el);
+        setTimeout(() => el.remove(), 4500);
+    }
+
+    // ── Fetch all jobs ────────────────────────────────────────
+    async function loadJobs() {
+        try {
+            const res  = await fetch(`${API}/jobs`);
+            const body = await res.json();
+
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('conn-badge').textContent = '⬤ connected';
+            document.getElementById('conn-badge').style.color = 'var(--green)';
+
+            if (!body.success || !body.data.length) {
+                document.getElementById('jobs-error').style.display = 'block';
+                document.getElementById('jobs-error').innerHTML =
+                    '<span>📭</span>No jobs found in the database.<br>Run the seed script first.';
+                return;
+            }
+
+            const grid = document.getElementById('jobs-grid');
+            grid.style.display = 'grid';
+            body.data.forEach((job, i) => {
+                const card = buildCard(job, i);
+                grid.appendChild(card);
+            });
+
+        } catch (err) {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('jobs-error').style.display = 'block';
+            document.getElementById('conn-badge').textContent = '⬤ offline';
+            document.getElementById('conn-badge').style.color = 'var(--red)';
+        }
+    }
+
+    // ── Build a job card element ──────────────────────────────
+    function buildCard(job, index) {
+        const wrapper = document.createElement('div');
+        wrapper.style.animationDelay = `${index * 50}ms`;
+
+        const statusClass = `status-${job.statusName?.replace(/ /g, '_') || 'OPEN'}`;
+
+        const card = document.createElement('div');
+        card.className = 'job-card';
+        card.dataset.jobId = job.id;
+
+        const budgetLabel = job.budgetType === 'hourly'
+            ? `$${fmt(job.minBudget)}–$${fmt(job.maxBudget)}/hr`
+            : `$${fmt(job.minBudget)}–$${fmt(job.maxBudget)}`;
+
+        card.innerHTML = `
+      <div class="card-top">
+        <div class="card-title">${esc(job.title)}</div>
+        <span class="status-badge ${statusClass}">${job.statusName || 'OPEN'}</span>
+      </div>
+      <p class="card-desc">${esc(job.description || 'No description provided.')}</p>
+      <div class="card-meta">
+        <span>💰 <span class="val">${budgetLabel}</span></span>
+        <span>📅 <span class="val">${fmtDate(job.createdAt)}</span></span>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn-primary match-btn" onclick="findMatch(${job.id}, this)">
+          🔍 Find Match
+        </button>
+      </div>
+    `;
+
+        wrapper.appendChild(card);
+        return wrapper;
+    }
+
+    // ── Find matching freelancers (REQUIREMENT A: Cursor procedure) ──
+    async function findMatch(jobId, btn) {
+        btn.disabled = true;
+        btn.textContent = '⏳ Matching…';
+
+        // Remove old panel if present
+        const existing = document.querySelector(`[data-panel="${jobId}"]`);
+        if (existing) { existing.remove(); btn.disabled = false; btn.textContent = '🔍 Find Match'; return; }
+
+        try {
+            const res  = await fetch(`${API}/jobs/${jobId}/match`);
+            const body = await res.json();
+
+            if (!body.success) {
+                toast(body.message || 'Matching failed', 'error');
+                btn.disabled = false;
+                btn.textContent = '🔍 Find Match';
+                return;
+            }
+
+            const panel = document.createElement('div');
+            panel.className = 'match-panel';
+            panel.dataset.panel = jobId;
+
+            const freelancers = body.data || [];
+
+            panel.innerHTML = `<div class="panel-title">// ${freelancers.length} matching freelancer(s) — job #${jobId}</div>`;
+
+            if (freelancers.length === 0) {
+                panel.innerHTML += `<p style="color:var(--muted);font-family:var(--mono);font-size:12px;padding:8px 0">
+          No freelancers have ≥ 50% of the required skills for this job.
+        </p>`;
+            } else {
+                freelancers.forEach(fl => {
+                    panel.innerHTML += `
+            <div class="freelancer-row">
+              <div class="avatar">${fl.fullName.charAt(0)}</div>
+              <div class="fl-info">
+                <div class="fl-name">${esc(fl.fullName)}</div>
+                <div class="fl-email">${esc(fl.email)}</div>
+              </div>
+              <div class="fl-right">
+                <div class="fl-rate">${fl.hourlyRate ? '$'+fl.hourlyRate+'/hr' : 'fixed'}</div>
+                <div class="fl-match">${fl.matchPct}% match</div>
+              </div>
+            </div>`;
+                });
+            }
+
+            // ── Accept-proposal row (REQUIREMENT B: Nested Block procedure) ──
+            panel.innerHTML += `
+        <div class="proposal-row">
+          <input class="proposal-input" type="number" min="1"
+            placeholder="Enter Proposal ID to accept…" id="pid-${jobId}" />
+          <button class="btn btn-outline" style="flex:0 0 auto;white-space:nowrap"
+            onclick="acceptProposal(${jobId})">
+            ✓ Accept Proposal
+          </button>
+        </div>`;
+
+            // Insert panel after the card's wrapper
+            btn.closest('.job-card').parentNode.appendChild(panel);
+            btn.textContent = '✕ Close';
+
+        } catch (err) {
+            toast('Network error: ' + err.message, 'error');
+            btn.textContent = '🔍 Find Match';
+        }
+        btn.disabled = false;
+    }
+
+    // ── Accept a proposal (REQUIREMENT B: Nested Block procedure) ──
+    async function acceptProposal(jobId) {
+        const input = document.getElementById(`pid-${jobId}`);
+        const proposalId = input?.value?.trim();
+
+        if (!proposalId) {
+            toast('Please enter a Proposal ID first.', 'error');
+            return;
+        }
+
+        const btn = input.nextElementSibling;
+        btn.disabled = true;
+        btn.textContent = '⏳ Processing…';
+
+        try {
+            const res  = await fetch(`${API}/proposals/${proposalId}/accept`, { method: 'POST' });
+            const body = await res.json();
+
+            if (body.success) {
+                toast(`✅ ${body.message}`, 'success');
+                // Reload jobs to reflect the updated status
+                setTimeout(() => {
+                    document.getElementById('jobs-grid').innerHTML = '';
+                    loadJobs();
+                }, 1000);
+            } else {
+                toast(`❌ ${body.message}`, 'error');
+            }
+        } catch (err) {
+            toast('Network error: ' + err.message, 'error');
+        }
+
+        btn.disabled = false;
+        btn.textContent = '✓ Accept Proposal';
+    }
+
+    // ── Utilities ─────────────────────────────────────────────
+    function fmt(n)    { return n ? Number(n).toLocaleString('en-US', {maximumFractionDigits: 0}) : '?'; }
+    function esc(s)    { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    function fmtDate(d){ return d ? new Date(d).toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'}) : '—'; }
+
+    // ── Boot ──────────────────────────────────────────────────
+    loadJobs();
+</script>
+
+</body>
+</html>
