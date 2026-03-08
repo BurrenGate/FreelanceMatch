@@ -2,10 +2,6 @@ package sdu.database.piedpiper.model;
 
 import java.math.BigDecimal;
 
-/**
- * Represents one row from the temp_recommended_freelancers table
- * that is populated by the get_recommended_freelancers() procedure.
- */
 public class FreelancerMatch {
     private Long       profileId;
     private String     fullName;

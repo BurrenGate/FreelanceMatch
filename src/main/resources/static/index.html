@@ -9,10 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
     <style>
-        /* ═══════════════════════════════════════════════════════════
-           DESIGN: Industrial / editorial – dark slate + electric amber
-           Typeface: Syne (geometric grotesque) + DM Mono
-        ═══════════════════════════════════════════════════════════ */
         :root {
             --bg:        #0d0f12;
             --surface:   #161a20;
@@ -38,7 +34,6 @@
             overflow-x: hidden;
         }
 
-        /* ── Grid noise texture ─────────────────────────────────── */
         body::before {
             content: '';
             position: fixed; inset: 0;
@@ -50,10 +45,8 @@
             z-index: 0;
         }
 
-        /* ── Layout ─────────────────────────────────────────────── */
         .shell { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px 80px; }
 
-        /* ── Header ─────────────────────────────────────────────── */
         header {
             padding: 40px 0 32px;
             display: flex;
@@ -102,7 +95,6 @@
             white-space: nowrap;
         }
 
-        /* ── Section label ──────────────────────────────────────── */
         .section-label {
             font-family: var(--mono);
             font-size: 11px;
@@ -112,7 +104,6 @@
             margin-bottom: 16px;
         }
 
-        /* ── Loader ─────────────────────────────────────────────── */
         #loader {
             display: flex;
             align-items: center;
@@ -131,7 +122,6 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ── Job grid ────────────────────────────────────────────── */
         #jobs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
@@ -201,7 +191,6 @@
         .card-meta span { display: flex; align-items: center; gap: 4px; }
         .card-meta .val { color: var(--amber); font-weight: 500; }
 
-        /* ── Buttons ────────────────────────────────────────────── */
         .card-actions { display: flex; gap: 8px; }
 
         .btn {
@@ -234,7 +223,6 @@
         .btn-outline:active { transform: scale(0.97); }
         .btn-outline:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 
-        /* ── Match panel (expands below card) ───────────────────── */
         .match-panel {
             background: #0a0c10;
             border: 1px solid var(--border);
@@ -286,7 +274,6 @@
         .fl-rate { font-family: var(--mono); font-size: 12px; color: var(--amber); }
         .fl-match { font-family: var(--mono); font-size: 11px; color: var(--green); }
 
-        /* ── Proposal input row ─────────────────────────────────── */
         .proposal-row {
             display: flex;
             gap: 8px;
@@ -311,7 +298,6 @@
         .proposal-input:focus { border-color: var(--amber); }
         .proposal-input::placeholder { color: var(--muted); }
 
-        /* ── Toast notifications ────────────────────────────────── */
         #toast-container {
             position: fixed;
             bottom: 28px;
@@ -353,7 +339,6 @@
             to   { opacity: 1; transform: translateX(0); }
         }
 
-        /* ── Empty / error states ───────────────────────────────── */
         .state-msg {
             text-align: center;
             padding: 60px 20px;
@@ -369,7 +354,6 @@
 
 <div class="shell">
 
-    <!-- ── Header ─────────────────────────────────────────── -->
     <header>
         <div class="logo-mark"><span>FM</span></div>
         <div class="header-text">
@@ -379,7 +363,6 @@
         <div class="header-badge" id="conn-badge">⬤ connecting…</div>
     </header>
 
-    <!-- ── Jobs section ───────────────────────────────────── -->
     <p class="section-label">// available projects</p>
 
     <div id="loader">
@@ -396,16 +379,11 @@
 
 </div>
 
-<!-- ── Toast container ──────────────────────────────────── -->
 <div id="toast-container"></div>
 
-<!-- ═══════════════════════════════════════════════════════
-     JAVASCRIPT  –  vanilla ES2022, no frameworks
-═══════════════════════════════════════════════════════ -->
 <script>
     const API = 'http://localhost:8080/api';
 
-    // ── Toast helper ─────────────────────────────────────────
     function toast(msg, type = 'success') {
         const el = document.createElement('div');
         el.className = `toast ${type}`;
@@ -414,7 +392,6 @@
         setTimeout(() => el.remove(), 4500);
     }
 
-    // ── Fetch all jobs ────────────────────────────────────────
     async function loadJobs() {
         try {
             const res  = await fetch(`${API}/jobs`);
@@ -446,7 +423,6 @@
         }
     }
 
-    // ── Build a job card element ──────────────────────────────
     function buildCard(job, index) {
         const wrapper = document.createElement('div');
         wrapper.style.animationDelay = `${index * 50}ms`;
@@ -473,7 +449,7 @@
       </div>
       <div class="card-actions">
         <button class="btn btn-primary match-btn" onclick="findMatch(${job.id}, this)">
-          🔍 Find Match
+          Find Match
         </button>
       </div>
     `;
@@ -482,14 +458,12 @@
         return wrapper;
     }
 
-    // ── Find matching freelancers (REQUIREMENT A: Cursor procedure) ──
     async function findMatch(jobId, btn) {
         btn.disabled = true;
-        btn.textContent = '⏳ Matching…';
+        btn.textContent = 'Matching…';
 
-        // Remove old panel if present
         const existing = document.querySelector(`[data-panel="${jobId}"]`);
-        if (existing) { existing.remove(); btn.disabled = false; btn.textContent = '🔍 Find Match'; return; }
+        if (existing) { existing.remove(); btn.disabled = false; btn.textContent = 'Find Match'; return; }
 
         try {
             const res  = await fetch(`${API}/jobs/${jobId}/match`);
@@ -498,7 +472,7 @@
             if (!body.success) {
                 toast(body.message || 'Matching failed', 'error');
                 btn.disabled = false;
-                btn.textContent = '🔍 Find Match';
+                btn.textContent = 'Find Match';
                 return;
             }
 
@@ -531,7 +505,6 @@
                 });
             }
 
-            // ── Accept-proposal row (REQUIREMENT B: Nested Block procedure) ──
             panel.innerHTML += `
         <div class="proposal-row">
           <input class="proposal-input" type="number" min="1"
@@ -542,18 +515,16 @@
           </button>
         </div>`;
 
-            // Insert panel after the card's wrapper
             btn.closest('.job-card').parentNode.appendChild(panel);
             btn.textContent = '✕ Close';
 
         } catch (err) {
             toast('Network error: ' + err.message, 'error');
-            btn.textContent = '🔍 Find Match';
+            btn.textContent = 'Find Match';
         }
         btn.disabled = false;
     }
 
-    // ── Accept a proposal (REQUIREMENT B: Nested Block procedure) ──
     async function acceptProposal(jobId) {
         const input = document.getElementById(`pid-${jobId}`);
         const proposalId = input?.value?.trim();
@@ -565,21 +536,20 @@
 
         const btn = input.nextElementSibling;
         btn.disabled = true;
-        btn.textContent = '⏳ Processing…';
+        btn.textContent = 'Processing…';
 
         try {
             const res  = await fetch(`${API}/proposals/${proposalId}/accept`, { method: 'POST' });
             const body = await res.json();
 
             if (body.success) {
-                toast(`✅ ${body.message}`, 'success');
-                // Reload jobs to reflect the updated status
+                toast(`${body.message}`, 'success');
                 setTimeout(() => {
                     document.getElementById('jobs-grid').innerHTML = '';
                     loadJobs();
                 }, 1000);
             } else {
-                toast(`❌ ${body.message}`, 'error');
+                toast(`${body.message}`, 'error');
             }
         } catch (err) {
             toast('Network error: ' + err.message, 'error');
@@ -589,12 +559,10 @@
         btn.textContent = '✓ Accept Proposal';
     }
 
-    // ── Utilities ─────────────────────────────────────────────
     function fmt(n)    { return n ? Number(n).toLocaleString('en-US', {maximumFractionDigits: 0}) : '?'; }
     function esc(s)    { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
     function fmtDate(d){ return d ? new Date(d).toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'}) : '—'; }
 
-    // ── Boot ──────────────────────────────────────────────────
     loadJobs();
 </script>
 

@@ -3,12 +3,6 @@ package sdu.database.piedpiper.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-// ─────────────────────────────────────────────────────────────
-// Simple POJOs used to transport data between layers.
-// No JPA annotations needed – we use JdbcTemplate directly.
-// ─────────────────────────────────────────────────────────────
-
-// ── Job ───────────────────────────────────────────────────────
 public class Job {
     private Long          id;
     private Long          clientId;
@@ -17,10 +11,9 @@ public class Job {
     private String        budgetType;
     private BigDecimal    minBudget;
     private BigDecimal    maxBudget;
-    private String        statusName;   // from job_statuses join
+    private String        statusName;
     private LocalDateTime createdAt;
 
-    // --- Getters & Setters ---
 
     public Long getId()                    { return id; }
     public void setId(Long id)             { this.id = id; }

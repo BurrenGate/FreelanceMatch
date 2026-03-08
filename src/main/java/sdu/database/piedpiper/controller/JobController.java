@@ -11,13 +11,6 @@ import sdu.database.piedpiper.service.JobService;
 
 import java.util.List;
 
-/**
- * REST Controller  –  exposes three endpoints used by the frontend.
- *
- * GET  /api/jobs              → list all jobs
- * GET  /api/jobs/{id}/match   → call cursor procedure, return freelancer matches
- * POST /api/proposals/{id}/accept → call nested-block procedure, finalize contract
- */
 @RestController
 @RequestMapping("/api")
 public class JobController {
@@ -30,12 +23,6 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    // ─── GET /api/jobs ────────────────────────────────────────
-
-    /**
-     * Returns every job with its status name so the frontend
-     * can display the full list with badges.
-     */
     @GetMapping("/jobs")
     public ResponseEntity<ApiResponse<List<Job>>> getAllJobs() {
         log.debug("GET /api/jobs");
@@ -45,15 +32,6 @@ public class JobController {
         );
     }
 
-    // ─── GET /api/jobs/{id}/match ─────────────────────────────
-
-    /**
-     * Triggers the CURSOR / LOOP procedure (Requirement A) and
-     * returns the list of freelancers whose skills match ≥ 50 % of
-     * the job's required skills.
-     *
-     * @param id the job ID
-     */
     @GetMapping("/jobs/{id}/match")
     public ResponseEntity<ApiResponse<List<FreelancerMatch>>> getMatchingFreelancers(
             @PathVariable Long id) {
@@ -74,21 +52,6 @@ public class JobController {
         }
     }
 
-    // ─── POST /api/proposals/{id}/accept ─────────────────────
-
-    /**
-     * Triggers the NESTED BLOCK procedure (Requirement B) which:
-     *   1. Validates proposal status = 'pending'
-     *   2. Validates job status = 'OPEN'
-     *   3. Updates proposal → 'accepted'
-     *   4. Updates job → 'IN_PROGRESS'
-     *   5. Inserts a new contract record
-     *
-     * Returns 200 OK on success, or 400 Bad Request if the SQL
-     * procedure raises an exception (with the DB message).
-     *
-     * @param id the proposal ID to accept
-     */
     @PostMapping("/proposals/{id}/accept")
     public ResponseEntity<ApiResponse<Void>> acceptProposal(@PathVariable Long id) {
         log.debug("POST /api/proposals/{}/accept", id);
