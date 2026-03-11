@@ -34,6 +34,7 @@
             overflow-x: hidden;
         }
 
+        /* ── Grid noise texture ─────────────────────────────────── */
         body::before {
             content: '';
             position: fixed; inset: 0;
@@ -54,6 +55,16 @@
             gap: 20px;
             border-bottom: 1px solid var(--border);
             margin-bottom: 40px;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
         }
 
         .logo-mark {
@@ -129,9 +140,6 @@
         }
 
         .job-card {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 10px;
@@ -141,9 +149,6 @@
             gap: 12px;
             transition: border-color 0.2s, transform 0.15s;
             animation: fadeUp 0.4s ease both;
-
-            position: relative;
-            z-index: 2;
         }
         .job-card:hover { border-color: var(--amber); transform: translateY(-2px); }
 
@@ -189,23 +194,15 @@
 
         .card-meta {
             display: flex;
-            flex-direction: column;
-            gap: 5px;
+            gap: 12px;
             font-family: var(--mono);
             font-size: 11px;
             color: var(--muted);
-            margin-top: auto;
-            padding-top: 15px;
         }
         .card-meta span { display: flex; align-items: center; gap: 4px; }
         .card-meta .val { color: var(--amber); font-weight: 500; }
 
-        .card-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: auto;
-            padding-top: 10px;
-        }
+        .card-actions { display: flex; gap: 8px; }
 
         .btn {
             flex: 1;
@@ -229,11 +226,11 @@
         .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 
         .btn-outline {
-            white-space: nowrap;
-            flex-shrink: 0;
             background: transparent;
             color: var(--text);
             border: 1px solid var(--border);
+            flex-shrink: 0;
+            white-space: nowrap;
         }
         .btn-outline:hover { border-color: var(--text); }
         .btn-outline:active { transform: scale(0.97); }
@@ -247,10 +244,9 @@
             padding: 16px;
             animation: slideDown 0.25s ease;
             margin-top: -10px;
-            z-index: 1;
         }
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; transform: translateY(-8px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
@@ -291,10 +287,6 @@
         .fl-rate { font-family: var(--mono); font-size: 12px; color: var(--amber); }
         .fl-match { font-family: var(--mono); font-size: 11px; color: var(--green); }
 
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        input[type=number] { -moz-appearance: textfield; }
-
         .proposal-row {
             display: flex;
             gap: 8px;
@@ -302,7 +294,7 @@
             padding-top: 14px;
             border-top: 1px solid var(--border);
             margin-top: 4px;
-            width: 100%
+            width: 100%;
         }
 
         .proposal-input {
@@ -378,15 +370,15 @@
 <div class="shell">
 
     <header>
-        <div class="logo-mark"><span>PP</span></div>
+        <div class="logo-mark"><span>FM</span></div>
         <div class="header-text">
             <h1>FreelanceMatch</h1>
-            <p>Freelancer Project Matching Platform - Pied Piper</p>
+            <p>Freelancer Project Matching Platform — DB Systems 2</p>
         </div>
         <div class="header-badge" id="conn-badge">⬤ connecting…</div>
     </header>
 
-    <p class="section-label">available projects</p>
+    <p class="section-label">Available projects</p>
 
     <div id="loader">
         <div class="spinner"></div>
@@ -559,7 +551,7 @@
 
         const btn = input.nextElementSibling;
         btn.disabled = true;
-        btn.textContent = 'Processing…';
+        btn.textContent = '⏳ Processing…';
 
         try {
             const res  = await fetch(`${API}/proposals/${proposalId}/accept`, { method: 'POST' });
@@ -567,6 +559,7 @@
 
             if (body.success) {
                 toast(`${body.message}`, 'success');
+                // Reload jobs to reflect the updated status
                 setTimeout(() => {
                     document.getElementById('jobs-grid').innerHTML = '';
                     loadJobs();
@@ -579,7 +572,7 @@
         }
 
         btn.disabled = false;
-        btn.textContent = '✓ Accept Proposal';
+        btn.textContent = 'Accept Proposal';
     }
 
     function fmt(n)    { return n ? Number(n).toLocaleString('en-US', {maximumFractionDigits: 0}) : '?'; }
