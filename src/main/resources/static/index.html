@@ -285,6 +285,7 @@
 
         .fl-right { text-align: right; flex-shrink: 0; }
         .fl-rate { font-family: var(--mono); font-size: 12px; color: var(--amber); }
+        .fl-stats { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 2px; }
         .fl-match { font-family: var(--mono); font-size: 11px; color: var(--green); }
 
         .proposal-row {
@@ -514,6 +515,8 @@
               </div>
               <div class="fl-right">
                 <div class="fl-rate">${fl.hourlyRate ? '$'+fl.hourlyRate+'/hr' : 'fixed'}</div>
+                <div class="fl-stats">⭐ ${fl.rating || '0.0'} • 💰 $${fmt(fl.totalEarnings)}</div>
+                <div class="fl-stats">💼 ${fl.activeJobs} active • ${fl.isAvailable ? '✅ Avail' : '⏳ Busy'}</div>
                 <div class="fl-match">${fl.matchPct}% match</div>
               </div>
             </div>`;

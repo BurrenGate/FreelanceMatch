@@ -45,6 +45,10 @@ public class JobRepository {
         fm.setHourlyRate(rs.getBigDecimal("hourly_rate"));
         fm.setEmail(rs.getString("email"));
         fm.setMatchPct(rs.getDouble("match_pct"));
+        fm.setRating(rs.getDouble("rating"));
+        fm.setTotalEarnings(rs.getBigDecimal("total_earnings"));
+        fm.setActiveJobs(rs.getInt("active_jobs"));
+        fm.setIsAvailable(rs.getBoolean("is_available"));
         return fm;
     };
 
@@ -71,7 +75,15 @@ public class JobRepository {
         log.debug("Calling get_recommended_freelancers for job {}", jobId);
         jdbc.execute("CALL get_recommended_freelancers(" + jobId + ")");
 
-        String selectSql = "SELECT * FROM temp_recommended_freelancers ORDER BY match_pct DESC";
+        String selectSql = """
+                SELECT *,
+                       get_freelancer_rating(profile_id) as rating,
+                       get_freelancer_total_earnings(profile_id) as total_earnings,
+                       get_active_jobs_count(profile_id) as active_jobs,
+                       is_freelancer_available(profile_id) as is_available
+                FROM temp_recommended_freelancers
+                ORDER BY match_pct DESC, rating DESC
+                """;
         return jdbc.query(selectSql, MATCH_MAPPER);
     }
 
