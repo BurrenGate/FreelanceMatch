@@ -22,8 +22,7 @@ public class ProposalService {
     public void submitProposal(SubmitProposalRequest request) {
         log.info("Freelancer ID: {} is submitting a proposal for Job ID: {}", 
                  request.getFreelancerId(), request.getJobId());
-                 
-        // Делегируем всю логику проверок (статус задачи, дубликаты) в PostgreSQL
+
         proposalRepository.submitProposal(
                 request.getJobId(),
                 request.getFreelancerId(),
@@ -39,7 +38,6 @@ public class ProposalService {
 
     public void acceptProposal(Long proposalId) {
         log.info("Client is accepting proposal ID: {}", proposalId);
-        // Вся бизнес-логика и транзакционность (изменение 3-х таблиц) скрыта внутри БД
         proposalRepository.acceptProposalAndCreateContract(proposalId);
     }
 }

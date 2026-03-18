@@ -23,10 +23,8 @@ public class AccountService {
     public void registerAccount(RegisterRequest request) {
         log.info("Attempting to register user with email: {}", request.getEmail());
 
-        // Хешируем пароль перед отправкой в базу с помощью BCrypt
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 
-        // Вся транзакционная логика происходит внутри PL/pgSQL процедуры
         accountRepository.registerUser(
                 request.getEmail(),
                 encodedPassword,
@@ -39,10 +37,6 @@ public class AccountService {
         log.info("User {} successfully registered", request.getEmail());
     }
 
-    // Метод логина мы удалили! Теперь за проверку паролей отвечает
-    // AuthenticationManager в твоем AuthController.
-
-    // Этот метод нужен контроллеру и Security, чтобы доставать юзера из БД
     public Account findByEmail(String email) {
         log.debug("Fetching account by email: {}", email);
         return accountRepository.findByEmail(email);

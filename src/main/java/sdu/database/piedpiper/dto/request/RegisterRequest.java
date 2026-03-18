@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 public class RegisterRequest {
     private String email;
     private String password;
-    private Integer roleId; // 1 - client, 2 - freelancer
+    private Integer roleId;
     private String firstName;
     private String lastName;
-    private BigDecimal hourlyRate; // Может быть null для заказчика
+    private BigDecimal hourlyRate;
 }

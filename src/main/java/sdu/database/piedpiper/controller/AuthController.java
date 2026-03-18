@@ -40,15 +40,12 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<String>> login(@RequestBody LoginRequest request) {
         try {
-            // Spring Security сам проверит пароль под капотом
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
             );
 
-            // Если дошли сюда, пароль верный. Достаем юзера из БД, чтобы узнать его роль
             Account account = accountService.findByEmail(request.getEmail());
 
-            // Генерируем токен
             String token = jwtUtil.generateToken(account.getEmail(), account.getRoleId());
 
             return ResponseEntity.ok(ApiResponse.ok("Успешный вход", token));

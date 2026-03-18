@@ -37,7 +37,6 @@ public class JobRepository {
         return j;
     };
 
-    /** Maps one row from temp_recommended_freelancers to a FreelancerMatch object */
     private static final RowMapper<FreelancerMatch> MATCH_MAPPER = (rs, rowNum) -> {
         FreelancerMatch fm = new FreelancerMatch();
         fm.setProfileId(rs.getLong("profile_id"));
@@ -73,14 +72,14 @@ public class JobRepository {
 
     public List<FreelancerMatch> findRecommendedFreelancers(Long jobId) {
         log.debug("Calling get_recommended_freelancers for job {}", jobId);
-        jdbc.execute("CALL get_recommended_freelancers(" + jobId + ")");
+        jdbc.execute("CALL job_market.get_recommended_freelancers(" + jobId + ")");
 
         String selectSql = """
                 SELECT *,
-                       get_freelancer_rating(profile_id) as rating,
-                       get_freelancer_total_earnings(profile_id) as total_earnings,
-                       get_active_jobs_count(profile_id) as active_jobs,
-                       is_freelancer_available(profile_id) as is_available
+                       job_market.get_freelancer_rating(profile_id) as rating,
+                       job_market.get_freelancer_total_earnings(profile_id) as total_earnings,
+                       job_market.get_active_jobs_count(profile_id) as active_jobs,
+                       job_market.is_freelancer_available(profile_id) as is_available
                 FROM temp_recommended_freelancers
                 ORDER BY match_pct DESC, rating DESC
                 """;
@@ -89,7 +88,7 @@ public class JobRepository {
 
     public void finalizeProposalAndCreateContract(Long proposalId) {
         log.debug("Calling finalize_proposal_and_create_contract for proposal {}", proposalId);
-        jdbc.execute("CALL finalize_proposal_and_create_contract(" + proposalId + ")");
+        jdbc.execute("CALL job_market.finalize_proposal_and_create_contract(" + proposalId + ")");
     }
 }
 

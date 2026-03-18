@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         info = @Info(title = "Pied Piper Freelance API", version = "1.0", description = "API для биржи фриланса (MVP)"),
-        security = @SecurityRequirement(name = "Bearer Authentication") // Применяем токен ко всем эндпоинтам по умолчанию
+        security = @SecurityRequirement(name = "Bearer Authentication")
 )
 @SecurityScheme(
         name = "Bearer Authentication",

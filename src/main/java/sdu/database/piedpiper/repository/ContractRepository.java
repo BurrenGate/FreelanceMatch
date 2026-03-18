@@ -17,10 +17,9 @@ public class ContractRepository {
         this.jdbc = jdbc;
     }
 
-    // Вызов PL/pgSQL процедуры для завершения контракта и выставления оценки
     public void completeJobAndRate(Long contractId, BigDecimal rating, String feedback) {
         log.debug("Calling complete_job_and_rate for contract {}", contractId);
-        String sql = "CALL complete_job_and_rate(?, ?, ?)";
+        String sql = "CALL job_market.complete_job_and_rate(?, ?, ?)";
         jdbc.update(sql, contractId, rating, feedback);
     }
 }

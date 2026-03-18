@@ -31,23 +31,20 @@ public class ProposalRepository {
         return p;
     };
 
-    // Вызов новой PL/pgSQL процедуры для подачи заявки
     public void submitProposal(Long jobId, Long freelancerId, BigDecimal bidAmount, String coverLetter) {
         log.debug("Calling submit_proposal for job {} from freelancer {}", jobId, freelancerId);
-        String sql = "CALL submit_proposal(?, ?, ?, ?)";
+        String sql = "CALL job_market.submit_proposal(?, ?, ?, ?)";
         jdbc.update(sql, jobId, freelancerId, bidAmount, coverLetter);
     }
 
-    // Чтобы заказчик мог посмотреть, кто откликнулся на его работу
     public List<Proposal> findByJobId(Long jobId) {
         String sql = "SELECT * FROM proposals WHERE job_id = ? ORDER BY created_at DESC";
         return jdbc.query(sql, PROPOSAL_MAPPER, jobId);
     }
 
-    // Вызов мощной PL/pgSQL процедуры для принятия заявки и создания контракта
     public void acceptProposalAndCreateContract(Long proposalId) {
         log.debug("Calling finalize_proposal_and_create_contract for proposal {}", proposalId);
-        String sql = "CALL finalize_proposal_and_create_contract(?)";
+        String sql = "CALL job_market.finalize_proposal_and_create_contract(?)";
         jdbc.update(sql, proposalId);
     }
 }
