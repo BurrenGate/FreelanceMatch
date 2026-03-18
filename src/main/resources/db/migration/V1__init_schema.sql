@@ -119,7 +119,6 @@ CREATE TABLE job_required_skills (
                                      PRIMARY KEY (job_id, skill_id)
 );
 
-
 CREATE OR REPLACE PROCEDURE get_recommended_freelancers(p_job_id INT)
     LANGUAGE plpgsql
 AS $$
@@ -161,7 +160,7 @@ BEGIN
 
     LOOP
         FETCH freelancer_cursor INTO rec;
-        EXIT WHEN NOT FOUND;   -- exit condition
+        EXIT WHEN NOT FOUND;
 
         SELECT COUNT(*) INTO v_matched_skills
         FROM   profile_skills ps

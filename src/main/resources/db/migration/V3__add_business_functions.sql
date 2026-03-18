@@ -1,4 +1,3 @@
--- 1. Get Freelancer's Average Rating
 CREATE OR REPLACE FUNCTION get_freelancer_rating(p_profile_id BIGINT)
 RETURNS NUMERIC(3,2)
 LANGUAGE plpgsql
@@ -8,14 +7,13 @@ DECLARE
 BEGIN
     SELECT AVG(rating) INTO v_rating
     FROM   reviews
-    WHERE  reviewer_id <> p_profile_id  -- assuming reviewer is not the same as the profile we're checking
+    WHERE  reviewer_id <> p_profile_id
       AND  contract_id IN (SELECT id FROM contracts WHERE freelancer_id = p_profile_id);
     
     RETURN COALESCE(v_rating, 0.00);
 END;
 $$;
 
--- 2. Get Freelancer's Total Earnings (Sum of all completed contracts)
 CREATE OR REPLACE FUNCTION get_freelancer_total_earnings(p_profile_id BIGINT)
 RETURNS DECIMAL(15,2)
 LANGUAGE plpgsql
@@ -32,7 +30,6 @@ BEGIN
 END;
 $$;
 
--- 3. Get Active Jobs Count for a Profile (Either as Client or Freelancer)
 CREATE OR REPLACE FUNCTION get_active_jobs_count(p_profile_id BIGINT)
 RETURNS INTEGER
 LANGUAGE plpgsql
@@ -40,7 +37,6 @@ AS $$
 DECLARE
     v_count INTEGER;
 BEGIN
-    -- Count open/in-progress jobs where profile is client OR contracts where profile is freelancer
     SELECT (
         (SELECT COUNT(*) FROM jobs WHERE client_id = p_profile_id AND status_id IN (1, 2))
         +
@@ -51,7 +47,6 @@ BEGIN
 END;
 $$;
 
--- 4. Calculate Skill Match Count (Matches between job and freelancer)
 CREATE OR REPLACE FUNCTION get_skill_match_count(p_job_id BIGINT, p_profile_id BIGINT)
 RETURNS INTEGER
 LANGUAGE plpgsql
@@ -69,7 +64,6 @@ BEGIN
 END;
 $$;
 
--- 5. Get Last Transaction Amount for a Contract
 CREATE OR REPLACE FUNCTION get_last_transaction_amount(p_contract_id BIGINT)
 RETURNS DECIMAL(15,2)
 LANGUAGE plpgsql
@@ -87,7 +81,6 @@ BEGIN
 END;
 $$;
 
--- 6. Check if freelancer is available (less than 3 active contracts)
 CREATE OR REPLACE FUNCTION is_freelancer_available(p_profile_id BIGINT)
 RETURNS BOOLEAN
 LANGUAGE plpgsql

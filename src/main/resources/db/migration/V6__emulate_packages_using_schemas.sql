@@ -1,8 +1,6 @@
--- Create schemas to emulate Oracle packages
 CREATE SCHEMA IF NOT EXISTS user_management;
 CREATE SCHEMA IF NOT EXISTS job_market;
 
--- 1. Move/Re-create procedures in user_management schema
 CREATE OR REPLACE PROCEDURE user_management.register_user(
     p_email         VARCHAR(255),
     p_password_hash VARCHAR(255),
@@ -38,9 +36,6 @@ EXCEPTION
 END;
 $$;
 
--- 2. Move/Re-create functions and procedures in job_market schema
-
--- Helper functions for job_market
 CREATE OR REPLACE FUNCTION job_market.get_freelancer_rating(p_profile_id BIGINT)
 RETURNS NUMERIC(3,2)
 LANGUAGE plpgsql
@@ -106,7 +101,6 @@ BEGIN
 END;
 $$;
 
--- Procedures for job_market
 CREATE OR REPLACE PROCEDURE job_market.get_recommended_freelancers(p_job_id BIGINT)
     LANGUAGE plpgsql
 AS $$
