@@ -1,4 +1,4 @@
-package sdu.database.piedpiper.model;
+package sdu.database.piedpiper.dto.response;
 
 public class ApiResponse<T> {
     private boolean success;

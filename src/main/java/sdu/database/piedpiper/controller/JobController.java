@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sdu.database.piedpiper.model.ApiResponse;
+import sdu.database.piedpiper.dto.response.ApiResponse;
 import sdu.database.piedpiper.model.FreelancerMatch;
 import sdu.database.piedpiper.model.Job;
 import sdu.database.piedpiper.service.JobService;
@@ -46,22 +46,6 @@ public class JobController {
 
         } catch (RuntimeException ex) {
             log.warn("Matching procedure error for job {}: {}", id, ex.getMessage());
-            return ResponseEntity
-                    .badRequest()
-                    .body(ApiResponse.error(ex.getMessage()));
-        }
-    }
-
-    @PostMapping("/proposals/{id}/accept")
-    public ResponseEntity<ApiResponse<Void>> acceptProposal(@PathVariable Long id) {
-        log.debug("POST /api/proposals/{}/accept", id);
-        try {
-            jobService.acceptProposal(id);
-            return ResponseEntity.ok(
-                    ApiResponse.ok("Proposal " + id + " accepted – contract created!", null)
-            );
-        } catch (RuntimeException ex) {
-            log.warn("Accept proposal error for proposal {}: {}", id, ex.getMessage());
             return ResponseEntity
                     .badRequest()
                     .body(ApiResponse.error(ex.getMessage()));
