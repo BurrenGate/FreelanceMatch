@@ -17,12 +17,10 @@ AS $$
 DECLARE
     v_new_account_id BIGINT;
 BEGIN
-    -- 1. Create account and capture the generated ID
     INSERT INTO accounts (email, password_hash, role_id)
     VALUES (p_email, p_password_hash, p_role_id)
     RETURNING id INTO v_new_account_id;
 
-    -- 2. Create profile, linking it to the new account
     INSERT INTO profiles (account_id, first_name, last_name, hourly_rate)
     VALUES (v_new_account_id, p_first_name, p_last_name, p_hourly_rate);
 
@@ -30,7 +28,6 @@ BEGIN
 
 EXCEPTION
     WHEN unique_violation THEN
-        -- Check error text: if email is mentioned, then it's an email conflict
         IF SQLERRM ILIKE '%email%' THEN
             RAISE EXCEPTION 'Account with email "%" already exists.', p_email;
         ELSE
