@@ -29,15 +29,13 @@ public class AccountRepository {
         return a;
     };
 
-    // Вызов нашей PL/pgSQL процедуры для регистрации
     public void registerUser(String email, String passwordHash, Integer roleId, 
                              String firstName, String lastName, java.math.BigDecimal hourlyRate) {
         log.debug("Calling register_user procedure for email: {}", email);
-        String sql = "CALL register_user(?, ?, ?, ?, ?, ?)";
+        String sql = "CALL user_management.register_user(?, ?, ?, ?, ?, ?)";
         jdbc.update(sql, email, passwordHash, roleId, firstName, lastName, hourlyRate);
     }
 
-    // Метод для MVP "логина" (найти юзера по email)
     public Account findByEmail(String email) {
         String sql = "SELECT * FROM accounts WHERE email = ?";
         List<Account> accounts = jdbc.query(sql, ACCOUNT_MAPPER, email);

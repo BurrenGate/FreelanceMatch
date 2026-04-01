@@ -16,9 +16,7 @@ public class CustomUserDetails implements UserDetails {
         this.account = account;
     }
 
-    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Маппим наши ID ролей из базы в строковые названия для Spring Security
         String roleName = switch (account.getRoleId()) {
             case 1 -> "ROLE_CLIENT";
             case 2 -> "ROLE_FREELANCER";
@@ -33,9 +31,8 @@ public class CustomUserDetails implements UserDetails {
         return account.getPasswordHash();
     }
 
-    @Override
     public String getUsername() {
-        return account.getEmail(); // В качестве логина используем email
+        return account.getEmail();
     }
 
     public Account getAccount() {

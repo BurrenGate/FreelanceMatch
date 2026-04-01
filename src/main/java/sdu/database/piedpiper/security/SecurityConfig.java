@@ -32,7 +32,6 @@ public class SecurityConfig {
                 .cors(org.springframework.security.config.Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        // Открываем логин, регистрацию И все пути Swagger
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/v3/api-docs/**",
@@ -52,7 +51,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Хеширование паролей
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -66,7 +65,6 @@ public class SecurityConfig {
     @Bean
     public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
         org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
-        // Указываем адреса твоего фронтенда (обычно Vite использует 5173, а React Create App - 3000)
         configuration.setAllowedOrigins(java.util.List.of("http://localhost:5173", "http://localhost:3000", "http://localhost:8080"));
         configuration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(java.util.List.of("Authorization", "Content-Type"));

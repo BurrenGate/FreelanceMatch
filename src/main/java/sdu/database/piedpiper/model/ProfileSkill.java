@@ -2,7 +2,6 @@ package sdu.database.piedpiper.model;
 
 import lombok.*;
 
-// Таблицы связей (Many-to-Many)
 @Getter @Setter @Builder
 @NoArgsConstructor @AllArgsConstructor
 public class ProfileSkill {

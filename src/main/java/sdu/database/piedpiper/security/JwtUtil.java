@@ -14,10 +14,8 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    // Секретный ключ (в реальном проекте должен лежать в application.properties)
-    // Это просто случайная Base64 строка длиной больше 256 бит для HMAC-SHA
     private static final String SECRET_KEY = "VGhpcy1pcy1hLXZlcnktc2VjdXJlLWtleS1mb3ItcGllZC1waXBlci1tdnAtcHJvamVjdA==";
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10 часов
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60 * 10;
 
     private SecretKey getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);

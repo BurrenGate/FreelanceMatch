@@ -20,7 +20,6 @@ public class ContractService {
         log.info("Client is attempting to complete contract ID: {} with rating: {}", 
                  request.getContractId(), request.getRating());
 
-        // Вызываем PL/pgSQL процедуру, которая обновит 4 таблицы за одну транзакцию
         contractRepository.completeJobAndRate(
                 request.getContractId(),
                 request.getRating(),
