@@ -4,10 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import sdu.database.piedpiper.model.FreelancerMatch;
 import sdu.database.piedpiper.model.Job;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -51,6 +55,28 @@ public class JobRepository {
         return fm;
     };
 
+    public Job save(Job job) {
+        String sql = "INSERT INTO jobs (client_id, title, description, budget_type, min_budget, max_budget, status_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbc.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setLong(1, job.getClientId());
+            ps.setString(2, job.getTitle());
+            ps.setString(3, job.getDescription());
+            ps.setString(4, job.getBudgetType());
+            ps.setBigDecimal(5, job.getMinBudget());
+            ps.setBigDecimal(6, job.getMaxBudget());
+            ps.setInt(7, 1); // Assuming 1 is a default status like 'Open'
+            return ps;
+        }, keyHolder);
+
+        if (keyHolder.getKey() != null) {
+            job.setId(keyHolder.getKey().longValue());
+        }
+        return job;
+    }
+
     public List<Job> findAll() {
         String sql = """
                 SELECT j.id,
@@ -90,5 +116,24 @@ public class JobRepository {
         log.debug("Calling finalize_proposal_and_create_contract for proposal {}", proposalId);
         jdbc.execute("CALL job_market.finalize_proposal_and_create_contract(" + proposalId + ")");
     }
-}
 
+    public List<Job> findByClientId(Long clientId) {
+        String sql = """
+                SELECT j.id,
+                       j.client_id,
+                       j.title,
+                       j.description,
+                       j.budget_type,
+                       j.min_budget,
+                       j.max_budget,
+                       j.created_at,
+                       js.status_name
+                FROM   jobs j
+                JOIN   job_statuses js ON js.id = j.status_id
+                WHERE  j.client_id = ?
+                ORDER  BY j.created_at DESC
+                """;
+        log.debug("Executing findByClientId({}) jobs query", clientId);
+        return jdbc.query(sql, JOB_MAPPER, clientId);
+    }
+}

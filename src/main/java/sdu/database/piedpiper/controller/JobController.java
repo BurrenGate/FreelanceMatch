@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sdu.database.piedpiper.dto.JobDTO;
 import sdu.database.piedpiper.dto.response.ApiResponse;
 import sdu.database.piedpiper.model.FreelancerMatch;
 import sdu.database.piedpiper.model.Job;
@@ -12,7 +13,7 @@ import sdu.database.piedpiper.service.JobService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/jobs")
 public class JobController {
 
     private static final Logger log = LoggerFactory.getLogger(JobController.class);
@@ -23,7 +24,7 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    @GetMapping("/jobs")
+    @GetMapping
     public ResponseEntity<ApiResponse<List<Job>>> getAllJobs() {
         log.debug("GET /api/jobs");
         List<Job> jobs = jobService.getAllJobs();
@@ -32,7 +33,17 @@ public class JobController {
         );
     }
 
-    @GetMapping("/jobs/{id}/match")
+    @GetMapping("/my")
+    public List<Job> getMyJobs() {
+        return jobService.getMyJobs();
+    }
+
+    @PostMapping
+    public void createJob(@RequestBody JobDTO jobDTO) {
+        jobService.createJob(jobDTO);
+    }
+
+    @GetMapping("/{id}/match")
     public ResponseEntity<ApiResponse<List<FreelancerMatch>>> getMatchingFreelancers(
             @PathVariable Long id) {
 
@@ -47,8 +58,7 @@ public class JobController {
         } catch (RuntimeException ex) {
             log.warn("Matching procedure error for job {}: {}", id, ex.getMessage());
             return ResponseEntity
-                    .badRequest()
-                    .body(ApiResponse.error(ex.getMessage()));
+                    .badRequest().body(ApiResponse.error(ex.getMessage()));
         }
     }
 }
