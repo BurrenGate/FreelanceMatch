@@ -4,10 +4,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import sdu.database.piedpiper.dto.JobDTO;
+import sdu.database.piedpiper.model.Account;
 import sdu.database.piedpiper.model.FreelancerMatch;
 import sdu.database.piedpiper.model.Job;
+import sdu.database.piedpiper.model.JobRequiredSkill;
+import sdu.database.piedpiper.model.Profile;
+import sdu.database.piedpiper.repository.AccountRepository;
 import sdu.database.piedpiper.repository.JobRepository;
+import sdu.database.piedpiper.repository.JobRequiredSkillRepository;
+import sdu.database.piedpiper.repository.ProfileRepository;
+import sdu.database.piedpiper.security.SecurityUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -16,9 +25,15 @@ public class JobService {
     private static final Logger log = LoggerFactory.getLogger(JobService.class);
 
     private final JobRepository jobRepository;
+    private final JobRequiredSkillRepository jobRequiredSkillRepository;
+    private final AccountRepository accountRepository;
+    private final ProfileRepository profileRepository;
 
-    public JobService(JobRepository jobRepository) {
+    public JobService(JobRepository jobRepository, JobRequiredSkillRepository jobRequiredSkillRepository, AccountRepository accountRepository, ProfileRepository profileRepository) {
         this.jobRepository = jobRepository;
+        this.jobRequiredSkillRepository = jobRequiredSkillRepository;
+        this.accountRepository = accountRepository;
+        this.profileRepository = profileRepository;
     }
 
     public List<Job> getAllJobs() {
@@ -46,6 +61,43 @@ public class JobService {
         }
     }
 
+    public void createJob(JobDTO jobDTO) {
+        String username = SecurityUtils.getCurrentUsername();
+        Account account = accountRepository.findByEmail(username);
+        if (account == null) return;
+        Profile profile = profileRepository.findByAccountId(account.getId()).orElse(null);
+        if (profile == null) return;
+
+        Job job = new Job();
+        job.setClientId(profile.getId());
+        job.setTitle(jobDTO.getTitle());
+        job.setDescription(jobDTO.getDescription());
+        job.setBudgetType("fixed"); // Assuming fixed budget
+        if (jobDTO.getBudget() != null) {
+            BigDecimal budget = BigDecimal.valueOf(jobDTO.getBudget());
+            job.setMinBudget(budget);
+            job.setMaxBudget(budget);
+        }
+        Job savedJob = jobRepository.save(job);
+
+        for (Long skillId : jobDTO.getRequiredSkillIds()) {
+            JobRequiredSkill jobRequiredSkill = new JobRequiredSkill();
+            jobRequiredSkill.setJobId(savedJob.getId());
+            jobRequiredSkill.setSkillId(skillId.intValue());
+            jobRequiredSkillRepository.save(jobRequiredSkill);
+        }
+    }
+
+    public List<Job> getMyJobs() {
+        String username = SecurityUtils.getCurrentUsername();
+        Account account = accountRepository.findByEmail(username);
+        if (account == null) return null;
+        Profile profile = profileRepository.findByAccountId(account.getId()).orElse(null);
+        if (profile == null) return null;
+
+        return jobRepository.findByClientId(profile.getId());
+    }
+
     private String extractMessage(DataAccessException e) {
         Throwable cause = e.getMostSpecificCause();
         String msg = cause.getMessage();
@@ -56,4 +108,3 @@ public class JobService {
         return msg != null ? msg : "Unknown database error";
     }
 }
-

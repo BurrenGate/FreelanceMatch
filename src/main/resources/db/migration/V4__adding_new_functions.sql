@@ -29,7 +29,6 @@ EXCEPTION
 END;
 $$;
 
-
 CREATE OR REPLACE PROCEDURE submit_proposal(
     p_job_id        BIGINT,
     p_freelancer_id BIGINT,
@@ -63,7 +62,6 @@ BEGIN
     RAISE NOTICE 'Proposal from freelancer % for job % successfully submitted.', p_freelancer_id, p_job_id;
 END;
 $$;
-
 
 CREATE OR REPLACE PROCEDURE complete_job_and_rate(
     p_contract_id BIGINT,
