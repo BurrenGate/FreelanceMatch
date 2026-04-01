@@ -4,8 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sdu.database.piedpiper.dto.JobDTO;
+import sdu.database.piedpiper.dto.response.JobDTO;
 import sdu.database.piedpiper.dto.response.ApiResponse;
+import sdu.database.piedpiper.dto.response.RecommendedJobDTO;
 import sdu.database.piedpiper.model.FreelancerMatch;
 import sdu.database.piedpiper.model.Job;
 import sdu.database.piedpiper.service.JobService;
@@ -34,8 +35,8 @@ public class JobController {
     }
 
     @GetMapping("/my")
-    public List<Job> getMyJobs() {
-        return jobService.getMyJobs();
+    public ResponseEntity<List<Job>> getMyJobs() {
+        return ResponseEntity.ok(jobService.getMyJobs());
     }
 
     @PostMapping
@@ -61,4 +62,25 @@ public class JobController {
                     .badRequest().body(ApiResponse.error(ex.getMessage()));
         }
     }
+
+    @GetMapping("/recommended")
+    public ResponseEntity<ApiResponse<List<RecommendedJobDTO>>> getRecommendedJobs() {
+        log.debug("GET /api/jobs/recommended");
+
+        try {
+            List<RecommendedJobDTO> recommendedJobs = jobService.getRecommendedJobs();
+
+            String msg = recommendedJobs.isEmpty()
+                    ? "No matching jobs found based on your skills."
+                    : "Found " + recommendedJobs.size() + " recommended jobs for you.";
+
+            return ResponseEntity.ok(ApiResponse.ok(msg, recommendedJobs));
+
+        } catch (RuntimeException ex) {
+            log.warn("Recommendation error: {}", ex.getMessage());
+            return ResponseEntity.badRequest().body(ApiResponse.error(ex.getMessage()));
+        }
+    }
+
+
 }

@@ -45,4 +45,6 @@ public class ContractRepository {
         String sql = "SELECT * FROM contracts WHERE freelancer_id = ?";
         return jdbc.query(sql, CONTRACT_MAPPER, freelancerId);
     }
+
+
 }

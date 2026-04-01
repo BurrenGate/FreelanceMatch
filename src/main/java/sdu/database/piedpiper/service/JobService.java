@@ -4,7 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import sdu.database.piedpiper.dto.JobDTO;
+import sdu.database.piedpiper.dto.response.JobDTO;
+import sdu.database.piedpiper.dto.response.RecommendedJobDTO;
 import sdu.database.piedpiper.model.Account;
 import sdu.database.piedpiper.model.FreelancerMatch;
 import sdu.database.piedpiper.model.Job;
@@ -89,13 +90,24 @@ public class JobService {
     }
 
     public List<Job> getMyJobs() {
-        String username = SecurityUtils.getCurrentUsername();
-        Account account = accountRepository.findByEmail(username);
-        if (account == null) return null;
-        Profile profile = profileRepository.findByAccountId(account.getId()).orElse(null);
-        if (profile == null) return null;
+        String email = SecurityUtils.getCurrentUsername();
 
-        return jobRepository.findByClientId(profile.getId());
+        if (email == null) {
+            throw new RuntimeException("User is not authenticated");
+        }
+
+        // Передаем email напрямую в базу данных
+        return jobRepository.findJobsByClientEmail(email);
+    }
+
+    public List<RecommendedJobDTO> getRecommendedJobs() {
+        String email = SecurityUtils.getCurrentUsername();
+
+        if (email == null) {
+            throw new RuntimeException("User is not authenticated");
+        }
+
+        return jobRepository.getRecommendedJobsForFreelancer(email);
     }
 
     private String extractMessage(DataAccessException e) {

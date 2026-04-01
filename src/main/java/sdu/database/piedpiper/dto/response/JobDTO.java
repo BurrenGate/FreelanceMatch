@@ -1,4 +1,4 @@
-package sdu.database.piedpiper.dto;
+package sdu.database.piedpiper.dto.response;
 
 import lombok.Data;
 import java.util.List;

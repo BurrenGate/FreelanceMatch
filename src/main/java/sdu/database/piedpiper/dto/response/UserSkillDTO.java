@@ -1,4 +1,4 @@
-package sdu.database.piedpiper.dto;
+package sdu.database.piedpiper.dto.response;
 
 public class UserSkillDTO {
     private Long skillId;

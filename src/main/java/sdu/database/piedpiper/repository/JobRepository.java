@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import sdu.database.piedpiper.dto.response.RecommendedJobDTO;
 import sdu.database.piedpiper.model.FreelancerMatch;
 import sdu.database.piedpiper.model.Job;
 
@@ -117,7 +118,8 @@ public class JobRepository {
         jdbc.execute("CALL job_market.finalize_proposal_and_create_contract(" + proposalId + ")");
     }
 
-    public List<Job> findByClientId(Long clientId) {
+
+    public List<Job> findJobsByClientEmail(String email) {
         String sql = """
                 SELECT j.id,
                        j.client_id,
@@ -130,10 +132,32 @@ public class JobRepository {
                        js.status_name
                 FROM   jobs j
                 JOIN   job_statuses js ON js.id = j.status_id
-                WHERE  j.client_id = ?
+                JOIN   profiles p ON p.id = j.client_id
+                JOIN   accounts a ON a.id = p.account_id
+                WHERE  a.email = ?
                 ORDER  BY j.created_at DESC
                 """;
-        log.debug("Executing findByClientId({}) jobs query", clientId);
-        return jdbc.query(sql, JOB_MAPPER, clientId);
+
+        log.debug("Executing findJobsByClientEmail for user: {}", email);
+        return jdbc.query(sql, JOB_MAPPER, email);
+    }
+
+    public List<RecommendedJobDTO> getRecommendedJobsForFreelancer(String email) {
+        String sql = "SELECT * FROM job_management.get_recommended_jobs(?)";
+
+        return jdbc.query(sql, (rs, rowNum) ->
+                        RecommendedJobDTO.builder()
+                                .id(rs.getLong("id"))
+                                .clientId(rs.getLong("client_id"))
+                                .title(rs.getString("title"))
+                                .description(rs.getString("description"))
+                                .budgetType(rs.getString("budget_type"))
+                                .minBudget(rs.getBigDecimal("min_budget"))
+                                .maxBudget(rs.getBigDecimal("max_budget"))
+                                .statusName(rs.getString("status_name"))
+                                .createdAt(rs.getTimestamp("created_at").toLocalDateTime())
+                                .matchPercentage(rs.getDouble("match_percentage"))
+                                .build()
+                , email);
     }
 }

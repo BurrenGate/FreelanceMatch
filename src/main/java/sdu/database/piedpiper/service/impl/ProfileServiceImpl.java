@@ -1,77 +1,96 @@
 package sdu.database.piedpiper.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
-import sdu.database.piedpiper.dto.ProfileDTO;
-import sdu.database.piedpiper.dto.UserSkillDTO;
-import sdu.database.piedpiper.model.Account;
-import sdu.database.piedpiper.model.Profile;
-import sdu.database.piedpiper.model.ProfileSkill;
+import sdu.database.piedpiper.dto.response.*;
 import sdu.database.piedpiper.repository.AccountRepository;
+import sdu.database.piedpiper.repository.DashboardRepository;
 import sdu.database.piedpiper.repository.ProfileRepository;
 import sdu.database.piedpiper.repository.ProfileSkillRepository;
 import sdu.database.piedpiper.security.SecurityUtils;
 import sdu.database.piedpiper.service.ProfileService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
-    @Autowired
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
+    private final ProfileRepository profileRepository;
+    private final ProfileSkillRepository profileSkillRepository;
+    private final DashboardRepository dashboardRepository; // Добавляем репозиторий дашборда
 
-    @Autowired
-    private ProfileRepository profileRepository;
-
-    @Autowired
-    private ProfileSkillRepository profileSkillRepository;
+    // Внедрение зависимостей через конструктор
+    public ProfileServiceImpl(AccountRepository accountRepository,
+                              ProfileRepository profileRepository,
+                              ProfileSkillRepository profileSkillRepository,
+                              DashboardRepository dashboardRepository) {
+        this.accountRepository = accountRepository;
+        this.profileRepository = profileRepository;
+        this.profileSkillRepository = profileSkillRepository;
+        this.dashboardRepository = dashboardRepository;
+    }
 
     @Override
     public ProfileDTO getCurrentUserProfile() {
         String username = SecurityUtils.getCurrentUsername();
-        Account account = accountRepository.findByEmail(username);
-        if (account == null) {
-            return null; // Or throw an exception
+
+        ProfileDTO profileDTO = profileRepository.getFullProfileByEmail(username)
+                .orElseThrow(() -> new RuntimeException("Profile not found for user: " + username));
+
+        // Если профиль существует, подтягиваем его детальные навыки
+        if (profileDTO.getProfileId() != null) {
+            List<ProfileSkillDetailedDTO> skills = profileSkillRepository.getDetailedSkillsByProfileId(profileDTO.getProfileId());
+            profileDTO.setSkills(skills);
         }
-        Profile profile = profileRepository.findByAccountId(account.getId()).orElse(null);
-        if (profile == null) {
-            return null; // Or throw an exception
-        }
 
-        List<ProfileSkill> skills = profileSkillRepository.findByProfileId(profile.getId());
-        List<String> skillNames = skills.stream().map(s -> s.getSkillId().toString()).collect(Collectors.toList()); // Placeholder
-
-        ProfileDTO dto = new ProfileDTO();
-        dto.setId(profile.getId());
-        dto.setUsername(account.getEmail());
-        dto.setEmail(account.getEmail());
-        // dto.setRating(...); // No rating field in Profile
-        // dto.setBalance(...); // No balance field in Profile
-        dto.setSkills(skillNames);
-
-        return dto;
+        return profileDTO;
     }
 
     @Override
     public void addSkillsToCurrentUser(List<UserSkillDTO> skills) {
-        String username = SecurityUtils.getCurrentUsername();
-        Account account = accountRepository.findByEmail(username);
-        if (account == null) {
-            return; // Or throw an exception
-        }
-        Profile profile = profileRepository.findByAccountId(account.getId()).orElse(null);
-        if (profile == null) {
-            return; // Or throw an exception
+        String email = SecurityUtils.getCurrentUsername();
+
+        if (email == null) {
+            throw new RuntimeException("User is not authenticated");
         }
 
-        for (UserSkillDTO skillDTO : skills) {
-            ProfileSkill profileSkill = new ProfileSkill();
-            profileSkill.setProfileId(profile.getId());
-            profileSkill.setSkillId(skillDTO.getSkillId().intValue());
-            profileSkill.setSkillLevel(skillDTO.getSkillLevel().toString()); // Assuming skill level is a string
-            profileSkillRepository.save(profileSkill);
+        // Передаем всю работу базе данных
+        profileSkillRepository.addSkillsToProfile(email, skills);
+    }
+
+    @Override
+    public void updateCurrentUserProfile(UpdateProfileDTO dto) {
+        String username = SecurityUtils.getCurrentUsername();
+
+        if (username == null) {
+            throw new RuntimeException("User is not authenticated");
+        }
+
+        // Передаем данные в БД. Вся логика поиска и обновления скрыта в PL/SQL
+        profileRepository.updateProfile(username, dto);
+    }
+
+    public FreelancerDashboardDTO getFreelancerDashboard() {
+        String username = SecurityUtils.getCurrentUsername();
+
+        if (username == null) {
+            throw new RuntimeException("User is not authenticated");
+        }
+
+        // 1. Получаем профиль пользователя, чтобы достать его profileId
+        ProfileDTO profileDTO = profileRepository.getFullProfileByEmail(username)
+                .orElseThrow(() -> new RuntimeException("Profile not found for user: " + username));
+
+        Long profileId = profileDTO.getProfileId();
+
+        // 2. Вызываем PL/pgSQL функцию через DashboardRepository, передавая profileId
+        try {
+            return dashboardRepository.getDashboardByFreelancerId(profileId);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
     }
+
+
 }
