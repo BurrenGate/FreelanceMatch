@@ -23,7 +23,6 @@ public class ProfileSkillRepository {
 
     public List<ProfileSkill> findByProfileId(Long profileId) {
         String sql = "SELECT profile_id, skill_id, skill_level FROM profile_skills WHERE profile_id = ?";
-        // Используем современный varargs вместо массива объектов
         return jdbcTemplate.query(
                 sql,
                 (rs, rowNum) -> new ProfileSkill(
@@ -37,10 +36,7 @@ public class ProfileSkillRepository {
 
     public void addSkillsToProfile(String email, List<UserSkillDTO> skills) {
         try {
-            // Превращаем список объектов в JSON-строку
             String skillsJson = objectMapper.writeValueAsString(skills);
-
-            // Вызываем процедуру, явно указывая PostgreSQL, что передаем тип jsonb
             String sql = "CALL profile_management.add_user_skills(?, ?::jsonb)";
             jdbcTemplate.update(sql, email, skillsJson);
 
@@ -63,6 +59,32 @@ public class ProfileSkillRepository {
                                 .skillName(rs.getString("skill_name"))
                                 .category(rs.getString("category"))
                                 .skillLevel(rs.getString("skill_level"))
+                                .build()
+                , profileId);
+    }
+
+    public List<ProfileSkillDetailedDTO> getAllAvailableSkills() {
+        String sql = "SELECT * FROM get_all_available_skills()";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) ->
+                ProfileSkillDetailedDTO.builder()
+                        .skillId(rs.getInt("skill_id"))
+                        .skillName(rs.getString("skill_name"))
+                        .category(rs.getString("skill_category")) // Исправлено: колонка называется skill_category
+                        .skillLevel(null) // Исправлено: здесь нет уровня, так как навык еще не привязан
+                        .build()
+        );
+    }
+
+    public List<ProfileSkillDetailedDTO> getAvailableSkillsForProfile(Long profileId) {
+        String sql = "SELECT * FROM get_available_skills_for_profile(?)";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) ->
+                        ProfileSkillDetailedDTO.builder()
+                                .skillId(rs.getInt("skill_id"))
+                                .skillName(rs.getString("skill_name"))
+                                .category(rs.getString("skill_category")) // Исправлено: колонка называется skill_category
+                                .skillLevel(null) // Исправлено: здесь нет уровня
                                 .build()
                 , profileId);
     }
