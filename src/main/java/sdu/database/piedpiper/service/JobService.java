@@ -42,6 +42,52 @@ public class JobService {
         return jobRepository.findAll();
     }
 
+    public java.util.Optional<Job> getJobById(Long id) {
+        log.info("Fetching job by id: {}", id);
+        return jobRepository.findById(id);
+    }
+
+    public void updateJob(Long id, JobDTO jobDTO) {
+        log.info("Updating job {}", id);
+        java.util.Optional<Job> existingJob = jobRepository.findById(id);
+        if (existingJob.isEmpty()) {
+            throw new RuntimeException("Job not found with id: " + id);
+        }
+
+        Job job = existingJob.get();
+        job.setTitle(jobDTO.getTitle());
+        job.setDescription(jobDTO.getDescription());
+        if (jobDTO.getBudget() != null) {
+            BigDecimal budget = BigDecimal.valueOf(jobDTO.getBudget());
+            job.setMinBudget(budget);
+            job.setMaxBudget(budget);
+        }
+
+        jobRepository.update(id, job);
+
+        // Update required skills if provided
+        if (jobDTO.getRequiredSkillIds() != null && !jobDTO.getRequiredSkillIds().isEmpty()) {
+            jobRequiredSkillRepository.deleteByJobId(id);
+            for (Long skillId : jobDTO.getRequiredSkillIds()) {
+                JobRequiredSkill jobRequiredSkill = new JobRequiredSkill();
+                jobRequiredSkill.setJobId(id);
+                jobRequiredSkill.setSkillId(skillId.intValue());
+                jobRequiredSkillRepository.save(jobRequiredSkill);
+            }
+        }
+    }
+
+    public void deleteJob(Long id) {
+        log.info("Deleting job {}", id);
+        java.util.Optional<Job> existingJob = jobRepository.findById(id);
+        if (existingJob.isEmpty()) {
+            throw new RuntimeException("Job not found with id: " + id);
+        }
+
+        jobRequiredSkillRepository.deleteByJobId(id);
+        jobRepository.deleteById(id);
+    }
+
     public List<FreelancerMatch> getRecommendedFreelancers(Long jobId) {
         log.info("Getting recommended freelancers for job {}", jobId);
         try {
@@ -49,16 +95,6 @@ public class JobService {
         } catch (DataAccessException e) {
             log.error("Error calling matching procedure for job {}: {}", jobId, e.getMessage());
             throw new RuntimeException("Matching procedure failed: " + extractMessage(e), e);
-        }
-    }
-
-    public void acceptProposal(Long proposalId) {
-        log.info("Accepting proposal {}", proposalId);
-        try {
-            jobRepository.finalizeProposalAndCreateContract(proposalId);
-        } catch (DataAccessException e) {
-            log.error("Error calling contract procedure for proposal {}: {}", proposalId, e.getMessage());
-            throw new RuntimeException(extractMessage(e), e);
         }
     }
 

@@ -8,6 +8,7 @@ import sdu.database.piedpiper.model.Proposal;
 import sdu.database.piedpiper.repository.ProposalRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProposalService {
@@ -17,6 +18,34 @@ public class ProposalService {
 
     public ProposalService(ProposalRepository proposalRepository) {
         this.proposalRepository = proposalRepository;
+    }
+
+    public List<Proposal> getAllProposals() {
+        log.info("Fetching all proposals");
+        return proposalRepository.findAll();
+    }
+
+    public Optional<Proposal> getProposalById(Long id) {
+        log.info("Fetching proposal by id: {}", id);
+        return proposalRepository.findById(id);
+    }
+
+    public Proposal updateProposal(Long id, Proposal proposal) {
+        log.info("Updating proposal {}", id);
+        Optional<Proposal> existingProposal = proposalRepository.findById(id);
+        if (existingProposal.isEmpty()) {
+            throw new RuntimeException("Proposal not found with id: " + id);
+        }
+        return proposalRepository.update(id, proposal);
+    }
+
+    public void deleteProposal(Long id) {
+        log.info("Deleting proposal {}", id);
+        Optional<Proposal> existingProposal = proposalRepository.findById(id);
+        if (existingProposal.isEmpty()) {
+            throw new RuntimeException("Proposal not found with id: " + id);
+        }
+        proposalRepository.deleteById(id);
     }
 
     public void submitProposal(SubmitProposalRequest request) {

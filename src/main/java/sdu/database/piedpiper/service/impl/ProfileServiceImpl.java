@@ -55,6 +55,20 @@ public class ProfileServiceImpl implements ProfileService {
             throw new RuntimeException("User is not authenticated");
         }
 
+        // Validate skills before sending to database
+        if (skills == null || skills.isEmpty()) {
+            throw new IllegalArgumentException("Skills list cannot be empty");
+        }
+
+        for (UserSkillDTO skill : skills) {
+            if (skill.getSkillId() == null || skill.getSkillId() <= 0) {
+                throw new IllegalArgumentException("Invalid skill ID: skill IDs must be positive integers");
+            }
+            if (skill.getSkillLevel() == null || skill.getSkillLevel() < 0 || skill.getSkillLevel() > 5) {
+                throw new IllegalArgumentException("Invalid skill level: must be between 0 and 5");
+            }
+        }
+
         // Передаем всю работу базе данных
         profileSkillRepository.addSkillsToProfile(email, skills);
     }
