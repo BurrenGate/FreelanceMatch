@@ -55,6 +55,20 @@ public class ProfileServiceImpl implements ProfileService {
             throw new RuntimeException("User is not authenticated");
         }
 
+        // Validate skills before sending to database
+        if (skills == null || skills.isEmpty()) {
+            throw new IllegalArgumentException("Skills list cannot be empty");
+        }
+
+        for (UserSkillDTO skill : skills) {
+            if (skill.getSkillId() == null || skill.getSkillId() <= 0) {
+                throw new IllegalArgumentException("Invalid skill ID: skill IDs must be positive integers");
+            }
+            if (skill.getSkillLevel() == null || skill.getSkillLevel() < 0 || skill.getSkillLevel() > 5) {
+                throw new IllegalArgumentException("Invalid skill level: must be between 0 and 5");
+            }
+        }
+
         // Передаем всю работу базе данных
         profileSkillRepository.addSkillsToProfile(email, skills);
     }
@@ -71,6 +85,7 @@ public class ProfileServiceImpl implements ProfileService {
         profileRepository.updateProfile(username, dto);
     }
 
+    @Override
     public FreelancerDashboardDTO getFreelancerDashboard() {
         String username = SecurityUtils.getCurrentUsername();
 
@@ -92,5 +107,18 @@ public class ProfileServiceImpl implements ProfileService {
         }
     }
 
+    @Override
+    public java.math.BigDecimal getFreelancerRating(Long profileId) {
+        return profileRepository.getFreelancerRating(profileId);
+    }
 
+    @Override
+    public java.math.BigDecimal getFreelancerTotalEarnings(Long profileId) {
+        return profileRepository.getFreelancerTotalEarnings(profileId);
+    }
+
+    @Override
+    public Boolean isFreelancerAvailable(Long profileId) {
+        return profileRepository.isFreelancerAvailable(profileId);
+    }
 }

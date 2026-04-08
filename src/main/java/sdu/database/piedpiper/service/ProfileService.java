@@ -14,4 +14,10 @@ public interface ProfileService {
     void updateCurrentUserProfile(UpdateProfileDTO dto);
 
     FreelancerDashboardDTO getFreelancerDashboard();
+
+    java.math.BigDecimal getFreelancerRating(Long profileId);
+
+    java.math.BigDecimal getFreelancerTotalEarnings(Long profileId);
+
+    Boolean isFreelancerAvailable(Long profileId);
 }

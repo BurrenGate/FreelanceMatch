@@ -57,11 +57,11 @@ public class JobRepository {
     };
 
     public Job save(Job job) {
-        String sql = "INSERT INTO jobs (client_id, title, description, budget_type, min_budget, max_budget, status_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO jobs (client_id, title, description, budget_type, min_budget, max_budget, status_id) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbc.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = connection.prepareStatement(sql, new String[]{"id"});
             ps.setLong(1, job.getClientId());
             ps.setString(2, job.getTitle());
             ps.setString(3, job.getDescription());
@@ -72,8 +72,9 @@ public class JobRepository {
             return ps;
         }, keyHolder);
 
-        if (keyHolder.getKey() != null) {
-            job.setId(keyHolder.getKey().longValue());
+        Number key = keyHolder.getKey();
+        if (key != null) {
+            job.setId(key.longValue());
         }
         return job;
     }
@@ -97,6 +98,61 @@ public class JobRepository {
         return jdbc.query(sql, JOB_MAPPER);
     }
 
+    public java.util.Optional<Job> findById(Long id) {
+        String sql = """
+                SELECT j.id,
+                       j.client_id,
+                       j.title,
+                       j.description,
+                       j.budget_type,
+                       j.min_budget,
+                       j.max_budget,
+                       j.created_at,
+                       js.status_name
+                FROM   jobs j
+                JOIN   job_statuses js ON js.id = j.status_id
+                WHERE  j.id = ?
+                """;
+        log.debug("Executing findById() for job {}", id);
+        try {
+            Job job = jdbc.queryForObject(sql, JOB_MAPPER, id);
+            return java.util.Optional.ofNullable(job);
+        } catch (Exception e) {
+            log.warn("Job not found with id: {}", id);
+            return java.util.Optional.empty();
+        }
+    }
+
+    public Job update(Long id, Job job) {
+        String sql = "UPDATE jobs SET title = ?, description = ?, budget_type = ?, min_budget = ?, max_budget = ? WHERE id = ?";
+        int rowsAffected = jdbc.update(sql, 
+                job.getTitle(), 
+                job.getDescription(), 
+                job.getBudgetType(), 
+                job.getMinBudget(), 
+                job.getMaxBudget(), 
+                id);
+        
+        if (rowsAffected > 0) {
+            job.setId(id);
+            log.debug("Job {} updated successfully", id);
+            return job;
+        } else {
+            throw new RuntimeException("Job not found with id: " + id);
+        }
+    }
+
+    public void deleteById(Long id) {
+        String sql = "DELETE FROM jobs WHERE id = ?";
+        int rowsAffected = jdbc.update(sql, id);
+        
+        if (rowsAffected > 0) {
+            log.debug("Job {} deleted successfully", id);
+        } else {
+            throw new RuntimeException("Job not found with id: " + id);
+        }
+    }
+
     public List<FreelancerMatch> findRecommendedFreelancers(Long jobId) {
         log.debug("Calling get_recommended_freelancers for job {}", jobId);
         jdbc.execute("CALL job_market.get_recommended_freelancers(" + jobId + ")");
@@ -113,9 +169,26 @@ public class JobRepository {
         return jdbc.query(selectSql, MATCH_MAPPER);
     }
 
-    public void finalizeProposalAndCreateContract(Long proposalId) {
-        log.debug("Calling finalize_proposal_and_create_contract for proposal {}", proposalId);
-        jdbc.execute("CALL job_market.finalize_proposal_and_create_contract(" + proposalId + ")");
+    public Integer getActiveJobsCount(Long profileId) {
+        log.debug("Calling get_active_jobs_count for profile {}", profileId);
+        String sql = "SELECT job_market.get_active_jobs_count(?)";
+        try {
+            return jdbc.queryForObject(sql, Integer.class, profileId);
+        } catch (Exception e) {
+            log.warn("Error getting active jobs count for profile {}: {}", profileId, e.getMessage());
+            return 0;
+        }
+    }
+
+    public Integer getSkillMatchCount(Long jobId, Long profileId) {
+        log.debug("Calling get_skill_match_count for job {} and profile {}", jobId, profileId);
+        String sql = "SELECT job_market.get_skill_match_count(?, ?)";
+        try {
+            return jdbc.queryForObject(sql, Integer.class, jobId, profileId);
+        } catch (Exception e) {
+            log.warn("Error getting skill match count: {}", e.getMessage());
+            return 0;
+        }
     }
 
 

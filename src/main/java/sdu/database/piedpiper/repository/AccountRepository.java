@@ -41,4 +41,11 @@ public class AccountRepository {
         List<Account> accounts = jdbc.query(sql, ACCOUNT_MAPPER, email);
         return accounts.isEmpty() ? null : accounts.get(0);
     }
+
+    public void registerUserWithRole(String email, String passwordHash, Integer roleId, 
+                                      String firstName, String lastName, java.math.BigDecimal hourlyRate) {
+        log.debug("Calling job_market.register_user procedure for email: {}", email);
+        String sql = "CALL job_market.register_user(?, ?, ?, ?, ?, ?)";
+        jdbc.update(sql, email, passwordHash, roleId, firstName, lastName, hourlyRate);
+    }
 }

@@ -38,4 +38,9 @@ public class JobRequiredSkillRepository {
         );
         return jobRequiredSkill;
     }
+
+    public void deleteByJobId(Long jobId) {
+        String sql = "DELETE FROM job_required_skills WHERE job_id = ?";
+        jdbcTemplate.update(sql, jobId);
+    }
 }
