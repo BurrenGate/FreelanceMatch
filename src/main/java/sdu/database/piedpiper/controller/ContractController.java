@@ -37,4 +37,18 @@ public class ContractController {
                     .body(ApiResponse.error(e.getMessage()));
         }
     }
+
+    @GetMapping("/{contractId}/last-transaction")
+    public ResponseEntity<ApiResponse<java.util.Map<String, Object>>> getLastTransactionAmount(@PathVariable Long contractId) {
+        try {
+            java.math.BigDecimal amount = contractService.getLastTransactionAmount(contractId);
+            java.util.Map<String, Object> result = new java.util.HashMap<>();
+            result.put("contractId", contractId);
+            result.put("lastTransactionAmount", amount);
+            return ResponseEntity.ok(ApiResponse.ok("Last transaction amount retrieved", result));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(ApiResponse.error(e.getMessage()));
+        }
+    }
 }

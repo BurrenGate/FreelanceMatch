@@ -25,7 +25,7 @@ public class AccountService {
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 
-        accountRepository.registerUser(
+        accountRepository.registerUserWithRole(
                 request.getEmail(),
                 encodedPassword,
                 request.getRoleId(),

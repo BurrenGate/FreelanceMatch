@@ -82,5 +82,36 @@ public class JobController {
         }
     }
 
+    @GetMapping("/{profileId}/active-count")
+    public ResponseEntity<ApiResponse<java.util.Map<String, Object>>> getActiveJobsCount(@PathVariable Long profileId) {
+        log.debug("GET /api/jobs/{}/active-count", profileId);
+        try {
+            Integer count = jobService.getActiveJobsCount(profileId);
+            java.util.Map<String, Object> result = new java.util.HashMap<>();
+            result.put("profileId", profileId);
+            result.put("activeJobsCount", count);
+            return ResponseEntity.ok(ApiResponse.ok("Active jobs count retrieved", result));
+        } catch (Exception ex) {
+            log.error("Error getting active jobs count: {}", ex.getMessage());
+            return ResponseEntity.badRequest().body(ApiResponse.error(ex.getMessage()));
+        }
+    }
 
+    @GetMapping("/{jobId}/skill-match/{profileId}")
+    public ResponseEntity<ApiResponse<java.util.Map<String, Object>>> getSkillMatchCount(
+            @PathVariable Long jobId,
+            @PathVariable Long profileId) {
+        log.debug("GET /api/jobs/{}/skill-match/{}", jobId, profileId);
+        try {
+            Integer matchCount = jobService.getSkillMatchCount(jobId, profileId);
+            java.util.Map<String, Object> result = new java.util.HashMap<>();
+            result.put("jobId", jobId);
+            result.put("profileId", profileId);
+            result.put("skillMatchCount", matchCount);
+            return ResponseEntity.ok(ApiResponse.ok("Skill match count retrieved", result));
+        } catch (Exception ex) {
+            log.error("Error getting skill match count: {}", ex.getMessage());
+            return ResponseEntity.badRequest().body(ApiResponse.error(ex.getMessage()));
+        }
+    }
 }

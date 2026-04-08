@@ -42,4 +42,25 @@ public class ProfileController {
         FreelancerDashboardDTO dashboard = profileService.getFreelancerDashboard();
         return ResponseEntity.ok(dashboard);
     }
+
+    @GetMapping("/{profileId}/rating")
+    public ResponseEntity<java.math.BigDecimal> getFreelancerRating(@PathVariable Long profileId) {
+        java.math.BigDecimal rating = profileService.getFreelancerRating(profileId);
+        return ResponseEntity.ok(rating);
+    }
+
+    @GetMapping("/{profileId}/earnings")
+    public ResponseEntity<java.math.BigDecimal> getFreelancerTotalEarnings(@PathVariable Long profileId) {
+        java.math.BigDecimal earnings = profileService.getFreelancerTotalEarnings(profileId);
+        return ResponseEntity.ok(earnings);
+    }
+
+    @GetMapping("/{profileId}/availability")
+    public ResponseEntity<java.util.Map<String, Object>> isFreelancerAvailable(@PathVariable Long profileId) {
+        Boolean available = profileService.isFreelancerAvailable(profileId);
+        java.util.Map<String, Object> response = new java.util.HashMap<>();
+        response.put("profileId", profileId);
+        response.put("available", available);
+        return ResponseEntity.ok(response);
+    }
 }

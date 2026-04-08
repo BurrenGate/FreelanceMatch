@@ -52,4 +52,9 @@ public class ContractService {
              return contractRepository.findByFreelancerId(profile.getId());
          }
     }
+
+    public java.math.BigDecimal getLastTransactionAmount(Long contractId) {
+        log.info("Getting last transaction amount for contract {}", contractId);
+        return contractRepository.getLastTransactionAmount(contractId);
+    }
 }

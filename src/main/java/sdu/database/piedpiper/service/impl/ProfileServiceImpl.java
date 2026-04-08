@@ -71,6 +71,7 @@ public class ProfileServiceImpl implements ProfileService {
         profileRepository.updateProfile(username, dto);
     }
 
+    @Override
     public FreelancerDashboardDTO getFreelancerDashboard() {
         String username = SecurityUtils.getCurrentUsername();
 
@@ -92,5 +93,18 @@ public class ProfileServiceImpl implements ProfileService {
         }
     }
 
+    @Override
+    public java.math.BigDecimal getFreelancerRating(Long profileId) {
+        return profileRepository.getFreelancerRating(profileId);
+    }
 
+    @Override
+    public java.math.BigDecimal getFreelancerTotalEarnings(Long profileId) {
+        return profileRepository.getFreelancerTotalEarnings(profileId);
+    }
+
+    @Override
+    public Boolean isFreelancerAvailable(Long profileId) {
+        return profileRepository.isFreelancerAvailable(profileId);
+    }
 }

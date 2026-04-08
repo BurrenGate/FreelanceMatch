@@ -106,7 +106,6 @@ CREATE OR REPLACE PROCEDURE job_market.get_recommended_freelancers(p_job_id BIGI
 AS $$
 DECLARE
     v_total_required    INT;
-    v_match_pct         NUMERIC;
 BEGIN
     DROP TABLE IF EXISTS temp_recommended_freelancers;
     CREATE TEMP TABLE temp_recommended_freelancers (
@@ -194,10 +193,6 @@ BEGIN
         RAISE EXCEPTION 'Proposal % cannot be accepted.', p_proposal_id;
     END IF;
 
-    UPDATE proposals SET status = 'accepted' WHERE id = p_proposal_id;
-    UPDATE proposals SET status = 'rejected' WHERE job_id = v_job_id AND id <> p_proposal_id;
-    UPDATE jobs SET status_id = 2 WHERE id = v_job_id;
-
     INSERT INTO contracts (job_id, freelancer_id, total_amount, status)
     VALUES (v_job_id, v_freelancer_id, v_bid_amount, 'active');
 END;
@@ -224,11 +219,18 @@ BEGIN
     FROM contracts
     WHERE id = p_contract_id;
 
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Contract % not found.', p_contract_id;
+    END IF;
+
     IF v_contract_status <> 'active' THEN
         RAISE EXCEPTION 'Contract % is not active.', p_contract_id;
     END IF;
 
     SELECT client_id INTO v_client_id FROM jobs WHERE id = v_job_id;
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Job with ID % associated with contract % not found.', v_job_id, p_contract_id;
+    END IF;
 
     UPDATE contracts SET status = 'completed' WHERE id = p_contract_id;
     UPDATE jobs SET status_id = 3 WHERE id = v_job_id;
@@ -238,5 +240,39 @@ BEGIN
 
     INSERT INTO reviews (contract_id, reviewer_id, rating, comment)
     VALUES (p_contract_id, v_client_id, v_int_rating, p_feedback);
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION job_market.get_skill_match_count(p_job_id BIGINT, p_profile_id BIGINT)
+RETURNS INTEGER
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    v_count INTEGER;
+BEGIN
+    SELECT COUNT(*) INTO v_count
+    FROM   job_required_skills jrs
+    JOIN   profile_skills ps ON ps.skill_id = jrs.skill_id
+    WHERE  jrs.job_id = p_job_id
+      AND  ps.profile_id = p_profile_id;
+
+    RETURN v_count;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION job_market.get_last_transaction_amount(p_contract_id BIGINT)
+RETURNS DECIMAL(15,2)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    v_amount DECIMAL(15,2);
+BEGIN
+    SELECT amount INTO v_amount
+    FROM   transactions
+    WHERE  contract_id = p_contract_id
+    ORDER  BY created_at DESC
+    LIMIT  1;
+
+    RETURN COALESCE(v_amount, 0.00);
 END;
 $$;

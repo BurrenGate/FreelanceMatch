@@ -46,5 +46,14 @@ public class ContractRepository {
         return jdbc.query(sql, CONTRACT_MAPPER, freelancerId);
     }
 
-
+    public BigDecimal getLastTransactionAmount(Long contractId) {
+        log.debug("Calling get_last_transaction_amount for contract {}", contractId);
+        String sql = "SELECT job_market.get_last_transaction_amount(?)";
+        try {
+            return jdbc.queryForObject(sql, BigDecimal.class, contractId);
+        } catch (Exception e) {
+            log.warn("Error getting last transaction amount for contract {}: {}", contractId, e.getMessage());
+            return BigDecimal.ZERO;
+        }
+    }
 }

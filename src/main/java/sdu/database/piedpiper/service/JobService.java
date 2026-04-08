@@ -62,6 +62,16 @@ public class JobService {
         }
     }
 
+    public Integer getActiveJobsCount(Long profileId) {
+        log.info("Getting active jobs count for profile {}", profileId);
+        return jobRepository.getActiveJobsCount(profileId);
+    }
+
+    public Integer getSkillMatchCount(Long jobId, Long profileId) {
+        log.info("Getting skill match count for job {} and freelancer {}", jobId, profileId);
+        return jobRepository.getSkillMatchCount(jobId, profileId);
+    }
+
     public void createJob(JobDTO jobDTO) {
         String username = SecurityUtils.getCurrentUsername();
         Account account = accountRepository.findByEmail(username);

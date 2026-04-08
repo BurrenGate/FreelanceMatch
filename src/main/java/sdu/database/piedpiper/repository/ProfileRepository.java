@@ -86,4 +86,31 @@ public class ProfileRepository {
                 dto.getAvatarUrl()
         );
     }
+
+    public java.math.BigDecimal getFreelancerRating(Long profileId) {
+        String sql = "SELECT job_market.get_freelancer_rating(?)";
+        try {
+            return jdbcTemplate.queryForObject(sql, java.math.BigDecimal.class, profileId);
+        } catch (Exception e) {
+            return java.math.BigDecimal.ZERO;
+        }
+    }
+
+    public java.math.BigDecimal getFreelancerTotalEarnings(Long profileId) {
+        String sql = "SELECT job_market.get_freelancer_total_earnings(?)";
+        try {
+            return jdbcTemplate.queryForObject(sql, java.math.BigDecimal.class, profileId);
+        } catch (Exception e) {
+            return java.math.BigDecimal.ZERO;
+        }
+    }
+
+    public Boolean isFreelancerAvailable(Long profileId) {
+        String sql = "SELECT job_market.is_freelancer_available(?)";
+        try {
+            return jdbcTemplate.queryForObject(sql, Boolean.class, profileId);
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

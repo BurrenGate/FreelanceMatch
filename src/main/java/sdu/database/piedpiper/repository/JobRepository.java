@@ -118,6 +118,28 @@ public class JobRepository {
         jdbc.execute("CALL job_market.finalize_proposal_and_create_contract(" + proposalId + ")");
     }
 
+    public Integer getActiveJobsCount(Long profileId) {
+        log.debug("Calling get_active_jobs_count for profile {}", profileId);
+        String sql = "SELECT job_market.get_active_jobs_count(?)";
+        try {
+            return jdbc.queryForObject(sql, Integer.class, profileId);
+        } catch (Exception e) {
+            log.warn("Error getting active jobs count for profile {}: {}", profileId, e.getMessage());
+            return 0;
+        }
+    }
+
+    public Integer getSkillMatchCount(Long jobId, Long profileId) {
+        log.debug("Calling get_skill_match_count for job {} and profile {}", jobId, profileId);
+        String sql = "SELECT job_market.get_skill_match_count(?, ?)";
+        try {
+            return jdbc.queryForObject(sql, Integer.class, jobId, profileId);
+        } catch (Exception e) {
+            log.warn("Error getting skill match count: {}", e.getMessage());
+            return 0;
+        }
+    }
+
 
     public List<Job> findJobsByClientEmail(String email) {
         String sql = """
