@@ -12,5 +12,5 @@ public class RecentActivityDTO {
     private String title;
     private String status;
     private BigDecimal amount;
-    private LocalDateTime date;
+    private String date;
 }

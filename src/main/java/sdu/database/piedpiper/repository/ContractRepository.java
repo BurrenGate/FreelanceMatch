@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import sdu.database.piedpiper.dto.response.ContractDetailsDTO;
 import sdu.database.piedpiper.model.Contract;
 
 import java.math.BigDecimal;
@@ -126,6 +127,58 @@ public class ContractRepository {
         } catch (Exception e) {
             log.warn("Error getting last transaction amount for contract {}: {}", contractId, e.getMessage());
             return BigDecimal.ZERO;
+        }
+    }
+
+    public String requestCancellation(Long contractId, Long requesterId, String reason) {
+        log.debug("Calling request_contract_cancellation for contract {}, requester {}", contractId, requesterId);
+        String sql = "SELECT contract_management.request_contract_cancellation(?, ?, ?)";
+        return jdbc.queryForObject(sql, String.class, contractId, requesterId, reason);
+    }
+
+    public String confirmCancellation(Long contractId, Long confirmerId) {
+        log.debug("Calling confirm_contract_cancellation for contract {}, confirmer {}", contractId, confirmerId);
+        String sql = "SELECT contract_management.confirm_contract_cancellation(?, ?)";
+        return jdbc.queryForObject(sql, String.class, contractId, confirmerId);
+    }
+
+    public String rejectCancellationRequest(Long contractId, Long rejecterId) {
+        log.debug("Calling reject_cancellation_request for contract {}, rejecter {}", contractId, rejecterId);
+        String sql = "SELECT contract_management.reject_cancellation_request(?, ?)";
+        return jdbc.queryForObject(sql, String.class, contractId, rejecterId);
+    }
+
+    public Optional<ContractDetailsDTO> getContractDetails(Long contractId, Long userId) {
+        log.debug("Calling get_contract_details for contract {}, user {}", contractId, userId);
+        String sql = "SELECT * FROM contract_management.get_contract_details(?, ?)";
+        try {
+            ContractDetailsDTO details = jdbc.queryForObject(sql, (rs, rowNum) -> {
+                ContractDetailsDTO dto = new ContractDetailsDTO();
+                dto.setContractId(rs.getLong("contract_id"));
+                dto.setJobId(rs.getLong("job_id"));
+                dto.setJobTitle(rs.getString("job_title"));
+                dto.setFreelancerId(rs.getLong("freelancer_id"));
+                dto.setFreelancerName(rs.getString("freelancer_name"));
+                dto.setClientId(rs.getLong("client_id"));
+                dto.setClientName(rs.getString("client_name"));
+                dto.setTotalAmount(rs.getBigDecimal("total_amount"));
+                dto.setStatus(rs.getString("status"));
+                Long cancellationRequestedBy = rs.getLong("cancellation_requested_by");
+                dto.setCancellationRequestedBy(rs.wasNull() ? null : cancellationRequestedBy);
+                dto.setCancellationRequesterName(rs.getString("cancellation_requester_name"));
+                dto.setCancellationRequestedAt(rs.getTimestamp("cancellation_requested_at") != null
+                        ? rs.getTimestamp("cancellation_requested_at").toLocalDateTime()
+                        : null);
+                dto.setCancellationReason(rs.getString("cancellation_reason"));
+                dto.setCreatedAt(rs.getTimestamp("created_at") != null
+                        ? rs.getTimestamp("created_at").toLocalDateTime()
+                        : null);
+                return dto;
+            }, contractId, userId);
+            return Optional.ofNullable(details);
+        } catch (Exception e) {
+            log.warn("Contract details not found: {}", e.getMessage());
+            return Optional.empty();
         }
     }
 }

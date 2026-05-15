@@ -42,7 +42,7 @@ public class SecurityConfig {
                                 "/error"
                         ).permitAll()
                         .requestMatchers("/api/proposals/submit").hasRole("FREELANCER")
-                        .requestMatchers("/api/contracts/complete", "/api/proposals/*/accept").hasRole("CLIENT")
+                        .requestMatchers("/api/contracts/complete", "/api/proposals/*/accept", "/api/proposals/*/reject").hasRole("CLIENT")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

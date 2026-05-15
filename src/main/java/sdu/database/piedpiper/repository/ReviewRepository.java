@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import sdu.database.piedpiper.dto.response.ReviewManageResponse;
 import sdu.database.piedpiper.model.Review;
 
 import java.util.List;
@@ -31,13 +32,13 @@ public class ReviewRepository {
     };
 
     public List<Review> findAll() {
-        String sql = "SELECT id, contract_id, reviewer_id, rating, comment FROM reviews ORDER BY id DESC";
+        String sql = "SELECT * FROM app_management.get_reviews()";
         log.debug("Executing findAll() reviews query");
         return jdbc.query(sql, REVIEW_MAPPER);
     }
 
     public Optional<Review> findById(Long id) {
-        String sql = "SELECT id, contract_id, reviewer_id, rating, comment FROM reviews WHERE id = ?";
+        String sql = "SELECT * FROM app_management.get_review_by_id(?)";
         try {
             Review review = jdbc.queryForObject(sql, REVIEW_MAPPER, id);
             return Optional.of(review);
@@ -48,35 +49,77 @@ public class ReviewRepository {
     }
 
     public List<Review> findByContractId(Long contractId) {
-        String sql = "SELECT id, contract_id, reviewer_id, rating, comment FROM reviews WHERE contract_id = ? ORDER BY id DESC";
+        String sql = "SELECT * FROM app_management.get_reviews_by_contract(?)";
         return jdbc.query(sql, REVIEW_MAPPER, contractId);
     }
 
     public List<Review> findByReviewerId(Long reviewerId) {
-        String sql = "SELECT id, contract_id, reviewer_id, rating, comment FROM reviews WHERE reviewer_id = ? ORDER BY id DESC";
+        String sql = "SELECT * FROM app_management.get_reviews_by_reviewer(?)";
         return jdbc.query(sql, REVIEW_MAPPER, reviewerId);
     }
 
     public Review save(Review review) {
-        if (review.getId() != null) {
-            String sql = "UPDATE reviews SET contract_id = ?, reviewer_id = ?, rating = ?, comment = ? WHERE id = ?";
-            jdbc.update(sql, review.getContractId(), review.getReviewerId(), review.getRating(), review.getComment(), review.getId());
-            log.info("Review updated: {}", review.getId());
-        } else {
-            String sql = "INSERT INTO reviews (contract_id, reviewer_id, rating, comment) VALUES (?, ?, ?, ?)";
-            jdbc.update(sql, review.getContractId(), review.getReviewerId(), review.getRating(), review.getComment());
-            log.info("Review created for contract: {}", review.getContractId());
-        }
+        String sql = "CALL app_management.upsert_review(?, ?, ?, ?, ?)";
+        jdbc.update(sql, review.getId(), review.getContractId(), review.getReviewerId(), review.getRating(), review.getComment());
         return review;
     }
 
     public void deleteById(Long id) {
-        String sql = "DELETE FROM reviews WHERE id = ?";
+        String sql = "CALL app_management.delete_review(?)";
         int deleted = jdbc.update(sql, id);
         if (deleted > 0) {
             log.info("Review deleted: {}", id);
         } else {
             log.warn("No review found with id: {}", id);
         }
+    }
+
+    public List<ReviewManageResponse> getManagedReviews(Long contractId, Long reviewerId, String adminEmail) {
+        String sql = "SELECT * FROM admin_management.get_reviews(?, ?, ?)";
+        return jdbc.query(sql, (rs, rowNum) -> ReviewManageResponse.builder()
+                .id(rs.getLong("id"))
+                .contractId(rs.getLong("contract_id"))
+                .reviewerId(rs.getLong("reviewer_id"))
+                .rating(rs.getInt("rating"))
+                .comment(rs.getString("comment"))
+                .build(), contractId, reviewerId, adminEmail);
+    }
+
+    public ReviewManageResponse getManagedReviewById(Long id, String adminEmail) {
+        String sql = "SELECT * FROM admin_management.get_review_by_id(?, ?)";
+        return jdbc.queryForObject(sql, (rs, rowNum) -> ReviewManageResponse.builder()
+                .id(rs.getLong("id"))
+                .contractId(rs.getLong("contract_id"))
+                .reviewerId(rs.getLong("reviewer_id"))
+                .rating(rs.getInt("rating"))
+                .comment(rs.getString("comment"))
+                .build(), id, adminEmail);
+    }
+
+    public ReviewManageResponse createManagedReview(Long contractId, Long reviewerId, Integer rating, String comment, String adminEmail) {
+        String sql = "SELECT * FROM admin_management.create_review(?, ?, ?, ?, ?)";
+        return jdbc.queryForObject(sql, (rs, rowNum) -> ReviewManageResponse.builder()
+                .id(rs.getLong("id"))
+                .contractId(rs.getLong("contract_id"))
+                .reviewerId(rs.getLong("reviewer_id"))
+                .rating(rs.getInt("rating"))
+                .comment(rs.getString("comment"))
+                .build(), contractId, reviewerId, rating, comment, adminEmail);
+    }
+
+    public ReviewManageResponse updateManagedReview(Long id, Long contractId, Long reviewerId, Integer rating, String comment, String adminEmail) {
+        String sql = "SELECT * FROM admin_management.update_review(?, ?, ?, ?, ?, ?)";
+        return jdbc.queryForObject(sql, (rs, rowNum) -> ReviewManageResponse.builder()
+                .id(rs.getLong("id"))
+                .contractId(rs.getLong("contract_id"))
+                .reviewerId(rs.getLong("reviewer_id"))
+                .rating(rs.getInt("rating"))
+                .comment(rs.getString("comment"))
+                .build(), id, contractId, reviewerId, rating, comment, adminEmail);
+    }
+
+    public void deleteManagedReview(Long id, String adminEmail) {
+        String sql = "CALL admin_management.delete_review(?, ?)";
+        jdbc.update(sql, id, adminEmail);
     }
 }

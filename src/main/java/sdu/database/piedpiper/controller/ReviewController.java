@@ -2,9 +2,11 @@ package sdu.database.piedpiper.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sdu.database.piedpiper.dto.request.ReviewRequest;
 import sdu.database.piedpiper.dto.response.ApiResponse;
 import sdu.database.piedpiper.model.Review;
 import sdu.database.piedpiper.security.SecurityUtils;
@@ -82,18 +84,12 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Review>> createReview(@RequestBody Review review) {
+    public ResponseEntity<ApiResponse<Review>> createReview(@Valid @RequestBody ReviewRequest review) {
         try {
             log.debug("POST /api/reviews");
             if (!SecurityUtils.hasAnyRole(1, 2)) {  // 1 = CLIENT, 2 = FREELANCER
                 return ResponseEntity.status(403)
                         .body(ApiResponse.error("Insufficient permissions. Only clients and freelancers can create reviews."));
-            }
-            if (review.getContractId() == null || review.getReviewerId() == null) {
-                return ResponseEntity.badRequest().body(ApiResponse.error("Contract ID and Reviewer ID are required"));
-            }
-            if (review.getRating() == null || review.getRating() < 1 || review.getRating() > 5) {
-                return ResponseEntity.badRequest().body(ApiResponse.error("Rating must be between 1 and 5"));
             }
             Review created = reviewService.createReview(review);
             return ResponseEntity.status(HttpStatus.CREATED)
@@ -107,12 +103,9 @@ public class ReviewController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<Review>> updateReview(@PathVariable Long id, @RequestBody Review review) {
+    public ResponseEntity<ApiResponse<Review>> updateReview(@PathVariable Long id, @Valid @RequestBody ReviewRequest review) {
         try {
             log.debug("PUT /api/reviews/{}", id);
-            if (review.getRating() == null || review.getRating() < 1 || review.getRating() > 5) {
-                return ResponseEntity.badRequest().body(ApiResponse.error("Rating must be between 1 and 5"));
-            }
             Review updated = reviewService.updateReview(id, review);
             return ResponseEntity.ok(ApiResponse.ok("Review updated successfully", updated));
         } catch (IllegalArgumentException ex) {

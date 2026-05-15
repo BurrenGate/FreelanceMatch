@@ -1,15 +1,17 @@
 package sdu.database.piedpiper.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sdu.database.piedpiper.dto.response.ProfileSkillDetailedDTO;
-import sdu.database.piedpiper.dto.response.UserSkillDTO;
+import sdu.database.piedpiper.dto.request.UpsertProfileSkillRequest;
+import sdu.database.piedpiper.dto.response.ApiResponse;
+import sdu.database.piedpiper.dto.response.ProfileSkillResponse;
 import sdu.database.piedpiper.service.ProfileSkillService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/skills")
+@RequestMapping("/api/profile-skills/me")
 public class ProfileSkillController {
 
     private final ProfileSkillService profileSkillService;
@@ -18,34 +20,27 @@ public class ProfileSkillController {
         this.profileSkillService = profileSkillService;
     }
 
-    // Получить все существующие навыки из справочника
     @GetMapping
-    public ResponseEntity<List<ProfileSkillDetailedDTO>> getAllAvailableSkills() {
-        List<ProfileSkillDetailedDTO> skills = profileSkillService.getAllAvailableSkills();
-        return ResponseEntity.ok(skills);
+    public ResponseEntity<ApiResponse<List<ProfileSkillResponse>>> getMySkills() {
+        List<ProfileSkillResponse> data = profileSkillService.getMySkills();
+        return ResponseEntity.ok(ApiResponse.ok("Profile skills retrieved successfully", data));
     }
 
-    // Получить навыки, которые профиль еще НЕ добавил себе (доступные для добавления)
-    @GetMapping("/profile/{profileId}/available")
-    public ResponseEntity<List<ProfileSkillDetailedDTO>> getAvailableSkillsForProfile(@PathVariable Long profileId) {
-        List<ProfileSkillDetailedDTO> skills = profileSkillService.getAvailableSkillsForProfile(profileId);
-        return ResponseEntity.ok(skills);
+    @GetMapping("/available")
+    public ResponseEntity<ApiResponse<List<ProfileSkillResponse>>> getMyAvailableSkills() {
+        List<ProfileSkillResponse> data = profileSkillService.getMyAvailableSkills();
+        return ResponseEntity.ok(ApiResponse.ok("Available skills retrieved successfully", data));
     }
 
-    // Получить уже добавленные навыки профиля
-    @GetMapping("/profile/{profileId}")
-    public ResponseEntity<List<ProfileSkillDetailedDTO>> getProfileSkills(@PathVariable Long profileId) {
-        List<ProfileSkillDetailedDTO> skills = profileSkillService.getProfileSkills(profileId);
-        return ResponseEntity.ok(skills);
+    @PutMapping
+    public ResponseEntity<ApiResponse<Void>> upsertMySkill(@Valid @RequestBody UpsertProfileSkillRequest request) {
+        profileSkillService.upsertMySkill(request.getSkillId(), request.getSkillLevel());
+        return ResponseEntity.ok(ApiResponse.ok("Profile skill saved successfully", null));
     }
 
-    // Добавить новые навыки профилю
-    @PostMapping("/profile/add")
-    public ResponseEntity<Void> addSkillsToProfile(
-            @RequestParam String email,
-            @RequestBody List<UserSkillDTO> skills) {
-        
-        profileSkillService.addSkillsToProfile(email, skills);
-        return ResponseEntity.ok().build(); // Возвращаем 200 OK без тела ответа
+    @DeleteMapping("/{skillId}")
+    public ResponseEntity<ApiResponse<Void>> deleteMySkill(@PathVariable Integer skillId) {
+        profileSkillService.deleteMySkill(skillId);
+        return ResponseEntity.ok(ApiResponse.ok("Profile skill removed successfully", null));
     }
 }

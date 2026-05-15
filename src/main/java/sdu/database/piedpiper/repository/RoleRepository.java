@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import sdu.database.piedpiper.dto.response.RoleResponse;
 import sdu.database.piedpiper.model.Role;
 
 import java.util.List;
@@ -27,14 +28,19 @@ public class RoleRepository {
         return r;
     };
 
+    private static final RowMapper<RoleResponse> ROLE_RESPONSE_MAPPER = (rs, rowNum) -> RoleResponse.builder()
+            .id(rs.getInt("id"))
+            .name(rs.getString("name"))
+            .build();
+
     public List<Role> findAll() {
-        String sql = "SELECT id, name FROM roles ORDER BY id ASC";
+        String sql = "SELECT * FROM app_management.get_roles()";
         log.debug("Executing findAll() roles query");
         return jdbc.query(sql, ROLE_MAPPER);
     }
 
     public Optional<Role> findById(Integer id) {
-        String sql = "SELECT id, name FROM roles WHERE id = ?";
+        String sql = "SELECT * FROM app_management.get_role_by_id(?)";
         try {
             Role role = jdbc.queryForObject(sql, ROLE_MAPPER, id);
             return Optional.of(role);
@@ -45,7 +51,7 @@ public class RoleRepository {
     }
 
     public Optional<Role> findByName(String name) {
-        String sql = "SELECT id, name FROM roles WHERE name = ?";
+        String sql = "SELECT * FROM app_management.get_role_by_name(?)";
         try {
             Role role = jdbc.queryForObject(sql, ROLE_MAPPER, name);
             return Optional.of(role);
@@ -53,5 +59,25 @@ public class RoleRepository {
             log.debug("Role not found with name: {}", name);
             return Optional.empty();
         }
+    }
+
+    public List<RoleResponse> getManagedRoles(String adminEmail) {
+        String sql = "SELECT * FROM admin_management.get_roles(?)";
+        return jdbc.query(sql, ROLE_RESPONSE_MAPPER, adminEmail);
+    }
+
+    public RoleResponse createRole(String name, String adminEmail) {
+        String sql = "SELECT * FROM admin_management.create_role(?, ?)";
+        return jdbc.queryForObject(sql, ROLE_RESPONSE_MAPPER, name, adminEmail);
+    }
+
+    public RoleResponse updateRole(Integer roleId, String name, String adminEmail) {
+        String sql = "SELECT * FROM admin_management.update_role(?, ?, ?)";
+        return jdbc.queryForObject(sql, ROLE_RESPONSE_MAPPER, roleId, name, adminEmail);
+    }
+
+    public void deleteRole(Integer roleId, String adminEmail) {
+        String sql = "CALL admin_management.delete_role(?, ?)";
+        jdbc.update(sql, roleId, adminEmail);
     }
 }

@@ -92,9 +92,10 @@ public class JobRepository {
                        js.status_name
                 FROM   jobs j
                 JOIN   job_statuses js ON js.id = j.status_id
+                WHERE  js.status_name = 'OPEN'
                 ORDER  BY j.created_at DESC
                 """;
-        log.debug("Executing findAll() jobs query");
+        log.debug("Executing findAll() jobs query - only OPEN jobs");
         return jdbc.query(sql, JOB_MAPPER);
     }
 
@@ -143,13 +144,14 @@ public class JobRepository {
     }
 
     public void deleteById(Long id) {
-        String sql = "DELETE FROM jobs WHERE id = ?";
-        int rowsAffected = jdbc.update(sql, id);
-        
-        if (rowsAffected > 0) {
+        String sql = "CALL job_market.delete_job(?)";
+        log.debug("Calling delete_job procedure for job {}", id);
+        try {
+            jdbc.update(sql, id);
             log.debug("Job {} deleted successfully", id);
-        } else {
-            throw new RuntimeException("Job not found with id: " + id);
+        } catch (Exception e) {
+            log.error("Error deleting job {}: {}", id, e.getMessage());
+            throw new RuntimeException("Failed to delete job: " + e.getMessage());
         }
     }
 

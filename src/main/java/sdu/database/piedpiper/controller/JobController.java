@@ -2,6 +2,7 @@ package sdu.database.piedpiper.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sdu.database.piedpiper.dto.response.JobDTO;
@@ -74,23 +75,11 @@ public class JobController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Void>> createJob(@RequestBody JobDTO jobDTO) {
+    public ResponseEntity<ApiResponse<Void>> createJob(@Valid @RequestBody JobDTO jobDTO) {
         try {
             if (!SecurityUtils.isClient()) {
                 return ResponseEntity.status(403)
                         .body(ApiResponse.error("Insufficient permissions. Only clients can create jobs."));
-            }
-            if (jobDTO.getTitle() == null || jobDTO.getTitle().trim().isEmpty()) {
-                return ResponseEntity.badRequest()
-                        .body(ApiResponse.error("Job title is required"));
-            }
-            if (jobDTO.getDescription() == null || jobDTO.getDescription().trim().isEmpty()) {
-                return ResponseEntity.badRequest()
-                        .body(ApiResponse.error("Job description is required"));
-            }
-            if (jobDTO.getRequiredSkillIds() == null || jobDTO.getRequiredSkillIds().isEmpty()) {
-                return ResponseEntity.badRequest()
-                        .body(ApiResponse.error("At least one required skill must be specified"));
             }
             jobService.createJob(jobDTO);
             return ResponseEntity.ok(ApiResponse.ok("Job created successfully", null));
@@ -134,20 +123,12 @@ public class JobController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> updateJob(@PathVariable Long id, @RequestBody JobDTO jobDTO) {
+    public ResponseEntity<ApiResponse<Void>> updateJob(@PathVariable Long id, @Valid @RequestBody JobDTO jobDTO) {
         log.debug("PUT /api/jobs/{}", id);
         try {
             if (!SecurityUtils.isClient()) {
                 return ResponseEntity.status(403)
                         .body(ApiResponse.error("Insufficient permissions. Only clients can update jobs."));
-            }
-            if (jobDTO.getTitle() == null || jobDTO.getTitle().trim().isEmpty()) {
-                return ResponseEntity.badRequest()
-                        .body(ApiResponse.error("Job title is required"));
-            }
-            if (jobDTO.getDescription() == null || jobDTO.getDescription().trim().isEmpty()) {
-                return ResponseEntity.badRequest()
-                        .body(ApiResponse.error("Job description is required"));
             }
             jobService.updateJob(id, jobDTO);
             return ResponseEntity.ok(ApiResponse.ok("Job updated successfully", null));

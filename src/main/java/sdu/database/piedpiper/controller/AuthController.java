@@ -52,6 +52,9 @@ public class AuthController {
             );
 
             Account account = accountService.findByEmail(request.getEmail());
+            
+            // Update last login timestamp
+            accountService.updateLastLogin(request.getEmail());
 
             String token = jwtUtil.generateToken(account.getEmail(), account.getRoleId());
             logger.info("Login successful for user: {}", request.getEmail());

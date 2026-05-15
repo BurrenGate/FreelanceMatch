@@ -2,9 +2,11 @@ package sdu.database.piedpiper.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sdu.database.piedpiper.dto.request.TransactionRequest;
 import sdu.database.piedpiper.dto.response.ApiResponse;
 import sdu.database.piedpiper.model.Transaction;
 import sdu.database.piedpiper.security.SecurityUtils;
@@ -82,18 +84,12 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponse<Transaction>> createTransaction(@RequestBody Transaction transaction) {
+    public ResponseEntity<ApiResponse<Transaction>> createTransaction(@Valid @RequestBody TransactionRequest transaction) {
         try {
             log.debug("POST /api/transactions");
             if (!SecurityUtils.hasAnyRole(1, 2)) {  // 1 = CLIENT, 2 = FREELANCER
                 return ResponseEntity.status(403)
                         .body(ApiResponse.error("Insufficient permissions. Only clients and freelancers can create transactions."));
-            }
-            if (transaction.getContractId() == null) {
-                return ResponseEntity.badRequest().body(ApiResponse.error("Contract ID is required"));
-            }
-            if (transaction.getAmount() == null || transaction.getAmount().signum() <= 0) {
-                return ResponseEntity.badRequest().body(ApiResponse.error("Amount must be greater than zero"));
             }
             Transaction created = transactionService.createTransaction(transaction);
             return ResponseEntity.status(HttpStatus.CREATED)
@@ -107,12 +103,9 @@ public class TransactionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<Transaction>> updateTransaction(@PathVariable Long id, @RequestBody Transaction transaction) {
+    public ResponseEntity<ApiResponse<Transaction>> updateTransaction(@PathVariable Long id, @Valid @RequestBody TransactionRequest transaction) {
         try {
             log.debug("PUT /api/transactions/{}", id);
-            if (transaction.getAmount() == null || transaction.getAmount().signum() <= 0) {
-                return ResponseEntity.badRequest().body(ApiResponse.error("Amount must be greater than zero"));
-            }
             Transaction updated = transactionService.updateTransaction(id, transaction);
             return ResponseEntity.ok(ApiResponse.ok("Transaction updated successfully", updated));
         } catch (IllegalArgumentException ex) {

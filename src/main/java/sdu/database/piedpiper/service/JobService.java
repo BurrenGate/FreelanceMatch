@@ -6,6 +6,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import sdu.database.piedpiper.dto.response.JobDTO;
 import sdu.database.piedpiper.dto.response.RecommendedJobDTO;
+import sdu.database.piedpiper.exception.ForbiddenOperationException;
+import sdu.database.piedpiper.exception.NotFoundException;
 import sdu.database.piedpiper.model.Account;
 import sdu.database.piedpiper.model.FreelancerMatch;
 import sdu.database.piedpiper.model.Job;
@@ -51,10 +53,11 @@ public class JobService {
         log.info("Updating job {}", id);
         java.util.Optional<Job> existingJob = jobRepository.findById(id);
         if (existingJob.isEmpty()) {
-            throw new RuntimeException("Job not found with id: " + id);
+            throw new NotFoundException("Job not found with id: " + id);
         }
 
         Job job = existingJob.get();
+        ensureCurrentClientOwnsJob(job);
         job.setTitle(jobDTO.getTitle());
         job.setDescription(jobDTO.getDescription());
         if (jobDTO.getBudget() != null) {
@@ -81,8 +84,10 @@ public class JobService {
         log.info("Deleting job {}", id);
         java.util.Optional<Job> existingJob = jobRepository.findById(id);
         if (existingJob.isEmpty()) {
-            throw new RuntimeException("Job not found with id: " + id);
+            throw new NotFoundException("Job not found with id: " + id);
         }
+
+        ensureCurrentClientOwnsJob(existingJob.get());
 
         jobRequiredSkillRepository.deleteByJobId(id);
         jobRepository.deleteById(id);
@@ -109,11 +114,7 @@ public class JobService {
     }
 
     public void createJob(JobDTO jobDTO) {
-        String username = SecurityUtils.getCurrentUsername();
-        Account account = accountRepository.findByEmail(username);
-        if (account == null) return;
-        Profile profile = profileRepository.findByAccountId(account.getId()).orElse(null);
-        if (profile == null) return;
+        Profile profile = getCurrentProfile();
 
         Job job = new Job();
         job.setClientId(profile.getId());
@@ -164,5 +165,25 @@ public class JobService {
             return msg.substring(idx).split("\n")[0].trim();
         }
         return msg != null ? msg : "Unknown database error";
+    }
+
+    private Profile getCurrentProfile() {
+        String username = SecurityUtils.getCurrentUsername();
+        if (username == null) {
+            throw new ForbiddenOperationException("User is not authenticated");
+        }
+        Account account = accountRepository.findByEmail(username);
+        if (account == null) {
+            throw new NotFoundException("Account not found for authenticated user");
+        }
+        return profileRepository.findByAccountId(account.getId())
+                .orElseThrow(() -> new NotFoundException("Profile not found for authenticated user"));
+    }
+
+    private void ensureCurrentClientOwnsJob(Job job) {
+        Profile current = getCurrentProfile();
+        if (!current.getId().equals(job.getClientId())) {
+            throw new ForbiddenOperationException("You can only modify your own jobs");
+        }
     }
 }

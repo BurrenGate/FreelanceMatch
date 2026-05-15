@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
         security = @SecurityRequirement(name = "Bearer Authentication")
 )
 @SecurityScheme(
-        name = "Bearer Authentication",
+        name = "BearerAuthentication",
         type = SecuritySchemeType.HTTP,
         bearerFormat = "JWT",
         scheme = "bearer"

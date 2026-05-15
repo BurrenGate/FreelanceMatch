@@ -2,9 +2,13 @@ package sdu.database.piedpiper.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sdu.database.piedpiper.dto.request.RoleUpsertRequest;
 import sdu.database.piedpiper.dto.response.ApiResponse;
+import sdu.database.piedpiper.dto.response.RoleResponse;
 import sdu.database.piedpiper.model.Role;
 import sdu.database.piedpiper.service.RoleService;
 
@@ -60,5 +64,31 @@ public class RoleController {
             log.error("Error getting role by name: {}", ex.getMessage());
             return ResponseEntity.badRequest().body(ApiResponse.error(ex.getMessage()));
         }
+    }
+
+    @GetMapping("/manage")
+    public ResponseEntity<ApiResponse<List<RoleResponse>>> getManagedRoles() {
+        List<RoleResponse> roles = roleService.getManagedRoles();
+        return ResponseEntity.ok(ApiResponse.ok("Roles retrieved successfully", roles));
+    }
+
+    @PostMapping("/manage")
+    public ResponseEntity<ApiResponse<RoleResponse>> createRole(@Valid @RequestBody RoleUpsertRequest request) {
+        RoleResponse created = roleService.createRole(request.getName());
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.ok("Role created successfully", created));
+    }
+
+    @PutMapping("/manage/{roleId}")
+    public ResponseEntity<ApiResponse<RoleResponse>> updateRole(@PathVariable Integer roleId,
+                                                                @Valid @RequestBody RoleUpsertRequest request) {
+        RoleResponse updated = roleService.updateRole(roleId, request.getName());
+        return ResponseEntity.ok(ApiResponse.ok("Role updated successfully", updated));
+    }
+
+    @DeleteMapping("/manage/{roleId}")
+    public ResponseEntity<ApiResponse<Void>> deleteRole(@PathVariable Integer roleId) {
+        roleService.deleteRole(roleId);
+        return ResponseEntity.ok(ApiResponse.ok("Role deleted successfully", null));
     }
 }

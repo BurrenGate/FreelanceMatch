@@ -3,6 +3,7 @@ package sdu.database.piedpiper.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import sdu.database.piedpiper.dto.response.JobRequiredSkillResponse;
 import sdu.database.piedpiper.model.JobRequiredSkill;
 
 import java.util.List;
@@ -42,5 +43,29 @@ public class JobRequiredSkillRepository {
     public void deleteByJobId(Long jobId) {
         String sql = "DELETE FROM job_required_skills WHERE job_id = ?";
         jdbcTemplate.update(sql, jobId);
+    }
+
+    public void addJobRequiredSkill(Long jobId, Integer skillId, String clientEmail) {
+        String sql = "CALL job_management.add_job_required_skill(?, ?, ?)";
+        jdbcTemplate.update(sql, jobId, skillId, clientEmail);
+    }
+
+    public void removeJobRequiredSkill(Long jobId, Integer skillId, String clientEmail) {
+        String sql = "CALL job_management.remove_job_required_skill(?, ?, ?)";
+        jdbcTemplate.update(sql, jobId, skillId, clientEmail);
+    }
+
+    public List<JobRequiredSkillResponse> getJobRequiredSkills(Long jobId, String clientEmail) {
+        String sql = "SELECT * FROM job_management.get_job_required_skills(?, ?)";
+        return jdbcTemplate.query(
+                sql,
+                (rs, rowNum) -> JobRequiredSkillResponse.builder()
+                        .skillId(rs.getInt("skill_id"))
+                        .skillName(rs.getString("skill_name"))
+                        .category(rs.getString("category"))
+                        .build(),
+                jobId,
+                clientEmail
+        );
     }
 }

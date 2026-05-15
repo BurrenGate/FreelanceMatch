@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import sdu.database.piedpiper.dto.response.ProfileSkillDetailedDTO;
+import sdu.database.piedpiper.dto.response.ProfileSkillResponse;
 import sdu.database.piedpiper.dto.response.UserSkillDTO;
 import sdu.database.piedpiper.model.ProfileSkill;
 
@@ -86,6 +87,36 @@ public class ProfileSkillRepository {
                                 .category(rs.getString("skill_category")) // Исправлено: колонка называется skill_category
                                 .skillLevel(null) // Исправлено: здесь нет уровня
                                 .build()
-                , profileId);
+                 , profileId);
+    }
+
+    public List<ProfileSkillResponse> getMySkills(String email) {
+        String sql = "SELECT * FROM profile_management.get_my_skills(?)";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> ProfileSkillResponse.builder()
+                .skillId(rs.getInt("skill_id"))
+                .skillName(rs.getString("skill_name"))
+                .category(rs.getString("skill_category"))
+                .skillLevel(rs.getString("skill_level"))
+                .build(), email);
+    }
+
+    public List<ProfileSkillResponse> getMyAvailableSkills(String email) {
+        String sql = "SELECT * FROM profile_management.get_my_available_skills(?)";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> ProfileSkillResponse.builder()
+                .skillId(rs.getInt("skill_id"))
+                .skillName(rs.getString("skill_name"))
+                .category(rs.getString("skill_category"))
+                .skillLevel(null)
+                .build(), email);
+    }
+
+    public void upsertMySkill(String email, Integer skillId, String skillLevel) {
+        String sql = "CALL profile_management.upsert_my_skill(?, ?, ?)";
+        jdbcTemplate.update(sql, email, skillId, skillLevel);
+    }
+
+    public void deleteMySkill(String email, Integer skillId) {
+        String sql = "CALL profile_management.delete_my_skill(?, ?)";
+        jdbcTemplate.update(sql, email, skillId);
     }
 }

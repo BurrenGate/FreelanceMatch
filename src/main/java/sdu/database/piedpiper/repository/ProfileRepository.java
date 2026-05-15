@@ -30,6 +30,16 @@ public class ProfileRepository {
         }
     }
 
+    public Optional<Profile> findById(Long profileId) {
+        String sql = "SELECT * FROM profiles WHERE id = ?";
+        try {
+            Profile profile = jdbcTemplate.queryForObject(sql, new Object[]{profileId}, new BeanPropertyRowMapper<>(Profile.class));
+            return Optional.ofNullable(profile);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
     public Optional<ProfileDTO> getFullProfileByEmail(String email) {
         // Вся логика сбора данных перенесена на сторону PostgreSQL
         String sql = """

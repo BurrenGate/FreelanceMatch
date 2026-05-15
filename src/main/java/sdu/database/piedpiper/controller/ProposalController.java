@@ -2,11 +2,14 @@ package sdu.database.piedpiper.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sdu.database.piedpiper.dto.request.ProposalUpdateRequest;
 import sdu.database.piedpiper.dto.request.SubmitProposalRequest;
 import sdu.database.piedpiper.dto.response.ApiResponse;
+import sdu.database.piedpiper.dto.response.ProposalWithFreelancerDTO;
 import sdu.database.piedpiper.model.Proposal;
 import sdu.database.piedpiper.security.SecurityUtils;
 import sdu.database.piedpiper.service.ProposalService;
@@ -53,16 +56,12 @@ public class ProposalController {
     }
 
     @PostMapping("/submit")
-    public ResponseEntity<ApiResponse<Void>> submitProposal(@RequestBody SubmitProposalRequest request) {
+    public ResponseEntity<ApiResponse<Void>> submitProposal(@Valid @RequestBody SubmitProposalRequest request) {
         log.debug("POST /api/proposals/submit");
         try {
             if (!SecurityUtils.isFreelancer()) {
                 return ResponseEntity.status(403)
                         .body(ApiResponse.error("Insufficient permissions. Only freelancers can submit proposals."));
-            }
-            if (request.getJobId() == null || request.getFreelancerId() == null) {
-                return ResponseEntity.badRequest()
-                        .body(ApiResponse.error("Job ID and Freelancer ID are required"));
             }
             if (request.getBidAmount() == null || request.getBidAmount().signum() <= 0) {
                 return ResponseEntity.badRequest()
@@ -79,13 +78,9 @@ public class ProposalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<Proposal>> updateProposal(@PathVariable Long id, @RequestBody Proposal proposal) {
+    public ResponseEntity<ApiResponse<Proposal>> updateProposal(@PathVariable Long id, @Valid @RequestBody ProposalUpdateRequest proposal) {
         log.debug("PUT /api/proposals/{}", id);
         try {
-            if (proposal.getBidAmount() == null || proposal.getBidAmount().signum() <= 0) {
-                return ResponseEntity.badRequest()
-                        .body(ApiResponse.error("Bid amount must be greater than zero"));
-            }
             Proposal updated = proposalService.updateProposal(id, proposal);
             return ResponseEntity.ok(ApiResponse.ok("Proposal updated successfully", updated));
         } catch (Exception e) {
@@ -124,6 +119,22 @@ public class ProposalController {
         }
     }
 
+    @GetMapping("/job/{jobId}/with-freelancer")
+    public ResponseEntity<ApiResponse<List<ProposalWithFreelancerDTO>>> getProposalsWithFreelancerDetails(@PathVariable Long jobId) {
+        log.debug("GET /api/proposals/job/{}/with-freelancer", jobId);
+        try {
+            List<ProposalWithFreelancerDTO> proposals = proposalService.getProposalsWithFreelancerDetails(jobId);
+            return ResponseEntity.ok(ApiResponse.ok(
+                    proposals.isEmpty() ? "No proposals found for this job" : "Retrieved " + proposals.size() + " proposal(s) with freelancer details",
+                    proposals
+            ));
+        } catch (Exception e) {
+            log.error("Error getting proposals with freelancer details: {}", e.getMessage());
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.error("Failed to retrieve proposals: " + e.getMessage()));
+        }
+    }
+
     @PostMapping("/{proposalId}/accept")
     public ResponseEntity<ApiResponse<Void>> acceptProposal(@PathVariable Long proposalId) {
         log.debug("POST /api/proposals/{}/accept", proposalId);
@@ -142,6 +153,29 @@ public class ProposalController {
             ));
         } catch (Exception e) {
             log.error("Error accepting proposal: {}", e.getMessage());
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.error(e.getMessage()));
+        }
+    }
+
+    @PostMapping("/{proposalId}/reject")
+    public ResponseEntity<ApiResponse<Void>> rejectProposal(@PathVariable Long proposalId) {
+        log.debug("POST /api/proposals/{}/reject", proposalId);
+        try {
+            if (!SecurityUtils.isClient()) {
+                return ResponseEntity.status(403)
+                        .body(ApiResponse.error("Insufficient permissions. Only clients can reject proposals."));
+            }
+            if (proposalId == null || proposalId <= 0) {
+                return ResponseEntity.badRequest()
+                        .body(ApiResponse.error("Valid proposal ID is required"));
+            }
+            proposalService.rejectProposal(proposalId);
+            return ResponseEntity.ok(ApiResponse.ok(
+                    "Proposal rejected successfully.", null
+            ));
+        } catch (Exception e) {
+            log.error("Error rejecting proposal: {}", e.getMessage());
             return ResponseEntity.badRequest()
                     .body(ApiResponse.error(e.getMessage()));
         }

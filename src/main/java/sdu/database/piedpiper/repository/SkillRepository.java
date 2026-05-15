@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import sdu.database.piedpiper.dto.response.SkillResponse;
 import sdu.database.piedpiper.model.Skill;
 
 import java.util.List;
@@ -28,14 +29,20 @@ public class SkillRepository {
         return s;
     };
 
+    private static final RowMapper<SkillResponse> SKILL_RESPONSE_MAPPER = (rs, rowNum) -> SkillResponse.builder()
+            .id(rs.getInt("id"))
+            .name(rs.getString("name"))
+            .category(rs.getString("category"))
+            .build();
+
     public List<Skill> findAll() {
-        String sql = "SELECT id, name, category FROM skills ORDER BY name ASC";
+        String sql = "SELECT * FROM app_management.get_skills()";
         log.debug("Executing findAll() skills query");
         return jdbc.query(sql, SKILL_MAPPER);
     }
 
     public Optional<Skill> findById(Integer id) {
-        String sql = "SELECT id, name, category FROM skills WHERE id = ?";
+        String sql = "SELECT * FROM app_management.get_skill_by_id(?)";
         try {
             Skill skill = jdbc.queryForObject(sql, SKILL_MAPPER, id);
             return Optional.of(skill);
@@ -46,20 +53,13 @@ public class SkillRepository {
     }
 
     public Skill save(Skill skill) {
-        if (skill.getId() != null) {
-            String sql = "UPDATE skills SET name = ?, category = ? WHERE id = ?";
-            jdbc.update(sql, skill.getName(), skill.getCategory(), skill.getId());
-            log.info("Skill updated: {}", skill.getId());
-        } else {
-            String sql = "INSERT INTO skills (name, category) VALUES (?, ?)";
-            jdbc.update(sql, skill.getName(), skill.getCategory());
-            log.info("Skill created: {}", skill.getName());
-        }
+        String sql = "CALL app_management.upsert_skill(?, ?, ?)";
+        jdbc.update(sql, skill.getId(), skill.getName(), skill.getCategory());
         return skill;
     }
 
     public void deleteById(Integer id) {
-        String sql = "DELETE FROM skills WHERE id = ?";
+        String sql = "CALL app_management.delete_skill(?)";
         int deleted = jdbc.update(sql, id);
         if (deleted > 0) {
             log.info("Skill deleted: {}", id);
@@ -69,7 +69,32 @@ public class SkillRepository {
     }
 
     public List<Skill> findByCategory(String category) {
-        String sql = "SELECT id, name, category FROM skills WHERE category = ? ORDER BY name ASC";
+        String sql = "SELECT * FROM app_management.get_skills_by_category(?)";
         return jdbc.query(sql, SKILL_MAPPER, category);
+    }
+
+    public List<SkillResponse> getManagedSkills(String category, String adminEmail) {
+        String sql = "SELECT * FROM admin_management.get_skills(?, ?)";
+        return jdbc.query(sql, SKILL_RESPONSE_MAPPER, category, adminEmail);
+    }
+
+    public SkillResponse getManagedSkillById(Integer id, String adminEmail) {
+        String sql = "SELECT * FROM admin_management.get_skill_by_id(?, ?)";
+        return jdbc.queryForObject(sql, SKILL_RESPONSE_MAPPER, id, adminEmail);
+    }
+
+    public SkillResponse createManagedSkill(String name, String category, String adminEmail) {
+        String sql = "SELECT * FROM admin_management.create_skill(?, ?, ?)";
+        return jdbc.queryForObject(sql, SKILL_RESPONSE_MAPPER, name, category, adminEmail);
+    }
+
+    public SkillResponse updateManagedSkill(Integer id, String name, String category, String adminEmail) {
+        String sql = "SELECT * FROM admin_management.update_skill(?, ?, ?, ?)";
+        return jdbc.queryForObject(sql, SKILL_RESPONSE_MAPPER, id, name, category, adminEmail);
+    }
+
+    public void deleteManagedSkill(Integer id, String adminEmail) {
+        String sql = "CALL admin_management.delete_skill(?, ?)";
+        jdbc.update(sql, id, adminEmail);
     }
 }

@@ -2,10 +2,13 @@ package sdu.database.piedpiper.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sdu.database.piedpiper.dto.request.SkillUpsertRequest;
 import sdu.database.piedpiper.dto.response.ApiResponse;
+import sdu.database.piedpiper.dto.response.SkillResponse;
 import sdu.database.piedpiper.model.Skill;
 import sdu.database.piedpiper.service.SkillService;
 
@@ -106,5 +109,37 @@ public class SkillController {
             log.error("Error getting skills by category: {}", ex.getMessage());
             return ResponseEntity.badRequest().body(ApiResponse.error(ex.getMessage()));
         }
+    }
+
+    @GetMapping("/manage")
+    public ResponseEntity<ApiResponse<List<SkillResponse>>> getManagedSkills(@RequestParam(required = false) String category) {
+        List<SkillResponse> skills = skillService.getManagedSkills(category);
+        return ResponseEntity.ok(ApiResponse.ok("Skills retrieved successfully", skills));
+    }
+
+    @GetMapping("/manage/{id}")
+    public ResponseEntity<ApiResponse<SkillResponse>> getManagedSkillById(@PathVariable Integer id) {
+        SkillResponse skill = skillService.getManagedSkillById(id);
+        return ResponseEntity.ok(ApiResponse.ok("Skill retrieved successfully", skill));
+    }
+
+    @PostMapping("/manage")
+    public ResponseEntity<ApiResponse<SkillResponse>> createManagedSkill(@Valid @RequestBody SkillUpsertRequest request) {
+        SkillResponse created = skillService.createManagedSkill(request.getName(), request.getCategory());
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.ok("Skill created successfully", created));
+    }
+
+    @PutMapping("/manage/{id}")
+    public ResponseEntity<ApiResponse<SkillResponse>> updateManagedSkill(@PathVariable Integer id,
+                                                                          @Valid @RequestBody SkillUpsertRequest request) {
+        SkillResponse updated = skillService.updateManagedSkill(id, request.getName(), request.getCategory());
+        return ResponseEntity.ok(ApiResponse.ok("Skill updated successfully", updated));
+    }
+
+    @DeleteMapping("/manage/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteManagedSkill(@PathVariable Integer id) {
+        skillService.deleteManagedSkill(id);
+        return ResponseEntity.ok(ApiResponse.ok("Skill deleted successfully", null));
     }
 }

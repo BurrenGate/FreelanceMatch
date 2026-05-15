@@ -121,4 +121,37 @@ public class ProposalRepository {
         String sql = "CALL job_market.finalize_proposal_and_create_contract(?)";
         jdbc.update(sql, proposalId);
     }
+
+    public void rejectProposal(Long proposalId) {
+        log.debug("Calling reject_proposal for proposal {}", proposalId);
+        String sql = "CALL job_market.reject_proposal(?)";
+        jdbc.update(sql, proposalId);
+    }
+
+    public List<sdu.database.piedpiper.dto.response.ProposalWithFreelancerDTO> findProposalsWithFreelancerDetails(Long jobId) {
+        log.debug("Calling get_proposals_with_freelancer_details for job {}", jobId);
+        String sql = "SELECT * FROM job_market.get_proposals_with_freelancer_details(?)";
+        
+        return jdbc.query(sql, (rs, rowNum) -> {
+            sdu.database.piedpiper.dto.response.ProposalWithFreelancerDTO dto = 
+                new sdu.database.piedpiper.dto.response.ProposalWithFreelancerDTO();
+            dto.setId(rs.getLong("proposal_id"));
+            dto.setJobId(rs.getLong("job_id"));
+            dto.setFreelancerId(rs.getLong("freelancer_id"));
+            dto.setBidAmount(rs.getBigDecimal("bid_amount"));
+            dto.setDeliveryDays(rs.getInt("delivery_days"));
+            dto.setCoverLetter(rs.getString("cover_letter"));
+            dto.setStatus(rs.getString("status"));
+            dto.setCreatedAt(rs.getTimestamp("created_at") != null 
+                ? rs.getTimestamp("created_at").toLocalDateTime() 
+                : null);
+            dto.setFreelancerName(rs.getString("freelancer_name"));
+            dto.setFreelancerEmail(rs.getString("freelancer_email"));
+            dto.setFreelancerHourlyRate(rs.getBigDecimal("freelancer_hourly_rate"));
+            dto.setFreelancerAvatarUrl(rs.getString("freelancer_avatar_url"));
+            dto.setFreelancerRating(rs.getBigDecimal("freelancer_rating"));
+            dto.setFreelancerCompletedJobs(rs.getInt("freelancer_completed_jobs"));
+            return dto;
+        }, jobId);
+    }
 }
