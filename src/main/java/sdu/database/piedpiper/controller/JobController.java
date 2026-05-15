@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sdu.database.piedpiper.dto.response.JobDTO;
 import sdu.database.piedpiper.dto.response.ApiResponse;
+import sdu.database.piedpiper.dto.response.JobSkillDTO;
 import sdu.database.piedpiper.dto.response.RecommendedJobDTO;
 import sdu.database.piedpiper.model.FreelancerMatch;
 import sdu.database.piedpiper.model.Job;
@@ -167,6 +168,21 @@ public class JobController {
             return ResponseEntity.ok(ApiResponse.ok("Active jobs count retrieved", result));
         } catch (Exception ex) {
             log.error("Error getting active jobs count: {}", ex.getMessage());
+            return ResponseEntity.badRequest().body(ApiResponse.error(ex.getMessage()));
+        }
+    }
+
+    @GetMapping("/{jobId}/skills")
+    public ResponseEntity<ApiResponse<List<JobSkillDTO>>> getJobSkills(@PathVariable Long jobId) {
+        log.debug("GET /api/jobs/{}/skills", jobId);
+        try {
+            List<JobSkillDTO> skills = jobService.getJobSkills(jobId);
+            return ResponseEntity.ok(ApiResponse.ok(
+                    skills.isEmpty() ? "No skills required for this job" : "Retrieved " + skills.size() + " skill(s)",
+                    skills
+            ));
+        } catch (Exception ex) {
+            log.error("Error getting job skills: {}", ex.getMessage());
             return ResponseEntity.badRequest().body(ApiResponse.error(ex.getMessage()));
         }
     }

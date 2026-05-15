@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import sdu.database.piedpiper.dto.response.JobSkillDTO;
 import sdu.database.piedpiper.dto.response.RecommendedJobDTO;
 import sdu.database.piedpiper.model.FreelancerMatch;
 import sdu.database.piedpiper.model.Job;
@@ -234,5 +235,17 @@ public class JobRepository {
                                 .matchPercentage(rs.getDouble("match_percentage"))
                                 .build()
                 , email);
+    }
+
+    public List<JobSkillDTO> getJobSkills(Long jobId) {
+        log.debug("Calling get_job_skills for job {}", jobId);
+        String sql = "SELECT * FROM job_market.get_job_skills(?)";
+        return jdbc.query(sql, (rs, rowNum) ->
+                JobSkillDTO.builder()
+                        .skillId(rs.getInt("skill_id"))
+                        .skillName(rs.getString("skill_name"))
+                        .skillCategory(rs.getString("skill_category"))
+                        .build(),
+                jobId);
     }
 }

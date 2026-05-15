@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import sdu.database.piedpiper.dto.response.JobDTO;
+import sdu.database.piedpiper.dto.response.JobSkillDTO;
 import sdu.database.piedpiper.dto.response.RecommendedJobDTO;
 import sdu.database.piedpiper.exception.ForbiddenOperationException;
 import sdu.database.piedpiper.exception.NotFoundException;
@@ -42,6 +43,11 @@ public class JobService {
     public List<Job> getAllJobs() {
         log.info("Fetching all jobs");
         return jobRepository.findAll();
+    }
+
+    public List<JobSkillDTO> getJobSkills(Long jobId) {
+        log.info("Fetching skills for job {}", jobId);
+        return jobRepository.getJobSkills(jobId);
     }
 
     public java.util.Optional<Job> getJobById(Long id) {

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import sdu.database.piedpiper.dto.request.ProposalUpdateRequest;
 import sdu.database.piedpiper.dto.request.SubmitProposalRequest;
 import sdu.database.piedpiper.dto.response.ApiResponse;
+import sdu.database.piedpiper.dto.response.ProposalDetailDTO;
 import sdu.database.piedpiper.dto.response.ProposalWithFreelancerDTO;
 import sdu.database.piedpiper.model.Proposal;
 import sdu.database.piedpiper.security.SecurityUtils;
@@ -38,6 +39,21 @@ public class ProposalController {
             ));
         } catch (Exception ex) {
             log.error("Error getting all proposals: {}", ex.getMessage());
+            return ResponseEntity.badRequest().body(ApiResponse.error(ex.getMessage()));
+        }
+    }
+
+    @GetMapping("/detailed")
+    public ResponseEntity<ApiResponse<List<ProposalDetailDTO>>> getAllProposalsDetailed() {
+        log.debug("GET /api/proposals/detailed");
+        try {
+            List<ProposalDetailDTO> proposals = proposalService.getAllProposalsDetailed();
+            return ResponseEntity.ok(ApiResponse.ok(
+                    proposals.isEmpty() ? "No proposals found" : "Retrieved " + proposals.size() + " detailed proposal(s)",
+                    proposals
+            ));
+        } catch (Exception ex) {
+            log.error("Error getting all detailed proposals: {}", ex.getMessage());
             return ResponseEntity.badRequest().body(ApiResponse.error(ex.getMessage()));
         }
     }

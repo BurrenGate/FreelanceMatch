@@ -170,6 +170,78 @@ public class FileController {
         }
     }
 
+    @PostMapping("/upload/chat")
+    public ResponseEntity<ApiResponse<FileUploadResponse>> uploadChatFile(@RequestParam("file") MultipartFile file) {
+        log.debug("POST /api/files/upload/chat - file: {}, type: {}, size: {}",
+                file.getOriginalFilename(), file.getContentType(), file.getSize());
+        try {
+            // Validate file type - supports images, videos, audio, documents, archives
+            if (!fileStorageService.isValidChatFileType(file)) {
+                return ResponseEntity.badRequest()
+                        .body(ApiResponse.error(
+                                "Invalid file type. Supported: images, videos, audio, documents (PDF, Word, Excel, PowerPoint), archives (ZIP, RAR, 7Z)"));
+            }
+
+            // Determine max size based on file category
+            String category = fileStorageService.getFileCategory(file.getContentType());
+            long maxSize;
+            String folder;
+
+            switch (category) {
+                case "image":
+                    maxSize = MAX_IMAGE_SIZE;
+                    folder = "chat/images";
+                    break;
+                case "video":
+                    maxSize = MAX_VIDEO_SIZE;
+                    folder = "chat/videos";
+                    break;
+                case "audio":
+                    maxSize = MAX_AUDIO_SIZE;
+                    folder = "chat/audio";
+                    break;
+                case "document":
+                    maxSize = MAX_DOCUMENT_SIZE;
+                    folder = "chat/documents";
+                    break;
+                case "archive":
+                    maxSize = MAX_DOCUMENT_SIZE;
+                    folder = "chat/archives";
+                    break;
+                default:
+                    maxSize = MAX_DOCUMENT_SIZE;
+                    folder = "chat/files";
+            }
+
+            if (file.getSize() > maxSize) {
+                return ResponseEntity.badRequest()
+                        .body(ApiResponse.error(String.format(
+                                "File size exceeds maximum limit of %dMB for %s files",
+                                maxSize / (1024 * 1024), category)));
+            }
+
+            String objectName = fileStorageService.uploadFile(file, folder);
+            String fileUrl = fileStorageService.getFileUrl(objectName);
+
+            FileUploadResponse response = FileUploadResponse.builder()
+                    .fileName(file.getOriginalFilename())
+                    .fileUrl(fileUrl)
+                    .objectName(objectName)
+                    .contentType(file.getContentType())
+                    .size(file.getSize())
+                    .category(category)
+                    .build();
+
+            return ResponseEntity.ok(ApiResponse.ok(
+                    String.format("%s uploaded successfully", category.substring(0, 1).toUpperCase() + category.substring(1)),
+                    response));
+        } catch (Exception e) {
+            log.error("Error uploading chat file: {}", e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ApiResponse.error("Failed to upload file: " + e.getMessage()));
+        }
+    }
+
     @PostMapping("/upload/avatar")
     public ResponseEntity<ApiResponse<FileUploadResponse>> uploadAvatar(@RequestParam("file") MultipartFile file) {
         log.debug("POST /api/files/upload/avatar");

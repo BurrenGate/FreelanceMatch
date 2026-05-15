@@ -58,6 +58,7 @@ b.nurdaulet2626@gmail.com
 ### Документация:
 - [Chat Documentation](CHAT_DOCUMENTATION.md) - Полная документация чата
 - [MinIO Documentation](MINIO_DOCUMENTATION.md) - Работа с файлами
+- [Universal File Upload](UNIVERSAL_FILE_UPLOAD.md) - Загрузка всех типов файлов
 - [File Type Fix](FIX_FILE_TYPE_LENGTH.md) - Исправление длины MIME-типов (V48)
 
 
@@ -100,3 +101,27 @@ b.nurdaulet2626@gmail.com
 
 ### Документация:
 - [Milestone Payments Documentation](MILESTONE_PAYMENTS_DOCUMENTATION.md) - Полная документация
+
+
+---
+
+## 💡 Предложение навыков (Skill Suggestions)
+
+### Функции:
+1. **Предложение навыков** - Клиенты и фрилансеры могут предлагать новые навыки
+2. **Модерация администратором** - Все предложения требуют одобрения админа
+3. **Статусы** - pending, approved, rejected
+4. **Комментарии** - Администратор может оставлять комментарии
+5. **Статистика** - Отслеживание всех предложений
+
+### Endpoints:
+- `POST /api/skill-suggestions` - Предложить навык
+- `GET /api/skill-suggestions/my` - Мои предложения
+- `GET /api/skill-suggestions/admin` - Все предложения (admin)
+- `POST /api/skill-suggestions/{id}/approve` - Одобрить (admin)
+- `POST /api/skill-suggestions/{id}/reject` - Отклонить (admin)
+- `GET /api/skill-suggestions/admin/statistics` - Статистика (admin)
+
+### Документация:
+- [Skill Suggestions Documentation](SKILL_SUGGESTIONS_DOCUMENTATION.md) - Полная документация
+- [Skill Suggestions Security](SKILL_SUGGESTIONS_SECURITY.md) - Правила безопасности

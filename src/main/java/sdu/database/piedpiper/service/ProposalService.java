@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import sdu.database.piedpiper.dto.request.SubmitProposalRequest;
 import sdu.database.piedpiper.dto.request.ProposalUpdateRequest;
+import sdu.database.piedpiper.dto.response.ProposalDetailDTO;
 import sdu.database.piedpiper.dto.response.ProposalWithFreelancerDTO;
 import sdu.database.piedpiper.exception.ForbiddenOperationException;
 import sdu.database.piedpiper.exception.NotFoundException;
@@ -112,6 +113,11 @@ public class ProposalService {
     public List<ProposalWithFreelancerDTO> getProposalsWithFreelancerDetails(Long jobId) {
         log.info("Fetching proposals with freelancer details for Job ID: {}", jobId);
         return proposalRepository.findProposalsWithFreelancerDetails(jobId);
+    }
+
+    public List<ProposalDetailDTO> getAllProposalsDetailed() {
+        log.info("Fetching all proposals with detailed information");
+        return proposalRepository.findAllProposalsDetailed();
     }
 
     private void ensureProposalOwner(Proposal proposal) {

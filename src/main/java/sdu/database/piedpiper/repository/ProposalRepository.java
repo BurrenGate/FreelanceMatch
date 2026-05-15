@@ -154,4 +154,37 @@ public class ProposalRepository {
             return dto;
         }, jobId);
     }
+
+    public List<sdu.database.piedpiper.dto.response.ProposalDetailDTO> findAllProposalsDetailed() {
+        log.debug("Calling get_all_proposals_detailed");
+        String sql = "SELECT * FROM job_market.get_all_proposals_detailed()";
+        
+        return jdbc.query(sql, (rs, rowNum) -> {
+            return sdu.database.piedpiper.dto.response.ProposalDetailDTO.builder()
+                .proposalId(rs.getLong("proposal_id"))
+                .jobId(rs.getLong("job_id"))
+                .freelancerId(rs.getLong("freelancer_id"))
+                .bidAmount(rs.getBigDecimal("bid_amount"))
+                .coverLetter(rs.getString("cover_letter"))
+                .status(rs.getString("status"))
+                .createdAt(rs.getTimestamp("created_at") != null 
+                    ? rs.getTimestamp("created_at").toLocalDateTime() 
+                    : null)
+                .isAccepted(rs.getBoolean("is_accepted"))
+                .jobTitle(rs.getString("job_title"))
+                .jobDescription(rs.getString("job_description"))
+                .jobMinBudget(rs.getBigDecimal("job_min_budget"))
+                .jobMaxBudget(rs.getBigDecimal("job_max_budget"))
+                .jobStatus(rs.getString("job_status"))
+                .freelancerName(rs.getString("freelancer_name"))
+                .freelancerEmail(rs.getString("freelancer_email"))
+                .freelancerHourlyRate(rs.getBigDecimal("freelancer_hourly_rate"))
+                .freelancerRating(rs.getBigDecimal("freelancer_rating"))
+                .freelancerBio(rs.getString("freelancer_bio"))
+                .clientId(rs.getLong("client_id"))
+                .clientName(rs.getString("client_name"))
+                .clientEmail(rs.getString("client_email"))
+                .build();
+        });
+    }
 }

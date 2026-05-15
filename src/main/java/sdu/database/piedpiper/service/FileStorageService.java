@@ -210,9 +210,72 @@ public class FileStorageService {
     }
 
     /**
+     * Check if file type is allowed for chat
+     * Supports: images, videos, audio, documents, archives
+     * @param file MultipartFile to validate
+     * @return true if valid, false otherwise
+     */
+    public boolean isValidChatFileType(MultipartFile file) {
+        String contentType = file.getContentType();
+        if (contentType == null) {
+            return false;
+        }
+
+        // Images
+        if (contentType.startsWith("image/")) {
+            return true;
+        }
+
+        // Videos
+        if (contentType.startsWith("video/")) {
+            return true;
+        }
+
+        // Audio
+        if (contentType.startsWith("audio/")) {
+            return true;
+        }
+
+        // Documents
+        if (contentType.startsWith("application/pdf") ||
+            contentType.startsWith("application/msword") ||
+            contentType.startsWith("application/vnd.ms-word") ||
+            contentType.startsWith("application/vnd.ms-excel") ||
+            contentType.startsWith("application/vnd.ms-powerpoint") ||
+            contentType.startsWith("application/vnd.openxmlformats-officedocument") ||
+            contentType.startsWith("application/vnd.oasis.opendocument") ||
+            contentType.equals("application/rtf")) {
+            return true;
+        }
+
+        // Text files
+        if (contentType.startsWith("text/")) {
+            return true;
+        }
+
+        // Archives
+        if (contentType.equals("application/zip") ||
+            contentType.equals("application/x-zip-compressed") ||
+            contentType.equals("application/x-rar-compressed") ||
+            contentType.equals("application/x-7z-compressed") ||
+            contentType.equals("application/x-tar") ||
+            contentType.equals("application/gzip")) {
+            return true;
+        }
+
+        // JSON, XML
+        if (contentType.equals("application/json") ||
+            contentType.equals("application/xml")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Get file category based on MIME type
      * @param contentType MIME type
-     * @return Category (image, video, audio, document, other)
+     * @return Category (image, video, audio, document, archive, other)
      */
     public String getFileCategory(String contentType) {
         if (contentType == null) {
@@ -227,9 +290,21 @@ public class FileStorageService {
             return "audio";
         } else if (contentType.startsWith("application/pdf") ||
                 contentType.startsWith("application/msword") ||
+                contentType.startsWith("application/vnd.ms-word") ||
+                contentType.startsWith("application/vnd.ms-excel") ||
+                contentType.startsWith("application/vnd.ms-powerpoint") ||
                 contentType.startsWith("application/vnd.openxmlformats") ||
+                contentType.startsWith("application/vnd.oasis.opendocument") ||
+                contentType.equals("application/rtf") ||
                 contentType.startsWith("text/")) {
             return "document";
+        } else if (contentType.equals("application/zip") ||
+                contentType.equals("application/x-zip-compressed") ||
+                contentType.equals("application/x-rar-compressed") ||
+                contentType.equals("application/x-7z-compressed") ||
+                contentType.equals("application/x-tar") ||
+                contentType.equals("application/gzip")) {
+            return "archive";
         }
         return "other";
     }

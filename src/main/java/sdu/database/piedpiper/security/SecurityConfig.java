@@ -41,8 +41,16 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/error"
                         ).permitAll()
+                        // Freelancer only
                         .requestMatchers("/api/proposals/submit").hasRole("FREELANCER")
+                        // Client only
                         .requestMatchers("/api/contracts/complete", "/api/proposals/*/accept", "/api/proposals/*/reject").hasRole("CLIENT")
+                        // Admin only - skill suggestions management
+                        .requestMatchers("/api/skill-suggestions/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/skill-suggestions/*/approve").hasRole("ADMIN")
+                        .requestMatchers("/api/skill-suggestions/*/reject").hasRole("ADMIN")
+                        // Clients and Freelancers - suggest skills and view own suggestions
+                        .requestMatchers("/api/skill-suggestions", "/api/skill-suggestions/my").hasAnyRole("CLIENT", "FREELANCER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
