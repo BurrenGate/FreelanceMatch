@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      - POSTGRES_DB=freelance
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - "db:/var/lib/postgresql"
+
+  minio:
+    image: minio/minio:latest
+    container_name: freelancematch_minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"  # API port
+      - "9001:9001"  # Web UI
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  app:
+    build: .
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - minio
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/freelance
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - MINIO_ENDPOINT=http://minio:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+
+volumes:
+  db:
+  minio_data:

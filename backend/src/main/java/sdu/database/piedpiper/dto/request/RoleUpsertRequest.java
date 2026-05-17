@@ -1,0 +1,11 @@
+package sdu.database.piedpiper.dto.request;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+
+@Data
+public class RoleUpsertRequest {
+
+    @NotBlank
+    private String name;
+}

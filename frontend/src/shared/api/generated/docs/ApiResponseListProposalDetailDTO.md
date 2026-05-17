@@ -1,0 +1,24 @@
+# ApiResponseListProposalDetailDTO
+
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**success** | **boolean** |  | [optional] [default to undefined]
+**message** | **string** |  | [optional] [default to undefined]
+**data** | [**Array&lt;ProposalDetailDTO&gt;**](ProposalDetailDTO.md) |  | [optional] [default to undefined]
+
+## Example
+
+```typescript
+import { ApiResponseListProposalDetailDTO } from './api';
+
+const instance: ApiResponseListProposalDetailDTO = {
+    success,
+    message,
+    data,
+};
+```
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
