@@ -1,620 +1,582 @@
-INSERT INTO skills (id, name, category) VALUES (1, 'Python', 'Backend');
-INSERT INTO skills (id, name, category) VALUES (2, 'Django', 'Backend');
-INSERT INTO skills (id, name, category) VALUES (3, 'FastAPI', 'Backend');
-INSERT INTO skills (id, name, category) VALUES (4, 'Java', 'Backend');
-INSERT INTO skills (id, name, category) VALUES (5, 'Spring Boot', 'Backend');
-INSERT INTO skills (id, name, category) VALUES (6, 'Node.js', 'Backend');
-INSERT INTO skills (id, name, category) VALUES (7, 'PostgreSQL', 'Database');
-INSERT INTO skills (id, name, category) VALUES (8, 'MySQL', 'Database');
-INSERT INTO skills (id, name, category) VALUES (9, 'MongoDB', 'Database');
-INSERT INTO skills (id, name, category) VALUES (10, 'Redis', 'Database');
-INSERT INTO skills (id, name, category) VALUES (11, 'React', 'Frontend');
-INSERT INTO skills (id, name, category) VALUES (12, 'Vue.js', 'Frontend');
-INSERT INTO skills (id, name, category) VALUES (13, 'Angular', 'Frontend');
-INSERT INTO skills (id, name, category) VALUES (14, 'TypeScript', 'Frontend');
-INSERT INTO skills (id, name, category) VALUES (15, 'Tailwind CSS', 'Frontend');
-INSERT INTO skills (id, name, category) VALUES (16, 'Docker', 'DevOps');
-INSERT INTO skills (id, name, category) VALUES (17, 'Kubernetes', 'DevOps');
-INSERT INTO skills (id, name, category) VALUES (18, 'AWS', 'DevOps');
-INSERT INTO skills (id, name, category) VALUES (19, 'CI/CD', 'DevOps');
-INSERT INTO skills (id, name, category) VALUES (20, 'GraphQL', 'API');
-INSERT INTO skills (id, name, category) VALUES (21, 'REST API', 'API');
-INSERT INTO skills (id, name, category) VALUES (22, 'Machine Learning', 'AI');
-INSERT INTO skills (id, name, category) VALUES (23, 'Data Science', 'AI');
-INSERT INTO skills (id, name, category) VALUES (24, 'Figma', 'Design');
-INSERT INTO skills (id, name, category) VALUES (25, 'UI/UX', 'Design');
+-- V2: This script seeds the database with initial data for skills, accounts, profiles, jobs, and more.
+-- This data is for development and testing purposes.
 
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (1,'alice.smith1@gmail.com','43cb62e061dc751430f983b8acc623d9',1,'active','2024-11-01 10:00:00','2023-01-01 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (2,'bob.johnson2@gmail.com','961cd8d3f2521783015b97fe1a80c721',1,'active','2024-11-01 10:00:00','2023-01-02 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (3,'carol.williams3@outlook.com','f0f4a7f4d79cceb3d3ecf2d6ab4a095c',1,'active','2024-11-01 10:00:00','2023-01-03 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (4,'david.brown4@yahoo.com','262110ba258bf0137b154df89fc7256f',1,'active','2024-11-01 10:00:00','2023-01-04 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (5,'emma.jones5@yahoo.com','43c156575c976c5ad2f6468d745eab34',1,'active','2024-11-01 10:00:00','2023-01-05 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (6,'frank.garcia6@yahoo.com','f3f9aa21c19b97c0e2bb257fec1f97b3',1,'active','2024-11-01 10:00:00','2023-01-06 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (7,'grace.miller7@gmail.com','be3c013f9bf6e11109f3d97adf867702',1,'active','2024-11-01 10:00:00','2023-01-07 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (8,'hank.davis8@hotmail.com','88651e2878fe4c16835dd051986d53bd',1,'active','2024-11-01 10:00:00','2023-01-08 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (9,'isla.wilson9@gmail.com','f6566885e302a01d223174a6cbcc5277',1,'active','2024-11-01 10:00:00','2023-01-09 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (10,'jake.moore10@hotmail.com','3c1816d39ec49bc16d8c1b8f27b04026',1,'active','2024-11-01 10:00:00','2023-01-10 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (11,'karen.taylor11@proton.me','fccc95379c5b35825c5a4afbfffabc5a',1,'active','2024-11-01 10:00:00','2023-01-11 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (12,'leo.anderson12@gmail.com','eb6da297299a7b4749d3c97d56335cd3',1,'active','2024-11-01 10:00:00','2023-01-12 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (13,'mia.thomas13@gmail.com','22e9b8581e8895eb47dcd01c8bf0330e',1,'active','2024-11-01 10:00:00','2023-01-13 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (14,'nate.jackson14@gmail.com','a1b283c811db04830874c9537fcd1eaa',1,'active','2024-11-01 10:00:00','2023-01-14 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (15,'olivia.white15@yahoo.com','f41dc33f2866bc0e53bee47c0e52e084',1,'active','2024-11-01 10:00:00','2023-01-15 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (16,'paul.harris16@yahoo.com','eccd24caeff21870f09785a22dd1bb0b',1,'active','2024-11-01 10:00:00','2023-01-16 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (17,'quinn.martin17@hotmail.com','0af0ede79731640615a89bdf1ab26e2e',1,'active','2024-11-01 10:00:00','2023-01-17 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (18,'rose.thompson18@hotmail.com','b7afde9925b50f06ca7f9e8ff90248f8',1,'active','2024-11-01 10:00:00','2023-01-18 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (19,'sam.lee19@gmail.com','32fba869ec7d7384610286f543ad8b54',1,'active','2024-11-01 10:00:00','2023-01-19 08:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (20,'tara.walker20@hotmail.com','98f3c5870effb28fc4c73d5d1a7ba398',1,'active','2024-11-01 10:00:00','2023-01-20 08:00:00');
+-- Seed the skills table with a variety of technical skills.
+INSERT INTO skills (name, category) VALUES
+    ('Python', 'Backend'),
+    ('Django', 'Backend'),
+    ('FastAPI', 'Backend'),
+    ('Java', 'Backend'),
+    ('Spring Boot', 'Backend'),
+    ('Node.js', 'Backend'),
+    ('PostgreSQL', 'Database'),
+    ('MySQL', 'Database'),
+    ('MongoDB', 'Database'),
+    ('Redis', 'Database'),
+    ('React', 'Frontend'),
+    ('Vue.js', 'Frontend'),
+    ('Angular', 'Frontend'),
+    ('TypeScript', 'Frontend'),
+    ('Tailwind CSS', 'Frontend'),
+    ('Docker', 'DevOps'),
+    ('Kubernetes', 'DevOps'),
+    ('AWS', 'DevOps'),
+    ('CI/CD', 'DevOps'),
+    ('GraphQL', 'API'),
+    ('REST API', 'API'),
+    ('Machine Learning', 'AI'),
+    ('Data Science', 'AI'),
+    ('Figma', 'Design'),
+    ('UI/UX', 'Design');
 
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (21,'alice1fl@yahoo.com','92d481859192ba19a7605410226fec36',2,'active','2024-12-01 09:00:00','2022-06-02 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (22,'bob2fl@hotmail.com','13b44b7453c1eecbf8eccccb583a7df2',2,'active','2024-12-01 09:00:00','2022-06-03 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (23,'carol3fl@proton.me','a6467491da1ae83b0d2525727b7b9af4',2,'active','2024-12-01 09:00:00','2022-06-04 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (24,'david4fl@yahoo.com','c340017e29054d37a469ca659341ba76',2,'active','2024-12-01 09:00:00','2022-06-05 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (25,'emma5fl@proton.me','535a8e280c8bbebcb38182c102882ba0',2,'active','2024-12-01 09:00:00','2022-06-06 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (26,'frank6fl@hotmail.com','c036b267ac49c226d7170b3d1b42a940',2,'active','2024-12-01 09:00:00','2022-06-07 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (27,'grace7fl@outlook.com','8bf4a56a7d851b0b734c05e8ee5d5edd',2,'active','2024-12-01 09:00:00','2022-06-08 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (28,'hank8fl@gmail.com','ee558ea122f920acea98b95b94c134a4',2,'active','2024-12-01 09:00:00','2022-06-09 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (29,'isla9fl@yahoo.com','ce23dc150777b45509285fa4bbdf2265',2,'active','2024-12-01 09:00:00','2022-06-10 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (30,'jake10fl@proton.me','883dca3b91a69bb177aa5e4eeb0fd502',2,'active','2024-12-01 09:00:00','2022-06-11 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (31,'karen11fl@outlook.com','d103c3ff1fb26449f63c854480a4bd27',2,'active','2024-12-01 09:00:00','2022-06-12 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (32,'leo12fl@outlook.com','c9c1c0ff4c67e6e03474c176d2168e86',2,'active','2024-12-01 09:00:00','2022-06-13 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (33,'mia13fl@yahoo.com','1d0e1836bd9a09491afbaa257ba21dc0',2,'active','2024-12-01 09:00:00','2022-06-14 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (34,'nate14fl@yahoo.com','f20eddcc4917c62c693dd9c96731ab6d',2,'active','2024-12-01 09:00:00','2022-06-15 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (35,'olivia15fl@outlook.com','1277894714d127fa0a524641f70c5d24',2,'active','2024-12-01 09:00:00','2022-06-16 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (36,'paul16fl@gmail.com','f8019325edd15aa087c5f6100c7288a0',2,'active','2024-12-01 09:00:00','2022-06-17 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (37,'quinn17fl@gmail.com','e2ebe97bf323bb95c3b5fbbcf21966cc',2,'active','2024-12-01 09:00:00','2022-06-18 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (38,'rose18fl@proton.me','1d426e6d8b04288eec293b4744327f42',2,'active','2024-12-01 09:00:00','2022-06-19 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (39,'sam19fl@gmail.com','a27640b839ffd8dbd3a2973cd3e6535d',2,'active','2024-12-01 09:00:00','2022-06-20 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (40,'tara20fl@outlook.com','54a1fe654f3719e06ec93f0fa5e0cc3f',2,'active','2024-12-01 09:00:00','2022-06-21 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (41,'uma21fl@outlook.com','739fc54290c2d37ff11f8657f922c0c5',2,'active','2024-12-01 09:00:00','2022-06-22 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (42,'victor22fl@hotmail.com','31445c488454b0dc3926b96225c5679b',2,'active','2024-12-01 09:00:00','2022-06-23 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (43,'wendy23fl@outlook.com','29b05c1206ef259dd71d1e4bdc724c22',2,'active','2024-12-01 09:00:00','2022-06-24 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (44,'xander24fl@gmail.com','fce99e86e8fafac8a0ffde5b8ceead4e',2,'active','2024-12-01 09:00:00','2022-06-25 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (45,'yara25fl@proton.me','274600e7dae4382fdfcf5cd6fcbf05a1',2,'active','2024-12-01 09:00:00','2022-06-26 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (46,'zoe26fl@hotmail.com','6f4b0e93acccb3f5c440264078f3d88d',2,'active','2024-12-01 09:00:00','2022-06-27 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (47,'aaron27fl@gmail.com','d03bf0ed3be1fb06a22e5e01d4d7c6d2',2,'active','2024-12-01 09:00:00','2022-06-28 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (48,'bella28fl@proton.me','711d696973968f1545ae842fb738afce',2,'active','2024-12-01 09:00:00','2022-06-01 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (49,'chris29fl@gmail.com','e62ab98d67737b6bbec57bd023b3d0bd',2,'active','2024-12-01 09:00:00','2022-06-02 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (50,'diana30fl@hotmail.com','f0bd3156d6ec72bdc0ed0b90b0505ce0',2,'active','2024-12-01 09:00:00','2022-06-03 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (51,'evan31fl@outlook.com','ae7875d0cf57037edaa566f62444ca38',2,'active','2024-12-01 09:00:00','2022-06-04 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (52,'fiona32fl@hotmail.com','468a9ab02b9cc1fe837e5235097d3be4',2,'active','2024-12-01 09:00:00','2022-06-05 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (53,'george33fl@outlook.com','b7179febeccda774aaef979dfb69edbf',2,'active','2024-12-01 09:00:00','2022-06-06 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (54,'holly34fl@hotmail.com','c5fc0a5d4d48d6d3cd86052fc3f2f171',2,'active','2024-12-01 09:00:00','2022-06-07 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (55,'ivan35fl@yahoo.com','8150da472257136ade29d6c8faa0e426',2,'active','2024-12-01 09:00:00','2022-06-08 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (56,'julia36fl@gmail.com','5548ff809577eb3149da86223e97b1cc',2,'active','2024-12-01 09:00:00','2022-06-09 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (57,'kevin37fl@gmail.com','18d3f579732217f7630f796e5686865e',2,'active','2024-12-01 09:00:00','2022-06-10 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (58,'laura38fl@yahoo.com','0ef09459ac627daa5a4799ce5d6d9804',2,'active','2024-12-01 09:00:00','2022-06-11 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (59,'mike39fl@outlook.com','ea1a7c8b3b946eb96ff8517c076aee46',2,'active','2024-12-01 09:00:00','2022-06-12 07:00:00');
-INSERT INTO accounts (id,email,password_hash,role_id,status,last_login,created_at) VALUES (60,'nina40fl@gmail.com','f590457fdeca68fe797074afefd839d4',2,'active','2024-12-01 09:00:00','2022-06-13 07:00:00');
+-- Seed the accounts table with client and freelancer users.
+-- Passwords are intentionally simple for development.
+INSERT INTO accounts (email, password_hash, role_id, status, last_login, created_at) VALUES
+    ('alice.smith1@gmail.com', '43cb62e061dc751430f983b8acc623d9', 1, 'active', '2024-11-01 10:00:00', '2023-01-01 08:00:00'),
+    ('bob.johnson2@gmail.com', '961cd8d3f2521783015b97fe1a80c721', 1, 'active', '2024-11-01 10:00:00', '2023-01-02 08:00:00'),
+    ('carol.williams3@outlook.com', 'f0f4a7f4d79cceb3d3ecf2d6ab4a095c', 1, 'active', '2024-11-01 10:00:00', '2023-01-03 08:00:00'),
+    ('david.brown4@yahoo.com', '262110ba258bf0137b154df89fc7256f', 1, 'active', '2024-11-01 10:00:00', '2023-01-04 08:00:00'),
+    ('emma.jones5@yahoo.com', '43c156575c976c5ad2f6468d745eab34', 1, 'active', '2024-11-01 10:00:00', '2023-01-05 08:00:00'),
+    ('frank.garcia6@yahoo.com', 'f3f9aa21c19b97c0e2bb257fec1f97b3', 1, 'active', '2024-11-01 10:00:00', '2023-01-06 08:00:00'),
+    ('grace.miller7@gmail.com', 'be3c013f9bf6e11109f3d97adf867702', 1, 'active', '2024-11-01 10:00:00', '2023-01-07 08:00:00'),
+    ('hank.davis8@hotmail.com', '88651e2878fe4c16835dd051986d53bd', 1, 'active', '2024-11-01 10:00:00', '2023-01-08 08:00:00'),
+    ('isla.wilson9@gmail.com', 'f6566885e302a01d223174a6cbcc5277', 1, 'active', '2024-11-01 10:00:00', '2023-01-09 08:00:00'),
+    ('jake.moore10@hotmail.com', '3c1816d39ec49bc16d8c1b8f27b04026', 1, 'active', '2024-11-01 10:00:00', '2023-01-10 08:00:00'),
+    ('karen.taylor11@proton.me', 'fccc95379c5b35825c5a4afbfffabc5a', 1, 'active', '2024-11-01 10:00:00', '2023-01-11 08:00:00'),
+    ('leo.anderson12@gmail.com', 'eb6da297299a7b4749d3c97d56335cd3', 1, 'active', '2024-11-01 10:00:00', '2023-01-12 08:00:00'),
+    ('mia.thomas13@gmail.com', '22e9b8581e8895eb47dcd01c8bf0330e', 1, 'active', '2024-11-01 10:00:00', '2023-01-13 08:00:00'),
+    ('nate.jackson14@gmail.com', 'a1b283c811db04830874c9537fcd1eaa', 1, 'active', '2024-11-01 10:00:00', '2023-01-14 08:00:00'),
+    ('olivia.white15@yahoo.com', 'f41dc33f2866bc0e53bee47c0e52e084', 1, 'active', '2024-11-01 10:00:00', '2023-01-15 08:00:00'),
+    ('paul.harris16@yahoo.com', 'eccd24caeff21870f09785a22dd1bb0b', 1, 'active', '2024-11-01 10:00:00', '2023-01-16 08:00:00'),
+    ('quinn.martin17@hotmail.com', '0af0ede79731640615a89bdf1ab26e2e', 1, 'active', '2024-11-01 10:00:00', '2023-01-17 08:00:00'),
+    ('rose.thompson18@hotmail.com', 'b7afde9925b50f06ca7f9e8ff90248f8', 1, 'active', '2024-11-01 10:00:00', '2023-01-18 08:00:00'),
+    ('sam.lee19@gmail.com', '32fba869ec7d7384610286f543ad8b54', 1, 'active', '2024-11-01 10:00:00', '2023-01-19 08:00:00'),
+    ('tara.walker20@hotmail.com', '98f3c5870effb28fc4c73d5d1a7ba398', 1, 'active', '2024-11-01 10:00:00', '2023-01-20 08:00:00'),
+    ('alice1fl@yahoo.com', '92d481859192ba19a7605410226fec36', 2, 'active', '2024-12-01 09:00:00', '2022-06-02 07:00:00'),
+    ('bob2fl@hotmail.com', '13b44b7453c1eecbf8eccccb583a7df2', 2, 'active', '2024-12-01 09:00:00', '2022-06-03 07:00:00'),
+    ('carol3fl@proton.me', 'a6467491da1ae83b0d2525727b7b9af4', 2, 'active', '2024-12-01 09:00:00', '2022-06-04 07:00:00'),
+    ('david4fl@yahoo.com', 'c340017e29054d37a469ca659341ba76', 2, 'active', '2024-12-01 09:00:00', '2022-06-05 07:00:00'),
+    ('emma5fl@proton.me', '535a8e280c8bbebcb38182c102882ba0', 2, 'active', '2024-12-01 09:00:00', '2022-06-06 07:00:00'),
+    ('frank6fl@hotmail.com', 'c036b267ac49c226d7170b3d1b42a940', 2, 'active', '2024-12-01 09:00:00', '2022-06-07 07:00:00'),
+    ('grace7fl@outlook.com', '8bf4a56a7d851b0b734c05e8ee5d5edd', 2, 'active', '2024-12-01 09:00:00', '2022-06-08 07:00:00'),
+    ('hank8fl@gmail.com', 'ee558ea122f920acea98b95b94c134a4', 2, 'active', '2024-12-01 09:00:00', '2022-06-09 07:00:00'),
+    ('isla9fl@yahoo.com', 'ce23dc150777b45509285fa4bbdf2265', 2, 'active', '2024-12-01 09:00:00', '2022-06-10 07:00:00'),
+    ('jake10fl@proton.me', '883dca3b91a69bb177aa5e4eeb0fd502', 2, 'active', '2024-12-01 09:00:00', '2022-06-11 07:00:00'),
+    ('karen11fl@outlook.com', 'd103c3ff1fb26449f63c854480a4bd27', 2, 'active', '2024-12-01 09:00:00', '2022-06-12 07:00:00'),
+    ('leo12fl@outlook.com', 'c9c1c0ff4c67e6e03474c176d2168e86', 2, 'active', '2024-12-01 09:00:00', '2022-06-13 07:00:00'),
+    ('mia13fl@yahoo.com', '1d0e1836bd9a09491afbaa257ba21dc0', 2, 'active', '2024-12-01 09:00:00', '2022-06-14 07:00:00'),
+    ('nate14fl@yahoo.com', 'f20eddcc4917c62c693dd9c96731ab6d', 2, 'active', '2024-12-01 09:00:00', '2022-06-15 07:00:00'),
+    ('olivia15fl@outlook.com', '1277894714d127fa0a524641f70c5d24', 2, 'active', '2024-12-01 09:00:00', '2022-06-16 07:00:00'),
+    ('paul16fl@gmail.com', 'f8019325edd15aa087c5f6100c7288a0', 2, 'active', '2024-12-01 09:00:00', '2022-06-17 07:00:00'),
+    ('quinn17fl@gmail.com', 'e2ebe97bf323bb95c3b5fbbcf21966cc', 2, 'active', '2024-12-01 09:00:00', '2022-06-18 07:00:00'),
+    ('rose18fl@proton.me', '1d426e6d8b04288eec293b4744327f42', 2, 'active', '2024-12-01 09:00:00', '2022-06-19 07:00:00'),
+    ('sam19fl@gmail.com', 'a27640b839ffd8dbd3a2973cd3e6535d', 2, 'active', '2024-12-01 09:00:00', '2022-06-20 07:00:00'),
+    ('tara20fl@outlook.com', '54a1fe654f3719e06ec93f0fa5e0cc3f', 2, 'active', '2024-12-01 09:00:00', '2022-06-21 07:00:00'),
+    ('uma21fl@outlook.com', '739fc54290c2d37ff11f8657f922c0c5', 2, 'active', '2024-12-01 09:00:00', '2022-06-22 07:00:00'),
+    ('victor22fl@hotmail.com', '31445c488454b0dc3926b96225c5679b', 2, 'active', '2024-12-01 09:00:00', '2022-06-23 07:00:00'),
+    ('wendy23fl@outlook.com', '29b05c1206ef259dd71d1e4bdc724c22', 2, 'active', '2024-12-01 09:00:00', '2022-06-24 07:00:00'),
+    ('xander24fl@gmail.com', 'fce99e86e8fafac8a0ffde5b8ceead4e', 2, 'active', '2024-12-01 09:00:00', '2022-06-25 07:00:00'),
+    ('yara25fl@proton.me', '274600e7dae4382fdfcf5cd6fcbf05a1', 2, 'active', '2024-12-01 09:00:00', '2022-06-26 07:00:00'),
+    ('zoe26fl@hotmail.com', '6f4b0e93acccb3f5c440264078f3d88d', 2, 'active', '2024-12-01 09:00:00', '2022-06-27 07:00:00'),
+    ('aaron27fl@gmail.com', 'd03bf0ed3be1fb06a22e5e01d4d7c6d2', 2, 'active', '2024-12-01 09:00:00', '2022-06-28 07:00:00'),
+    ('bella28fl@proton.me', '711d696973968f1545ae842fb738afce', 2, 'active', '2024-12-01 09:00:00', '2022-06-01 07:00:00'),
+    ('chris29fl@gmail.com', 'e62ab98d67737b6bbec57bd023b3d0bd', 2, 'active', '2024-12-01 09:00:00', '2022-06-02 07:00:00'),
+    ('diana30fl@hotmail.com', 'f0bd3156d6ec72bdc0ed0b90b0505ce0', 2, 'active', '2024-12-01 09:00:00', '2022-06-03 07:00:00'),
+    ('evan31fl@outlook.com', 'ae7875d0cf57037edaa566f62444ca38', 2, 'active', '2024-12-01 09:00:00', '2022-06-04 07:00:00'),
+    ('fiona32fl@hotmail.com', '468a9ab02b9cc1fe837e5235097d3be4', 2, 'active', '2024-12-01 09:00:00', '2022-06-05 07:00:00'),
+    ('george33fl@outlook.com', 'b7179febeccda774aaef979dfb69edbf', 2, 'active', '2024-12-01 09:00:00', '2022-06-06 07:00:00'),
+    ('holly34fl@hotmail.com', 'c5fc0a5d4d48d6d3cd86052fc3f2f171', 2, 'active', '2024-12-01 09:00:00', '2022-06-07 07:00:00'),
+    ('ivan35fl@yahoo.com', '8150da472257136ade29d6c8faa0e426', 2, 'active', '2024-12-01 09:00:00', '2022-06-08 07:00:00'),
+    ('julia36fl@gmail.com', '5548ff809577eb3149da86223e97b1cc', 2, 'active', '2024-12-01 09:00:00', '2022-06-09 07:00:00'),
+    ('kevin37fl@gmail.com', '18d3f579732217f7630f796e5686865e', 2, 'active', '2024-12-01 09:00:00', '2022-06-10 07:00:00'),
+    ('laura38fl@yahoo.com', '0ef09459ac627daa5a4799ce5d6d9804', 2, 'active', '2024-12-01 09:00:00', '2022-06-11 07:00:00'),
+    ('mike39fl@outlook.com', 'ea1a7c8b3b946eb96ff8517c076aee46', 2, 'active', '2024-12-01 09:00:00', '2022-06-12 07:00:00'),
+    ('nina40fl@gmail.com', 'f590457fdeca68fe797074afefd839d4', 2, 'active', '2024-12-01 09:00:00', '2022-06-13 07:00:00');
 
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (1,1,'Alice','Smith','Detail-oriented developer committed to excellence and continuous learning.',NULL,'https://i.pravatar.cc/150?img=1','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (2,2,'Bob','Johnson','Dedicated specialist focused on clean code and scalable architecture.',NULL,'https://i.pravatar.cc/150?img=2','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (3,3,'Carol','Williams','Full-stack developer with deep expertise in cloud-native applications.',NULL,'https://i.pravatar.cc/150?img=3','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (4,4,'David','Brown','Versatile engineer with proven track record in distributed systems.',NULL,'https://i.pravatar.cc/150?img=4','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (5,5,'Emma','Jones','Results-driven engineer with strong communication and collaboration skills.',NULL,'https://i.pravatar.cc/150?img=5','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (6,6,'Frank','Garcia','Innovative thinker who bridges business needs with technical solutions.',NULL,'https://i.pravatar.cc/150?img=6','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (7,7,'Grace','Miller','Creative problem-solver with extensive experience in modern tech stacks.',NULL,'https://i.pravatar.cc/150?img=7','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (8,8,'Hank','Davis','Innovative thinker who bridges business needs with technical solutions.',NULL,'https://i.pravatar.cc/150?img=8','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (9,9,'Isla','Wilson','Innovative thinker who bridges business needs with technical solutions.',NULL,'https://i.pravatar.cc/150?img=9','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (10,10,'Jake','Moore','Detail-oriented developer committed to excellence and continuous learning.',NULL,'https://i.pravatar.cc/150?img=10','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (11,11,'Karen','Taylor','Versatile engineer with proven track record in distributed systems.',NULL,'https://i.pravatar.cc/150?img=11','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (12,12,'Leo','Anderson','Dedicated specialist focused on clean code and scalable architecture.',NULL,'https://i.pravatar.cc/150?img=12','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (13,13,'Mia','Thomas','Creative problem-solver with extensive experience in modern tech stacks.',NULL,'https://i.pravatar.cc/150?img=13','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (14,14,'Nate','Jackson','Detail-oriented developer committed to excellence and continuous learning.',NULL,'https://i.pravatar.cc/150?img=14','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (15,15,'Olivia','White','Creative problem-solver with extensive experience in modern tech stacks.',NULL,'https://i.pravatar.cc/150?img=15','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (16,16,'Paul','Harris','Results-driven engineer with strong communication and collaboration skills.',NULL,'https://i.pravatar.cc/150?img=16','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (17,17,'Quinn','Martin','Full-stack developer with deep expertise in cloud-native applications.',NULL,'https://i.pravatar.cc/150?img=17','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (18,18,'Rose','Thompson','Versatile engineer with proven track record in distributed systems.',NULL,'https://i.pravatar.cc/150?img=18','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (19,19,'Sam','Lee','Detail-oriented developer committed to excellence and continuous learning.',NULL,'https://i.pravatar.cc/150?img=19','2024-10-01 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (20,20,'Tara','Walker','Innovative thinker who bridges business needs with technical solutions.',NULL,'https://i.pravatar.cc/150?img=20','2024-10-01 00:00:00');
+-- Seed the profiles table with detailed information for each account.
+INSERT INTO profiles (account_id, first_name, last_name, bio, hourly_rate, avatar_url, updated_at) VALUES
+    (1, 'Alice', 'Smith', 'Detail-oriented developer committed to excellence and continuous learning.', NULL, 'https://i.pravatar.cc/150?img=1', '2024-10-01 00:00:00'),
+    (2, 'Bob', 'Johnson', 'Dedicated specialist focused on clean code and scalable architecture.', NULL, 'https://i.pravatar.cc/150?img=2', '2024-10-01 00:00:00'),
+    (3, 'Carol', 'Williams', 'Full-stack developer with deep expertise in cloud-native applications.', NULL, 'https://i.pravatar.cc/150?img=3', '2024-10-01 00:00:00'),
+    (4, 'David', 'Brown', 'Versatile engineer with proven track record in distributed systems.', NULL, 'https://i.pravatar.cc/150?img=4', '2024-10-01 00:00:00'),
+    (5, 'Emma', 'Jones', 'Results-driven engineer with strong communication and collaboration skills.', NULL, 'https://i.pravatar.cc/150?img=5', '2024-10-01 00:00:00'),
+    (6, 'Frank', 'Garcia', 'Innovative thinker who bridges business needs with technical solutions.', NULL, 'https://i.pravatar.cc/150?img=6', '2024-10-01 00:00:00'),
+    (7, 'Grace', 'Miller', 'Creative problem-solver with extensive experience in modern tech stacks.', NULL, 'https://i.pravatar.cc/150?img=7', '2024-10-01 00:00:00'),
+    (8, 'Hank', 'Davis', 'Innovative thinker who bridges business needs with technical solutions.', NULL, 'https://i.pravatar.cc/150?img=8', '2024-10-01 00:00:00'),
+    (9, 'Isla', 'Wilson', 'Innovative thinker who bridges business needs with technical solutions.', NULL, 'https://i.pravatar.cc/150?img=9', '2024-10-01 00:00:00'),
+    (10, 'Jake', 'Moore', 'Detail-oriented developer committed to excellence and continuous learning.', NULL, 'https://i.pravatar.cc/150?img=10', '2024-10-01 00:00:00'),
+    (11, 'Karen', 'Taylor', 'Versatile engineer with proven track record in distributed systems.', NULL, 'https://i.pravatar.cc/150?img=11', '2024-10-01 00:00:00'),
+    (12, 'Leo', 'Anderson', 'Dedicated specialist focused on clean code and scalable architecture.', NULL, 'https://i.pravatar.cc/150?img=12', '2024-10-01 00:00:00'),
+    (13, 'Mia', 'Thomas', 'Creative problem-solver with extensive experience in modern tech stacks.', NULL, 'https://i.pravatar.cc/150?img=13', '2024-10-01 00:00:00'),
+    (14, 'Nate', 'Jackson', 'Detail-oriented developer committed to excellence and continuous learning.', NULL, 'https://i.pravatar.cc/150?img=14', '2024-10-01 00:00:00'),
+    (15, 'Olivia', 'White', 'Creative problem-solver with extensive experience in modern tech stacks.', NULL, 'https://i.pravatar.cc/150?img=15', '2024-10-01 00:00:00'),
+    (16, 'Paul', 'Harris', 'Results-driven engineer with strong communication and collaboration skills.', NULL, 'https://i.pravatar.cc/150?img=16', '2024-10-01 00:00:00'),
+    (17, 'Quinn', 'Martin', 'Full-stack developer with deep expertise in cloud-native applications.', NULL, 'https://i.pravatar.cc/150?img=17', '2024-10-01 00:00:00'),
+    (18, 'Rose', 'Thompson', 'Versatile engineer with proven track record in distributed systems.', NULL, 'https://i.pravatar.cc/150?img=18', '2024-10-01 00:00:00'),
+    (19, 'Sam', 'Lee', 'Detail-oriented developer committed to excellence and continuous learning.', NULL, 'https://i.pravatar.cc/150?img=19', '2024-10-01 00:00:00'),
+    (20, 'Tara', 'Walker', 'Innovative thinker who bridges business needs with technical solutions.', NULL, 'https://i.pravatar.cc/150?img=20', '2024-10-01 00:00:00'),
+    (21, 'Alice', 'Miller', 'Experienced professional with a passion for delivering high-quality results on time.', 42.9, 'https://i.pravatar.cc/150?img=21', '2024-11-15 00:00:00'),
+    (22, 'Bob', 'Davis', 'Experienced professional with a passion for delivering high-quality results on time.', 100.5, 'https://i.pravatar.cc/150?img=22', '2024-11-15 00:00:00'),
+    (23, 'Carol', 'Wilson', 'Full-stack developer with deep expertise in cloud-native applications.', 46.77, 'https://i.pravatar.cc/150?img=23', '2024-11-15 00:00:00'),
+    (24, 'David', 'Moore', 'Detail-oriented developer committed to excellence and continuous learning.', 111.31, 'https://i.pravatar.cc/150?img=24', '2024-11-15 00:00:00'),
+    (25, 'Emma', 'Taylor', 'Innovative thinker who bridges business needs with technical solutions.', 41.26, 'https://i.pravatar.cc/150?img=25', '2024-11-15 00:00:00'),
+    (26, 'Frank', 'Anderson', 'Results-driven engineer with strong communication and collaboration skills.', 59.56, 'https://i.pravatar.cc/150?img=26', '2024-11-15 00:00:00'),
+    (27, 'Grace', 'Thomas', 'Results-driven engineer with strong communication and collaboration skills.', 34.29, 'https://i.pravatar.cc/150?img=27', '2024-11-15 00:00:00'),
+    (28, 'Hank', 'Jackson', 'Creative problem-solver with extensive experience in modern tech stacks.', 44.66, 'https://i.pravatar.cc/150?img=28', '2024-11-15 00:00:00'),
+    (29, 'Isla', 'White', 'Versatile engineer with proven track record in distributed systems.', 94.7, 'https://i.pravatar.cc/150?img=29', '2024-11-15 00:00:00'),
+    (30, 'Jake', 'Harris', 'Full-stack developer with deep expertise in cloud-native applications.', 109.78, 'https://i.pravatar.cc/150?img=30', '2024-11-15 00:00:00'),
+    (31, 'Karen', 'Martin', 'Full-stack developer with deep expertise in cloud-native applications.', 56.2, 'https://i.pravatar.cc/150?img=31', '2024-11-15 00:00:00'),
+    (32, 'Leo', 'Thompson', 'Creative problem-solver with extensive experience in modern tech stacks.', 70.95, 'https://i.pravatar.cc/150?img=32', '2024-11-15 00:00:00'),
+    (33, 'Mia', 'Lee', 'Dedicated specialist focused on clean code and scalable architecture.', 95.58, 'https://i.pravatar.cc/150?img=33', '2024-11-15 00:00:00'),
+    (34, 'Nate', 'Walker', 'Dedicated specialist focused on clean code and scalable architecture.', 35.28, 'https://i.pravatar.cc/150?img=34', '2024-11-15 00:00:00'),
+    (35, 'Olivia', 'Hall', 'Creative problem-solver with extensive experience in modern tech stacks.', 99.21, 'https://i.pravatar.cc/150?img=35', '2024-11-15 00:00:00'),
+    (36, 'Paul', 'Allen', 'Full-stack developer with deep expertise in cloud-native applications.', 79.64, 'https://i.pravatar.cc/150?img=36', '2024-11-15 00:00:00'),
+    (37, 'Quinn', 'Young', 'Full-stack developer with deep expertise in cloud-native applications.', 58.16, 'https://i.pravatar.cc/150?img=37', '2024-11-15 00:00:00'),
+    (38, 'Rose', 'King', 'Results-driven engineer with strong communication and collaboration skills.', 72.91, 'https://i.pravatar.cc/150?img=38', '2024-11-15 00:00:00'),
+    (39, 'Sam', 'Wright', 'Experienced professional with a passion for delivering high-quality results on time.', 88.03, 'https://i.pravatar.cc/150?img=39', '2024-11-15 00:00:00'),
+    (40, 'Tara', 'Scott', 'Dedicated specialist focused on clean code and scalable architecture.', 88.17, 'https://i.pravatar.cc/150?img=40', '2024-11-15 00:00:00'),
+    (41, 'Uma', 'Green', 'Versatile engineer with proven track record in distributed systems.', 96.86, 'https://i.pravatar.cc/150?img=41', '2024-11-15 00:00:00'),
+    (42, 'Victor', 'Baker', 'Innovative thinker who bridges business needs with technical solutions.', 31.16, 'https://i.pravatar.cc/150?img=42', '2024-11-15 00:00:00'),
+    (43, 'Wendy', 'Adams', 'Full-stack developer with deep expertise in cloud-native applications.', 35.82, 'https://i.pravatar.cc/150?img=43', '2024-11-15 00:00:00'),
+    (44, 'Xander', 'Nelson', 'Experienced professional with a passion for delivering high-quality results on time.', 115.38, 'https://i.pravatar.cc/150?img=44', '2024-11-15 00:00:00'),
+    (45, 'Yara', 'Smith', 'Versatile engineer with proven track record in distributed systems.', 117.19, 'https://i.pravatar.cc/150?img=45', '2024-11-15 00:00:00'),
+    (46, 'Zoe', 'Johnson', 'Creative problem-solver with extensive experience in modern tech stacks.', 70.77, 'https://i.pravatar.cc/150?img=46', '2024-11-15 00:00:00'),
+    (47, 'Aaron', 'Williams', 'Dedicated specialist focused on clean code and scalable architecture.', 107.05, 'https://i.pravatar.cc/150?img=47', '2024-11-15 00:00:00'),
+    (48, 'Bella', 'Brown', 'Versatile engineer with proven track record in distributed systems.', 104.17, 'https://i.pravatar.cc/150?img=48', '2024-11-15 00:00:00'),
+    (49, 'Chris', 'Jones', 'Detail-oriented developer committed to excellence and continuous learning.', 35.28, 'https://i.pravatar.cc/150?img=49', '2024-11-15 00:00:00'),
+    (50, 'Diana', 'Garcia', 'Creative problem-solver with extensive experience in modern tech stacks.', 73.94, 'https://i.pravatar.cc/150?img=50', '2024-11-15 00:00:00'),
+    (51, 'Evan', 'Miller', 'Experienced professional with a passion for delivering high-quality results on time.', 79.89, 'https://i.pravatar.cc/150?img=51', '2024-11-15 00:00:00'),
+    (52, 'Fiona', 'Davis', 'Results-driven engineer with strong communication and collaboration skills.', 21.95, 'https://i.pravatar.cc/150?img=52', '2024-11-15 00:00:00'),
+    (53, 'George', 'Wilson', 'Innovative thinker who bridges business needs with technical solutions.', 107.87, 'https://i.pravatar.cc/150?img=53', '2024-11-15 00:00:00'),
+    (54, 'Holly', 'Moore', 'Versatile engineer with proven track record in distributed systems.', 43.95, 'https://i.pravatar.cc/150?img=54', '2024-11-15 00:00:00'),
+    (55, 'Ivan', 'Taylor', 'Detail-oriented developer committed to excellence and continuous learning.', 107.8, 'https://i.pravatar.cc/150?img=55', '2024-11-15 00:00:00'),
+    (56, 'Julia', 'Anderson', 'Dedicated specialist focused on clean code and scalable architecture.', 28.57, 'https://i.pravatar.cc/150?img=56', '2024-11-15 00:00:00'),
+    (57, 'Kevin', 'Thomas', 'Results-driven engineer with strong communication and collaboration skills.', 101.6, 'https://i.pravatar.cc/150?img=57', '2024-11-15 00:00:00'),
+    (58, 'Laura', 'Jackson', 'Creative problem-solver with extensive experience in modern tech stacks.', 32.84, 'https://i.pravatar.cc/150?img=58', '2024-11-15 00:00:00'),
+    (59, 'Mike', 'White', 'Results-driven engineer with strong communication and collaboration skills.', 114.68, 'https://i.pravatar.cc/150?img=59', '2024-11-15 00:00:00'),
+    (60, 'Nina', 'Harris', 'Creative problem-solver with extensive experience in modern tech stacks.', 46.51, 'https://i.pravatar.cc/150?img=60', '2024-11-15 00:00:00');
 
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (21,21,'Alice','Miller','Experienced professional with a passion for delivering high-quality results on time.',42.9,'https://i.pravatar.cc/150?img=21','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (22,22,'Bob','Davis','Experienced professional with a passion for delivering high-quality results on time.',100.5,'https://i.pravatar.cc/150?img=22','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (23,23,'Carol','Wilson','Full-stack developer with deep expertise in cloud-native applications.',46.77,'https://i.pravatar.cc/150?img=23','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (24,24,'David','Moore','Detail-oriented developer committed to excellence and continuous learning.',111.31,'https://i.pravatar.cc/150?img=24','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (25,25,'Emma','Taylor','Innovative thinker who bridges business needs with technical solutions.',41.26,'https://i.pravatar.cc/150?img=25','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (26,26,'Frank','Anderson','Results-driven engineer with strong communication and collaboration skills.',59.56,'https://i.pravatar.cc/150?img=26','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (27,27,'Grace','Thomas','Results-driven engineer with strong communication and collaboration skills.',34.29,'https://i.pravatar.cc/150?img=27','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (28,28,'Hank','Jackson','Creative problem-solver with extensive experience in modern tech stacks.',44.66,'https://i.pravatar.cc/150?img=28','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (29,29,'Isla','White','Versatile engineer with proven track record in distributed systems.',94.7,'https://i.pravatar.cc/150?img=29','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (30,30,'Jake','Harris','Full-stack developer with deep expertise in cloud-native applications.',109.78,'https://i.pravatar.cc/150?img=30','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (31,31,'Karen','Martin','Full-stack developer with deep expertise in cloud-native applications.',56.2,'https://i.pravatar.cc/150?img=31','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (32,32,'Leo','Thompson','Creative problem-solver with extensive experience in modern tech stacks.',70.95,'https://i.pravatar.cc/150?img=32','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (33,33,'Mia','Lee','Dedicated specialist focused on clean code and scalable architecture.',95.58,'https://i.pravatar.cc/150?img=33','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (34,34,'Nate','Walker','Dedicated specialist focused on clean code and scalable architecture.',35.28,'https://i.pravatar.cc/150?img=34','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (35,35,'Olivia','Hall','Creative problem-solver with extensive experience in modern tech stacks.',99.21,'https://i.pravatar.cc/150?img=35','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (36,36,'Paul','Allen','Full-stack developer with deep expertise in cloud-native applications.',79.64,'https://i.pravatar.cc/150?img=36','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (37,37,'Quinn','Young','Full-stack developer with deep expertise in cloud-native applications.',58.16,'https://i.pravatar.cc/150?img=37','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (38,38,'Rose','King','Results-driven engineer with strong communication and collaboration skills.',72.91,'https://i.pravatar.cc/150?img=38','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (39,39,'Sam','Wright','Experienced professional with a passion for delivering high-quality results on time.',88.03,'https://i.pravatar.cc/150?img=39','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (40,40,'Tara','Scott','Dedicated specialist focused on clean code and scalable architecture.',88.17,'https://i.pravatar.cc/150?img=40','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (41,41,'Uma','Green','Versatile engineer with proven track record in distributed systems.',96.86,'https://i.pravatar.cc/150?img=41','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (42,42,'Victor','Baker','Innovative thinker who bridges business needs with technical solutions.',31.16,'https://i.pravatar.cc/150?img=42','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (43,43,'Wendy','Adams','Full-stack developer with deep expertise in cloud-native applications.',35.82,'https://i.pravatar.cc/150?img=43','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (44,44,'Xander','Nelson','Experienced professional with a passion for delivering high-quality results on time.',115.38,'https://i.pravatar.cc/150?img=44','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (45,45,'Yara','Smith','Versatile engineer with proven track record in distributed systems.',117.19,'https://i.pravatar.cc/150?img=45','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (46,46,'Zoe','Johnson','Creative problem-solver with extensive experience in modern tech stacks.',70.77,'https://i.pravatar.cc/150?img=46','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (47,47,'Aaron','Williams','Dedicated specialist focused on clean code and scalable architecture.',107.05,'https://i.pravatar.cc/150?img=47','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (48,48,'Bella','Brown','Versatile engineer with proven track record in distributed systems.',104.17,'https://i.pravatar.cc/150?img=48','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (49,49,'Chris','Jones','Detail-oriented developer committed to excellence and continuous learning.',35.28,'https://i.pravatar.cc/150?img=49','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (50,50,'Diana','Garcia','Creative problem-solver with extensive experience in modern tech stacks.',73.94,'https://i.pravatar.cc/150?img=50','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (51,51,'Evan','Miller','Experienced professional with a passion for delivering high-quality results on time.',79.89,'https://i.pravatar.cc/150?img=51','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (52,52,'Fiona','Davis','Results-driven engineer with strong communication and collaboration skills.',21.95,'https://i.pravatar.cc/150?img=52','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (53,53,'George','Wilson','Innovative thinker who bridges business needs with technical solutions.',107.87,'https://i.pravatar.cc/150?img=53','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (54,54,'Holly','Moore','Versatile engineer with proven track record in distributed systems.',43.95,'https://i.pravatar.cc/150?img=54','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (55,55,'Ivan','Taylor','Detail-oriented developer committed to excellence and continuous learning.',107.8,'https://i.pravatar.cc/150?img=55','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (56,56,'Julia','Anderson','Dedicated specialist focused on clean code and scalable architecture.',28.57,'https://i.pravatar.cc/150?img=56','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (57,57,'Kevin','Thomas','Results-driven engineer with strong communication and collaboration skills.',101.6,'https://i.pravatar.cc/150?img=57','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (58,58,'Laura','Jackson','Creative problem-solver with extensive experience in modern tech stacks.',32.84,'https://i.pravatar.cc/150?img=58','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (59,59,'Mike','White','Results-driven engineer with strong communication and collaboration skills.',114.68,'https://i.pravatar.cc/150?img=59','2024-11-15 00:00:00');
-INSERT INTO profiles (id,account_id,first_name,last_name,bio,hourly_rate,avatar_url,updated_at) VALUES (60,60,'Nina','Harris','Creative problem-solver with extensive experience in modern tech stacks.',46.51,'https://i.pravatar.cc/150?img=60','2024-11-15 00:00:00');
+-- Seed the profile_skills table to link profiles with their skills.
+INSERT INTO profile_skills (profile_id, skill_id, skill_level) VALUES
+    (21, 14, 'expert'),
+    (21, 7, 'expert'),
+    (21, 18, 'beginner'),
+    (21, 24, 'intermediate'),
+    (21, 10, 'intermediate'),
+    (21, 13, 'beginner'),
+    (21, 12, 'advanced'),
+    (22, 19, 'intermediate'),
+    (22, 18, 'beginner'),
+    (22, 8, 'beginner'),
+    (23, 21, 'intermediate'),
+    (23, 2, 'advanced'),
+    (23, 8, 'expert'),
+    (23, 3, 'intermediate'),
+    (23, 24, 'intermediate'),
+    (23, 11, 'expert'),
+    (23, 22, 'intermediate'),
+    (23, 17, 'expert'),
+    (24, 7, 'expert'),
+    (24, 4, 'expert'),
+    (24, 24, 'expert'),
+    (24, 22, 'beginner'),
+    (24, 14, 'beginner'),
+    (24, 12, 'beginner'),
+    (25, 24, 'expert'),
+    (25, 11, 'intermediate'),
+    (25, 4, 'expert'),
+    (25, 8, 'intermediate'),
+    (25, 7, 'advanced'),
+    (25, 21, 'expert'),
+    (26, 3, 'beginner'),
+    (26, 15, 'beginner'),
+    (26, 18, 'beginner'),
+    (26, 4, 'intermediate'),
+    (27, 14, 'beginner'),
+    (27, 16, 'intermediate'),
+    (27, 7, 'expert'),
+    (27, 13, 'beginner'),
+    (28, 9, 'intermediate'),
+    (28, 15, 'intermediate'),
+    (28, 10, 'advanced'),
+    (28, 14, 'intermediate'),
+    (28, 18, 'beginner'),
+    (28, 16, 'beginner'),
+    (29, 11, 'beginner'),
+    (29, 2, 'beginner'),
+    (29, 24, 'intermediate'),
+    (29, 19, 'beginner'),
+    (29, 16, 'beginner'),
+    (29, 17, 'intermediate'),
+    (29, 20, 'expert'),
+    (29, 6, 'beginner'),
+    (30, 8, 'advanced'),
+    (30, 19, 'advanced'),
+    (30, 20, 'intermediate'),
+    (30, 2, 'advanced'),
+    (30, 23, 'intermediate'),
+    (30, 3, 'advanced'),
+    (30, 14, 'expert'),
+    (31, 22, 'advanced'),
+    (31, 21, 'beginner'),
+    (31, 10, 'beginner'),
+    (31, 15, 'expert'),
+    (32, 19, 'intermediate'),
+    (32, 4, 'advanced'),
+    (32, 3, 'beginner'),
+    (32, 18, 'intermediate'),
+    (32, 7, 'advanced'),
+    (32, 17, 'advanced'),
+    (32, 9, 'intermediate'),
+    (33, 18, 'beginner'),
+    (33, 23, 'advanced'),
+    (33, 10, 'beginner'),
+    (33, 20, 'intermediate'),
+    (33, 21, 'advanced'),
+    (33, 17, 'beginner'),
+    (34, 24, 'advanced'),
+    (34, 18, 'advanced'),
+    (34, 5, 'intermediate'),
+    (35, 11, 'beginner'),
+    (35, 7, 'beginner'),
+    (35, 22, 'expert'),
+    (35, 21, 'advanced'),
+    (35, 9, 'beginner'),
+    (35, 17, 'beginner'),
+    (35, 16, 'advanced'),
+    (35, 23, 'intermediate'),
+    (36, 9, 'beginner'),
+    (36, 6, 'intermediate'),
+    (36, 15, 'beginner'),
+    (36, 18, 'advanced'),
+    (36, 14, 'intermediate'),
+    (36, 22, 'expert'),
+    (36, 1, 'intermediate'),
+    (36, 4, 'beginner'),
+    (37, 12, 'beginner'),
+    (37, 2, 'advanced'),
+    (37, 7, 'expert'),
+    (37, 22, 'intermediate'),
+    (37, 8, 'intermediate'),
+    (38, 6, 'advanced'),
+    (38, 14, 'expert'),
+    (38, 1, 'intermediate'),
+    (38, 24, 'advanced'),
+    (39, 23, 'expert'),
+    (39, 4, 'intermediate'),
+    (39, 13, 'intermediate'),
+    (39, 2, 'expert'),
+    (40, 10, 'expert'),
+    (40, 8, 'advanced'),
+    (40, 1, 'advanced'),
+    (40, 22, 'beginner'),
+    (40, 7, 'advanced'),
+    (41, 21, 'advanced'),
+    (41, 17, 'beginner'),
+    (41, 13, 'beginner'),
+    (41, 22, 'advanced'),
+    (41, 18, 'intermediate'),
+    (42, 9, 'expert'),
+    (42, 2, 'beginner'),
+    (42, 4, 'expert'),
+    (42, 20, 'intermediate'),
+    (42, 14, 'advanced'),
+    (42, 12, 'beginner'),
+    (42, 11, 'expert'),
+    (43, 17, 'intermediate'),
+    (43, 18, 'advanced'),
+    (43, 22, 'expert'),
+    (44, 22, 'advanced'),
+    (44, 11, 'beginner'),
+    (44, 20, 'advanced'),
+    (45, 10, 'intermediate'),
+    (45, 22, 'intermediate'),
+    (45, 14, 'expert'),
+    (45, 11, 'expert'),
+    (45, 13, 'intermediate'),
+    (45, 25, 'advanced'),
+    (45, 18, 'expert'),
+    (46, 1, 'expert'),
+    (46, 10, 'expert'),
+    (46, 24, 'expert'),
+    (46, 7, 'intermediate'),
+    (46, 14, 'expert'),
+    (46, 19, 'intermediate'),
+    (46, 11, 'beginner'),
+    (47, 17, 'beginner'),
+    (47, 22, 'intermediate'),
+    (47, 21, 'advanced'),
+    (47, 20, 'intermediate'),
+    (47, 11, 'intermediate'),
+    (48, 1, 'beginner'),
+    (48, 2, 'expert'),
+    (48, 8, 'expert'),
+    (48, 16, 'intermediate'),
+    (49, 23, 'expert'),
+    (49, 13, 'intermediate'),
+    (49, 16, 'intermediate'),
+    (49, 24, 'expert'),
+    (49, 8, 'beginner'),
+    (49, 5, 'intermediate'),
+    (49, 1, 'beginner'),
+    (49, 4, 'expert'),
+    (50, 15, 'advanced'),
+    (50, 22, 'expert'),
+    (50, 17, 'expert'),
+    (50, 18, 'expert'),
+    (51, 24, 'intermediate'),
+    (51, 16, 'advanced'),
+    (51, 15, 'expert'),
+    (51, 9, 'intermediate'),
+    (52, 15, 'advanced'),
+    (52, 3, 'advanced'),
+    (52, 23, 'advanced'),
+    (52, 10, 'beginner'),
+    (52, 8, 'intermediate'),
+    (53, 8, 'intermediate'),
+    (53, 13, 'beginner'),
+    (53, 23, 'expert'),
+    (53, 5, 'expert'),
+    (54, 18, 'expert'),
+    (54, 15, 'expert'),
+    (54, 14, 'beginner'),
+    (54, 2, 'expert'),
+    (54, 7, 'expert'),
+    (55, 12, 'expert'),
+    (55, 10, 'expert'),
+    (55, 25, 'intermediate'),
+    (56, 8, 'advanced'),
+    (56, 9, 'expert'),
+    (56, 14, 'intermediate'),
+    (56, 16, 'expert'),
+    (56, 1, 'intermediate'),
+    (56, 13, 'beginner'),
+    (57, 19, 'intermediate'),
+    (57, 25, 'expert'),
+    (57, 22, 'intermediate'),
+    (57, 1, 'beginner'),
+    (57, 3, 'advanced'),
+    (57, 14, 'expert'),
+    (58, 7, 'advanced'),
+    (58, 15, 'expert'),
+    (58, 11, 'advanced'),
+    (58, 25, 'beginner'),
+    (58, 13, 'expert'),
+    (59, 24, 'advanced'),
+    (59, 18, 'intermediate'),
+    (59, 2, 'beginner'),
+    (60, 2, 'intermediate'),
+    (60, 1, 'expert'),
+    (60, 8, 'beginner'),
+    (60, 7, 'intermediate'),
+    (60, 24, 'expert'),
+    (60, 20, 'advanced'),
+    (60, 5, 'advanced'),
+    (60, 23, 'intermediate');
 
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (21,14,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (21,7,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (21,18,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (21,24,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (21,10,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (21,13,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (21,12,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (22,19,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (22,18,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (22,8,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (23,21,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (23,2,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (23,8,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (23,3,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (23,24,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (23,11,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (23,22,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (23,17,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (24,7,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (24,4,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (24,24,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (24,22,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (24,14,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (24,12,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (25,24,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (25,11,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (25,4,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (25,8,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (25,7,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (25,21,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (26,3,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (26,15,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (26,18,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (26,4,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (27,14,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (27,16,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (27,7,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (27,13,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (28,9,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (28,15,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (28,10,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (28,14,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (28,18,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (28,16,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (29,11,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (29,2,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (29,24,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (29,19,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (29,16,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (29,17,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (29,20,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (29,6,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (30,8,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (30,19,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (30,20,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (30,2,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (30,23,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (30,3,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (30,14,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (31,22,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (31,21,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (31,10,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (31,15,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (32,19,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (32,4,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (32,3,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (32,18,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (32,7,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (32,17,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (32,9,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (33,18,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (33,23,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (33,10,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (33,20,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (33,21,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (33,17,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (34,24,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (34,18,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (34,5,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (35,11,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (35,7,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (35,22,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (35,21,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (35,9,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (35,17,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (35,16,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (35,23,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (36,9,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (36,6,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (36,15,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (36,18,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (36,14,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (36,22,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (36,1,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (36,4,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (37,12,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (37,2,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (37,7,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (37,22,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (37,8,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (38,6,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (38,14,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (38,1,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (38,24,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (39,23,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (39,4,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (39,13,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (39,2,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (40,10,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (40,8,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (40,1,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (40,22,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (40,7,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (41,21,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (41,17,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (41,13,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (41,22,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (41,18,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (42,9,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (42,2,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (42,4,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (42,20,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (42,14,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (42,12,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (42,11,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (43,17,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (43,18,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (43,22,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (44,22,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (44,11,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (44,20,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (45,10,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (45,22,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (45,14,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (45,11,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (45,13,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (45,25,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (45,18,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (46,1,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (46,10,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (46,24,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (46,7,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (46,14,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (46,19,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (46,11,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (47,17,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (47,22,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (47,21,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (47,20,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (47,11,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (48,1,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (48,2,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (48,8,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (48,16,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (49,23,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (49,13,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (49,16,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (49,24,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (49,8,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (49,5,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (49,1,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (49,4,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (50,15,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (50,22,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (50,17,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (50,18,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (51,24,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (51,16,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (51,15,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (51,9,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (52,15,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (52,3,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (52,23,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (52,10,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (52,8,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (53,8,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (53,13,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (53,23,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (53,5,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (54,18,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (54,15,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (54,14,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (54,2,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (54,7,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (55,12,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (55,10,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (55,25,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (56,8,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (56,9,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (56,14,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (56,16,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (56,1,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (56,13,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (57,19,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (57,25,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (57,22,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (57,1,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (57,3,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (57,14,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (58,7,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (58,15,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (58,11,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (58,25,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (58,13,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (59,24,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (59,18,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (59,2,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (60,2,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (60,1,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (60,8,'beginner');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (60,7,'intermediate');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (60,24,'expert');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (60,20,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (60,5,'advanced');
-INSERT INTO profile_skills (profile_id,skill_id,skill_level) VALUES (60,23,'intermediate');
+-- Seed the jobs table with a variety of job postings.
+INSERT INTO jobs (client_id, category_id, title, description, budget_type, min_budget, max_budget, status_id, created_at) VALUES
+    (19, 1, 'Build a Python REST API', 'Full-stack developer with deep expertise in cloud-native applications.', 'hourly', 4736.62, 7124.93, 1, '2024-04-04 12:00:00'),
+    (4, 1, 'Develop a React web application', 'Experienced professional with a passion for delivering high-quality results on time.', 'hourly', 2897.35, 8528.0, 2, '2024-09-21 12:00:00'),
+    (4, 1, 'Migrate legacy system to Docker', 'Full-stack developer with deep expertise in cloud-native applications.', 'hourly', 3360.13, 10161.08, 2, '2024-07-06 12:00:00'),
+    (18, 1, 'Create a dashboard using Vue.js', 'Results-driven engineer with strong communication and collaboration skills.', 'hourly', 2460.09, 8577.27, 1, '2024-05-11 12:00:00'),
+    (15, 1, 'Set up Kubernetes CI/CD pipeline', 'Detail-oriented developer committed to excellence and continuous learning.', 'hourly', 3064.32, 8741.64, 3, '2024-01-16 12:00:00'),
+    (12, 1, 'Data pipeline with PostgreSQL', 'Versatile engineer with proven track record in distributed systems.', 'hourly', 1758.46, 6931.55, 1, '2024-05-18 12:00:00'),
+    (3, 1, 'Containerise app with Docker', 'Detail-oriented developer committed to excellence and continuous learning.', 'hourly', 2698.6, 9005.75, 3, '2024-08-15 12:00:00'),
+    (8, 1, 'Build real-time chat with Node.js', 'Full-stack developer with deep expertise in cloud-native applications.', 'fixed', 1877.93, 6948.82, 3, '2024-09-17 12:00:00'),
+    (11, 1, 'Design UI/UX for SaaS product', 'Innovative thinker who bridges business needs with technical solutions.', 'hourly', 1719.12, 4478.95, 2, '2024-04-11 12:00:00'),
+    (6, 1, 'Machine learning model in Python', 'Detail-oriented developer committed to excellence and continuous learning.', 'fixed', 3823.72, 6759.22, 1, '2024-09-20 12:00:00'),
+    (8, 1, 'Spring Boot microservices', 'Innovative thinker who bridges business needs with technical solutions.', 'fixed', 1860.2, 7816.33, 2, '2024-05-02 12:00:00'),
+    (5, 1, 'Full-stack TypeScript app', 'Results-driven engineer with strong communication and collaboration skills.', 'fixed', 4427.24, 9445.69, 3, '2024-08-15 12:00:00'),
+    (16, 1, 'AWS cloud infrastructure setup', 'Dedicated specialist focused on clean code and scalable architecture.', 'fixed', 2303.18, 3821.76, 2, '2024-03-05 12:00:00'),
+    (18, 1, 'GraphQL API development', 'Full-stack developer with deep expertise in cloud-native applications.', 'fixed', 3990.62, 7653.27, 3, '2024-05-28 12:00:00'),
+    (2, 1, 'Angular admin panel', 'Dedicated specialist focused on clean code and scalable architecture.', 'fixed', 3314.82, 6167.34, 2, '2024-03-08 12:00:00'),
+    (6, 1, 'Redis caching layer implementation', 'Experienced professional with a passion for delivering high-quality results on time.', 'hourly', 2527.27, 7683.95, 3, '2024-01-08 12:00:00'),
+    (3, 1, 'FastAPI backend service', 'Detail-oriented developer committed to excellence and continuous learning.', 'hourly', 4045.23, 9420.64, 2, '2024-07-04 12:00:00'),
+    (5, 1, 'MongoDB data migration', 'Dedicated specialist focused on clean code and scalable architecture.', 'fixed', 1246.65, 4399.93, 3, '2024-08-04 12:00:00'),
+    (9, 1, 'Tailwind CSS redesign', 'Results-driven engineer with strong communication and collaboration skills.', 'hourly', 861.99, 2141.02, 1, '2024-07-24 12:00:00'),
+    (3, 1, 'CI/CD automation with GitHub Actions', 'Detail-oriented developer committed to excellence and continuous learning.', 'fixed', 4998.08, 10704.05, 1, '2024-05-19 12:00:00'),
+    (16, 1, 'Java Spring Boot API', 'Results-driven engineer with strong communication and collaboration skills.', 'hourly', 1316.7, 6414.01, 3, '2024-02-16 12:00:00'),
+    (4, 1, 'React Native mobile app', 'Creative problem-solver with extensive experience in modern tech stacks.', 'hourly', 2352.4, 6820.68, 3, '2024-09-02 12:00:00'),
+    (11, 1, 'Data Science dashboard', 'Dedicated specialist focused on clean code and scalable architecture.', 'hourly', 4392.1, 11166.59, 1, '2024-01-22 12:00:00'),
+    (17, 1, 'Figma to HTML conversion', 'Innovative thinker who bridges business needs with technical solutions.', 'hourly', 3314.34, 9634.27, 1, '2024-04-09 12:00:00'),
+    (16, 1, 'Vue.js e-commerce site', 'Dedicated specialist focused on clean code and scalable architecture.', 'fixed', 4879.16, 10141.26, 1, '2024-04-23 12:00:00'),
+    (1, 1, 'Django CMS development', 'Full-stack developer with deep expertise in cloud-native applications.', 'fixed', 1511.15, 8400.99, 1, '2024-02-15 12:00:00'),
+    (16, 1, 'Node.js WebSocket server', 'Versatile engineer with proven track record in distributed systems.', 'hourly', 2369.71, 6747.21, 1, '2024-08-08 12:00:00'),
+    (7, 1, 'PostgreSQL query optimization', 'Creative problem-solver with extensive experience in modern tech stacks.', 'fixed', 1743.11, 8273.15, 3, '2024-06-26 12:00:00'),
+    (10, 1, 'AWS Lambda serverless functions', 'Results-driven engineer with strong communication and collaboration skills.', 'fixed', 2509.46, 6899.85, 3, '2024-09-25 12:00:00'),
+    (8, 1, 'Kubernetes cluster management', 'Full-stack developer with deep expertise in cloud-native applications.', 'fixed', 4352.06, 8227.49, 1, '2024-06-24 12:00:00');
 
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (1,19,1,'Build a Python REST API','Full-stack developer with deep expertise in cloud-native applications.','hourly',4736.62,7124.93,1,'2024-04-04 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (2,4,1,'Develop a React web application','Experienced professional with a passion for delivering high-quality results on time.','hourly',2897.35,8528.0,2,'2024-09-21 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (3,4,1,'Migrate legacy system to Docker','Full-stack developer with deep expertise in cloud-native applications.','hourly',3360.13,10161.08,2,'2024-07-06 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (4,18,1,'Create a dashboard using Vue.js','Results-driven engineer with strong communication and collaboration skills.','hourly',2460.09,8577.27,1,'2024-05-11 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (5,15,1,'Set up Kubernetes CI/CD pipeline','Detail-oriented developer committed to excellence and continuous learning.','hourly',3064.32,8741.64,3,'2024-01-16 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (6,12,1,'Data pipeline with PostgreSQL','Versatile engineer with proven track record in distributed systems.','hourly',1758.46,6931.55,1,'2024-05-18 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (7,3,1,'Containerise app with Docker','Detail-oriented developer committed to excellence and continuous learning.','hourly',2698.6,9005.75,3,'2024-08-15 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (8,8,1,'Build real-time chat with Node.js','Full-stack developer with deep expertise in cloud-native applications.','fixed',1877.93,6948.82,3,'2024-09-17 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (9,11,1,'Design UI/UX for SaaS product','Innovative thinker who bridges business needs with technical solutions.','hourly',1719.12,4478.95,2,'2024-04-11 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (10,6,1,'Machine learning model in Python','Detail-oriented developer committed to excellence and continuous learning.','fixed',3823.72,6759.22,1,'2024-09-20 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (11,8,1,'Spring Boot microservices','Innovative thinker who bridges business needs with technical solutions.','fixed',1860.2,7816.33,2,'2024-05-02 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (12,5,1,'Full-stack TypeScript app','Results-driven engineer with strong communication and collaboration skills.','fixed',4427.24,9445.69,3,'2024-08-15 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (13,16,1,'AWS cloud infrastructure setup','Dedicated specialist focused on clean code and scalable architecture.','fixed',2303.18,3821.76,2,'2024-03-05 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (14,18,1,'GraphQL API development','Full-stack developer with deep expertise in cloud-native applications.','fixed',3990.62,7653.27,3,'2024-05-28 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (15,2,1,'Angular admin panel','Dedicated specialist focused on clean code and scalable architecture.','fixed',3314.82,6167.34,2,'2024-03-08 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (16,6,1,'Redis caching layer implementation','Experienced professional with a passion for delivering high-quality results on time.','hourly',2527.27,7683.95,3,'2024-01-08 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (17,3,1,'FastAPI backend service','Detail-oriented developer committed to excellence and continuous learning.','hourly',4045.23,9420.64,2,'2024-07-04 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (18,5,1,'MongoDB data migration','Dedicated specialist focused on clean code and scalable architecture.','fixed',1246.65,4399.93,3,'2024-08-04 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (19,9,1,'Tailwind CSS redesign','Results-driven engineer with strong communication and collaboration skills.','hourly',861.99,2141.02,1,'2024-07-24 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (20,3,1,'CI/CD automation with GitHub Actions','Detail-oriented developer committed to excellence and continuous learning.','fixed',4998.08,10704.05,1,'2024-05-19 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (21,16,1,'Java Spring Boot API','Results-driven engineer with strong communication and collaboration skills.','hourly',1316.7,6414.01,3,'2024-02-16 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (22,4,1,'React Native mobile app','Creative problem-solver with extensive experience in modern tech stacks.','hourly',2352.4,6820.68,3,'2024-09-02 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (23,11,1,'Data Science dashboard','Dedicated specialist focused on clean code and scalable architecture.','hourly',4392.1,11166.59,1,'2024-01-22 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (24,17,1,'Figma to HTML conversion','Innovative thinker who bridges business needs with technical solutions.','hourly',3314.34,9634.27,1,'2024-04-09 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (25,16,1,'Vue.js e-commerce site','Dedicated specialist focused on clean code and scalable architecture.','fixed',4879.16,10141.26,1,'2024-04-23 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (26,1,1,'Django CMS development','Full-stack developer with deep expertise in cloud-native applications.','fixed',1511.15,8400.99,1,'2024-02-15 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (27,16,1,'Node.js WebSocket server','Versatile engineer with proven track record in distributed systems.','hourly',2369.71,6747.21,1,'2024-08-08 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (28,7,1,'PostgreSQL query optimization','Creative problem-solver with extensive experience in modern tech stacks.','fixed',1743.11,8273.15,3,'2024-06-26 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (29,10,1,'AWS Lambda serverless functions','Results-driven engineer with strong communication and collaboration skills.','fixed',2509.46,6899.85,3,'2024-09-25 12:00:00');
-INSERT INTO jobs (id,client_id,category_id,title,description,budget_type,min_budget,max_budget,status_id,created_at) VALUES (30,8,1,'Kubernetes cluster management','Full-stack developer with deep expertise in cloud-native applications.','fixed',4352.06,8227.49,1,'2024-06-24 12:00:00');
+-- Seed the job_required_skills table to specify skills for each job.
+INSERT INTO job_required_skills (job_id, skill_id) VALUES
+    (1, 25), (1, 10), (1, 22), (1, 20),
+    (2, 1), (2, 14), (2, 16),
+    (3, 17), (3, 21), (3, 9), (3, 20),
+    (4, 3), (4, 9),
+    (5, 6), (5, 16), (5, 7),
+    (6, 17), (6, 7),
+    (7, 3), (7, 10),
+    (8, 14), (8, 24), (8, 18),
+    (9, 24), (9, 18),
+    (10, 4), (10, 7), (10, 10),
+    (11, 18), (11, 10),
+    (12, 6), (12, 2), (12, 9),
+    (13, 10), (13, 3), (13, 8), (13, 4),
+    (14, 14), (14, 10), (14, 19), (14, 20),
+    (15, 18), (15, 3),
+    (16, 23), (16, 10), (16, 15),
+    (17, 8), (17, 21), (17, 5), (17, 9),
+    (18, 23), (18, 10), (18, 13),
+    (19, 20), (19, 9), (19, 1),
+    (20, 25), (20, 6),
+    (21, 14), (21, 11), (21, 22),
+    (22, 3), (22, 11), (22, 9),
+    (23, 15), (23, 14), (23, 2), (23, 7),
+    (24, 5), (24, 10), (24, 15), (24, 23),
+    (25, 10), (25, 18),
+    (26, 21), (26, 5),
+    (27, 18), (27, 5), (27, 13),
+    (28, 9), (28, 1), (28, 10), (28, 24),
+    (29, 13), (29, 15), (29, 11), (29, 7),
+    (30, 23), (30, 13), (30, 22);
 
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (1,25);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (1,10);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (1,22);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (1,20);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (2,1);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (2,14);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (2,16);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (3,17);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (3,21);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (3,9);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (3,20);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (4,3);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (4,9);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (5,6);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (5,16);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (5,7);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (6,17);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (6,7);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (7,3);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (7,10);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (8,14);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (8,24);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (8,18);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (9,24);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (9,18);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (10,4);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (10,7);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (10,10);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (11,18);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (11,10);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (12,6);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (12,2);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (12,9);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (13,10);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (13,3);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (13,8);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (13,4);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (14,14);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (14,10);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (14,19);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (14,20);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (15,18);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (15,3);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (16,23);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (16,10);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (16,15);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (17,8);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (17,21);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (17,5);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (17,9);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (18,23);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (18,10);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (18,13);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (19,20);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (19,9);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (19,1);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (20,25);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (20,6);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (21,14);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (21,11);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (21,22);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (22,3);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (22,11);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (22,9);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (23,15);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (23,14);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (23,2);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (23,7);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (24,5);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (24,10);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (24,15);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (24,23);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (25,10);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (25,18);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (26,21);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (26,5);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (27,18);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (27,5);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (27,13);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (28,9);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (28,1);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (28,10);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (28,24);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (29,13);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (29,15);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (29,11);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (29,7);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (30,23);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (30,13);
-INSERT INTO job_required_skills (job_id,skill_id) VALUES (30,22);
+-- Seed the proposals table with freelancer proposals for jobs.
+INSERT INTO proposals (job_id, freelancer_id, bid_amount, delivery_days, cover_letter, status, created_at) VALUES
+    (26, 30, 6095.35, 11, 'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.', 'pending', '2024-10-17 08:00:00'),
+    (19, 42, 10475.49, 63, 'I have extensive experience with this technology stack and can deliver on time.', 'pending', '2024-10-17 08:00:00'),
+    (30, 50, 479.57, 25, 'This project is exactly what I specialise in. My portfolio demonstrates relevant work.', 'pending', '2024-10-28 08:00:00'),
+    (21, 30, 1175.49, 40, 'I have completed similar projects and can provide references. Ready to start immediately.', 'rejected', '2024-10-23 08:00:00'),
+    (13, 26, 10265.65, 75, 'This project is exactly what I specialise in. My portfolio demonstrates relevant work.', 'accepted', '2024-10-21 08:00:00'),
+    (23, 52, 10506.88, 11, 'I have extensive experience with this technology stack and can deliver on time.', 'pending', '2024-10-08 08:00:00'),
+    (21, 39, 11969.88, 18, 'This project is exactly what I specialise in. My portfolio demonstrates relevant work.', 'pending', '2024-10-25 08:00:00'),
+    (21, 27, 5491.04, 45, 'I have extensive experience with this technology stack and can deliver on time.', 'pending', '2024-10-11 08:00:00'),
+    (26, 24, 3732.4, 54, 'This project is exactly what I specialise in. My portfolio demonstrates relevant work.', 'pending', '2024-10-05 08:00:00'),
+    (8, 54, 5121.01, 30, 'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.', 'pending', '2024-10-03 08:00:00'),
+    (20, 45, 7550.61, 37, 'This project is exactly what I specialise in. My portfolio demonstrates relevant work.', 'pending', '2024-10-19 08:00:00'),
+    (5, 35, 5695.45, 39, 'This project is exactly what I specialise in. My portfolio demonstrates relevant work.', 'accepted', '2024-10-22 08:00:00'),
+    (1, 50, 10844.15, 76, 'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.', 'pending', '2024-10-03 08:00:00'),
+    (15, 43, 11855.52, 45, 'This project is exactly what I specialise in. My portfolio demonstrates relevant work.', 'rejected', '2024-10-09 08:00:00'),
+    (15, 40, 2630.84, 56, 'This project is exactly what I specialise in. My portfolio demonstrates relevant work.', 'pending', '2024-10-08 08:00:00'),
+    (13, 57, 4499.82, 44, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-27 08:00:00'),
+    (22, 46, 3511.42, 79, 'I have extensive experience with this technology stack and can deliver on time.', 'rejected', '2024-10-24 08:00:00'),
+    (16, 39, 9376.17, 36, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-21 08:00:00'),
+    (7, 60, 3232.33, 24, 'I have extensive experience with this technology stack and can deliver on time.', 'rejected', '2024-10-21 08:00:00'),
+    (2, 40, 9526.74, 11, 'I have completed similar projects and can provide references. Ready to start immediately.', 'rejected', '2024-10-05 08:00:00'),
+    (3, 39, 4122.61, 60, 'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.', 'pending', '2024-10-05 08:00:00'),
+    (26, 55, 10554.59, 53, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-27 08:00:00'),
+    (6, 37, 10994.37, 68, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-24 08:00:00'),
+    (28, 42, 9709.52, 66, 'I have extensive experience with this technology stack and can deliver on time.', 'pending', '2024-10-25 08:00:00'),
+    (8, 46, 11617.06, 78, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-26 08:00:00'),
+    (13, 21, 3394.17, 22, 'This project is exactly what I specialise in. My portfolio demonstrates relevant work.', 'accepted', '2024-10-22 08:00:00'),
+    (24, 37, 7139.35, 88, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-04 08:00:00'),
+    (22, 35, 5816.28, 86, 'I have completed similar projects and can provide references. Ready to start immediately.', 'rejected', '2024-10-08 08:00:00'),
+    (21, 25, 7734.23, 66, 'I have completed similar projects and can provide references. Ready to start immediately.', 'rejected', '2024-10-14 08:00:00'),
+    (4, 29, 830.56, 11, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-16 08:00:00'),
+    (4, 27, 3047.16, 75, 'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.', 'pending', '2024-10-13 08:00:00'),
+    (15, 44, 8144.69, 76, 'This project is exactly what I specialise in. My portfolio demonstrates relevant work.', 'rejected', '2024-10-24 08:00:00'),
+    (24, 30, 10659.34, 90, 'I have extensive experience with this technology stack and can deliver on time.', 'pending', '2024-10-27 08:00:00'),
+    (16, 60, 5074.96, 42, 'I have extensive experience with this technology stack and can deliver on time.', 'rejected', '2024-10-12 08:00:00'),
+    (7, 49, 5502.94, 37, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-22 08:00:00'),
+    (12, 55, 10849.85, 89, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-13 08:00:00'),
+    (9, 33, 11628.02, 65, 'I have extensive experience with this technology stack and can deliver on time.', 'rejected', '2024-10-07 08:00:00'),
+    (21, 59, 11661.79, 13, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-05 08:00:00'),
+    (26, 57, 2700.91, 77, 'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.', 'pending', '2024-10-19 08:00:00'),
+    (7, 35, 4144.15, 25, 'I have extensive experience with this technology stack and can deliver on time.', 'accepted', '2024-10-28 08:00:00'),
+    (5, 29, 6620.52, 29, 'I have extensive experience with this technology stack and can deliver on time.', 'rejected', '2024-10-28 08:00:00'),
+    (1, 29, 473.87, 37, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-01 08:00:00'),
+    (2, 29, 8978.1, 74, 'I have extensive experience with this technology stack and can deliver on time.', 'rejected', '2024-10-03 08:00:00'),
+    (16, 49, 9402.8, 72, 'I have extensive experience with this technology stack and can deliver on time.', 'accepted', '2024-10-17 08:00:00'),
+    (8, 60, 807.37, 73, 'I have completed similar projects and can provide references. Ready to start immediately.', 'accepted', '2024-10-21 08:00:00'),
+    (1, 24, 11983.47, 58, 'This project is exactly what I specialise in. My portfolio demonstrates relevant work.', 'pending', '2024-10-22 08:00:00'),
+    (4, 52, 8635.1, 63, 'I have extensive experience with this technology stack and can deliver on time.', 'pending', '2024-10-03 08:00:00'),
+    (11, 59, 2035.51, 23, 'I have completed similar projects and can provide references. Ready to start immediately.', 'rejected', '2024-10-21 08:00:00'),
+    (19, 56, 8632.19, 55, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-15 08:00:00'),
+    (17, 59, 5333.33, 21, 'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.', 'accepted', '2024-10-15 08:00:00'),
+    (29, 35, 5141.62, 65, 'This project is exactly what I specialise in. My portfolio demonstrates relevant work.', 'accepted', '2024-10-24 08:00:00'),
+    (4, 41, 5293.14, 39, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-05 08:00:00'),
+    (22, 51, 1085.46, 17, 'I have extensive experience with this technology stack and can deliver on time.', 'accepted', '2024-10-04 08:00:00'),
+    (24, 44, 9797.7, 78, 'I have extensive experience with this technology stack and can deliver on time.', 'pending', '2024-10-19 08:00:00'),
+    (18, 56, 4156.86, 22, 'This project is exactly what I specialise in. My portfolio demonstrates relevant work.', 'accepted', '2024-10-28 08:00:00'),
+    (22, 48, 10456.68, 13, 'I have completed similar projects and can provide references. Ready to start immediately.', 'rejected', '2024-10-10 08:00:00'),
+    (12, 27, 7061.65, 34, 'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.', 'rejected', '2024-10-16 08:00:00'),
+    (8, 27, 4396.33, 78, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-25 08:00:00'),
+    (9, 57, 2946.06, 61, 'I have extensive experience with this technology stack and can deliver on time.', 'rejected', '2024-10-22 08:00:00'),
+    (27, 38, 638.75, 41, 'I have completed similar projects and can provide references. Ready to start immediately.', 'pending', '2024-10-11 08:00:00');
 
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (1,26,30,6095.35,11,'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.','pending','2024-10-17 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (2,19,42,10475.49,63,'I have extensive experience with this technology stack and can deliver on time.','pending','2024-10-17 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (3,30,50,479.57,25,'This project is exactly what I specialise in. My portfolio demonstrates relevant work.','pending','2024-10-28 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (4,21,30,1175.49,40,'I have completed similar projects and can provide references. Ready to start immediately.','rejected','2024-10-23 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (5,13,26,10265.65,75,'This project is exactly what I specialise in. My portfolio demonstrates relevant work.','accepted','2024-10-21 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (6,23,52,10506.88,11,'I have extensive experience with this technology stack and can deliver on time.','pending','2024-10-08 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (7,21,39,11969.88,18,'This project is exactly what I specialise in. My portfolio demonstrates relevant work.','pending','2024-10-25 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (8,21,27,5491.04,45,'I have extensive experience with this technology stack and can deliver on time.','pending','2024-10-11 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (9,26,24,3732.4,54,'This project is exactly what I specialise in. My portfolio demonstrates relevant work.','pending','2024-10-05 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (10,8,54,5121.01,30,'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.','pending','2024-10-03 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (11,20,45,7550.61,37,'This project is exactly what I specialise in. My portfolio demonstrates relevant work.','pending','2024-10-19 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (12,5,35,5695.45,39,'This project is exactly what I specialise in. My portfolio demonstrates relevant work.','accepted','2024-10-22 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (13,1,50,10844.15,76,'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.','pending','2024-10-03 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (14,15,43,11855.52,45,'This project is exactly what I specialise in. My portfolio demonstrates relevant work.','rejected','2024-10-09 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (15,15,40,2630.84,56,'This project is exactly what I specialise in. My portfolio demonstrates relevant work.','pending','2024-10-08 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (16,13,57,4499.82,44,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-27 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (17,22,46,3511.42,79,'I have extensive experience with this technology stack and can deliver on time.','rejected','2024-10-24 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (18,16,39,9376.17,36,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-21 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (19,7,60,3232.33,24,'I have extensive experience with this technology stack and can deliver on time.','rejected','2024-10-21 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (20,2,40,9526.74,11,'I have completed similar projects and can provide references. Ready to start immediately.','rejected','2024-10-05 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (21,3,39,4122.61,60,'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.','pending','2024-10-05 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (22,26,55,10554.59,53,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-27 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (23,6,37,10994.37,68,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-24 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (24,28,42,9709.52,66,'I have extensive experience with this technology stack and can deliver on time.','pending','2024-10-25 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (25,8,46,11617.06,78,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-26 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (26,13,21,3394.17,22,'This project is exactly what I specialise in. My portfolio demonstrates relevant work.','accepted','2024-10-22 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (27,24,37,7139.35,88,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-04 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (28,22,35,5816.28,86,'I have completed similar projects and can provide references. Ready to start immediately.','rejected','2024-10-08 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (29,21,25,7734.23,66,'I have completed similar projects and can provide references. Ready to start immediately.','rejected','2024-10-14 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (30,4,29,830.56,11,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-16 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (31,4,27,3047.16,75,'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.','pending','2024-10-13 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (32,15,44,8144.69,76,'This project is exactly what I specialise in. My portfolio demonstrates relevant work.','rejected','2024-10-24 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (33,24,30,10659.34,90,'I have extensive experience with this technology stack and can deliver on time.','pending','2024-10-27 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (34,16,60,5074.96,42,'I have extensive experience with this technology stack and can deliver on time.','rejected','2024-10-12 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (35,7,49,5502.94,37,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-22 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (36,12,55,10849.85,89,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-13 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (37,9,33,11628.02,65,'I have extensive experience with this technology stack and can deliver on time.','rejected','2024-10-07 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (38,21,59,11661.79,13,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-05 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (39,26,57,2700.91,77,'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.','pending','2024-10-19 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (40,7,35,4144.15,25,'I have extensive experience with this technology stack and can deliver on time.','accepted','2024-10-28 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (41,5,29,6620.52,29,'I have extensive experience with this technology stack and can deliver on time.','rejected','2024-10-28 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (42,1,29,473.87,37,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-01 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (43,2,29,8978.1,74,'I have extensive experience with this technology stack and can deliver on time.','rejected','2024-10-03 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (44,16,49,9402.8,72,'I have extensive experience with this technology stack and can deliver on time.','accepted','2024-10-17 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (45,8,60,807.37,73,'I have completed similar projects and can provide references. Ready to start immediately.','accepted','2024-10-21 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (46,1,24,11983.47,58,'This project is exactly what I specialise in. My portfolio demonstrates relevant work.','pending','2024-10-22 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (47,4,52,8635.1,63,'I have extensive experience with this technology stack and can deliver on time.','pending','2024-10-03 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (48,11,59,2035.51,23,'I have completed similar projects and can provide references. Ready to start immediately.','rejected','2024-10-21 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (49,19,56,8632.19,55,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-15 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (50,17,59,5333.33,21,'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.','accepted','2024-10-15 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (51,29,35,5141.62,65,'This project is exactly what I specialise in. My portfolio demonstrates relevant work.','accepted','2024-10-24 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (52,4,41,5293.14,39,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-05 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (53,22,51,1085.46,17,'I have extensive experience with this technology stack and can deliver on time.','accepted','2024-10-04 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (54,24,44,9797.7,78,'I have extensive experience with this technology stack and can deliver on time.','pending','2024-10-19 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (55,18,56,4156.86,22,'This project is exactly what I specialise in. My portfolio demonstrates relevant work.','accepted','2024-10-28 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (56,22,48,10456.68,13,'I have completed similar projects and can provide references. Ready to start immediately.','rejected','2024-10-10 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (57,12,27,7061.65,34,'Your project aligns perfectly with my expertise. I am confident I can exceed expectations.','rejected','2024-10-16 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (58,8,27,4396.33,78,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-25 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (59,9,57,2946.06,61,'I have extensive experience with this technology stack and can deliver on time.','rejected','2024-10-22 08:00:00');
-INSERT INTO proposals (id,job_id,freelancer_id,bid_amount,delivery_days,cover_letter,status,created_at) VALUES (60,27,38,638.75,41,'I have completed similar projects and can provide references. Ready to start immediately.','pending','2024-10-11 08:00:00');
+-- Seed the contracts table with active and completed contracts.
+INSERT INTO contracts (job_id, freelancer_id, total_amount, status) VALUES
+    (2, 43, 1600.75, 'active'),
+    (3, 57, 12346.19, 'active'),
+    (5, 30, 13725.99, 'active'),
+    (7, 26, 13810.84, 'active'),
+    (8, 45, 8427.24, 'completed'),
+    (9, 31, 7605.88, 'completed'),
+    (11, 57, 11337.69, 'active'),
+    (12, 30, 4097.26, 'active'),
+    (13, 26, 5989.7, 'completed'),
+    (10, 52, 11516.75, 'completed'),
+    (15, 38, 5056.89, 'active'),
+    (16, 43, 8593.57, 'completed'),
+    (13, 58, 9529.44, 'completed'),
+    (18, 23, 5138.55, 'active'),
+    (21, 21, 4872.98, 'active'),
+    (22, 29, 14108.65, 'completed'),
+    (28, 41, 3479.74, 'completed'),
+    (29, 48, 4398.96, 'completed');
 
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (1,2,43,1600.75,'active');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (2,3,57,12346.19,'active');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (3,5,30,13725.99,'active');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (4,7,26,13810.84,'active');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (5,8,45,8427.24,'completed');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (6,9,31,7605.88,'completed');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (7,11,57,11337.69,'active');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (8,12,30,4097.26,'active');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (9,13,26,5989.7,'completed');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (10,14,52,11516.75,'completed');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (11,15,38,5056.89,'active');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (12,16,43,8593.57,'completed');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (13,17,58,9529.44,'completed');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (14,18,23,5138.55,'active');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (15,21,21,4872.98,'active');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (16,22,29,14108.65,'completed');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (17,28,41,3479.74,'completed');
-INSERT INTO contracts (id,job_id,freelancer_id,total_amount,status) VALUES (18,29,48,4398.96,'completed');
+-- Seed the transactions table with sample financial transactions.
+INSERT INTO transactions (contract_id, amount, type, created_at) VALUES
+    (1, 2873.95, 'refund', '2024-11-18 10:00:00'),
+    (1, 3366.75, 'milestone', '2024-11-03 10:00:00'),
+    (1, 1708.87, 'refund', '2024-11-02 10:00:00'),
+    (2, 271.22, 'payment', '2024-11-28 10:00:00'),
+    (2, 1389.63, 'milestone', '2024-11-19 10:00:00'),
+    (3, 2896.1, 'milestone', '2024-11-10 10:00:00'),
+    (3, 637.66, 'payment', '2024-11-11 10:00:00'),
+    (4, 3245.02, 'refund', '2024-11-15 10:00:00'),
+    (5, 3695.13, 'payment', '2024-11-14 10:00:00'),
+    (5, 3409.04, 'payment', '2024-11-14 10:00:00'),
+    (5, 2437.71, 'refund', '2024-11-03 10:00:00'),
+    (6, 3507.99, 'refund', '2024-11-11 10:00:00'),
+    (6, 1041.97, 'payment', '2024-11-03 10:00:00'),
+    (7, 2606.25, 'refund', '2024-11-17 10:00:00'),
+    (7, 936.83, 'milestone', '2024-11-12 10:00:00'),
+    (7, 2964.04, 'refund', '2024-11-27 10:00:00'),
+    (8, 1097.82, 'payment', '2024-11-09 10:00:00'),
+    (9, 859.3, 'payment', '2024-11-25 10:00:00'),
+    (10, 486.34, 'refund', '2024-11-16 10:00:00'),
+    (10, 1963.02, 'refund', '2024-11-25 10:00:00'),
+    (10, 2401.98, 'refund', '2024-11-19 10:00:00'),
+    (11, 2614.13, 'refund', '2024-11-11 10:00:00'),
+    (11, 3484.14, 'refund', '2024-11-11 10:00:00'),
+    (11, 773.64, 'payment', '2024-11-16 10:00:00'),
+    (12, 2599.26, 'milestone', '2024-11-19 10:00:00'),
+    (12, 413.45, 'refund', '2024-11-03 10:00:00'),
+    (13, 1954.62, 'payment', '2024-11-02 10:00:00'),
+    (13, 1601.2, 'milestone', '2024-11-03 10:00:00'),
+    (14, 3484.15, 'payment', '2024-11-20 10:00:00'),
+    (14, 2457.5, 'milestone', '2024-11-15 10:00:00'),
+    (14, 2405.25, 'refund', '2024-11-02 10:00:00'),
+    (15, 3654.39, 'refund', '2024-11-21 10:00:00'),
+    (15, 915.31, 'refund', '2024-11-16 10:00:00'),
+    (16, 773.27, 'payment', '2024-11-15 10:00:00'),
+    (16, 593.31, 'milestone', '2024-11-23 10:00:00'),
+    (16, 520.45, 'refund', '2024-11-06 10:00:00'),
+    (17, 1141.43, 'milestone', '2024-11-15 10:00:00'),
+    (18, 2186.44, 'payment', '2024-11-12 10:00:00'),
+    (18, 1616.84, 'milestone', '2024-11-13 10:00:00'),
+    (18, 1753.32, 'milestone', '2024-11-22 10:00:00');
 
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (1,1,2873.95,'refund','2024-11-18 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (2,1,3366.75,'milestone','2024-11-03 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (3,1,1708.87,'refund','2024-11-02 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (4,2,271.22,'payment','2024-11-28 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (5,2,1389.63,'milestone','2024-11-19 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (6,3,2896.1,'milestone','2024-11-10 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (7,3,637.66,'payment','2024-11-11 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (8,4,3245.02,'refund','2024-11-15 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (9,5,3695.13,'payment','2024-11-14 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (10,5,3409.04,'payment','2024-11-14 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (11,5,2437.71,'refund','2024-11-03 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (12,6,3507.99,'refund','2024-11-11 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (13,6,1041.97,'payment','2024-11-03 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (14,7,2606.25,'refund','2024-11-17 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (15,7,936.83,'milestone','2024-11-12 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (16,7,2964.04,'refund','2024-11-27 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (17,8,1097.82,'payment','2024-11-09 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (18,9,859.3,'payment','2024-11-25 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (19,10,486.34,'refund','2024-11-16 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (20,10,1963.02,'refund','2024-11-25 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (21,10,2401.98,'refund','2024-11-19 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (22,11,2614.13,'refund','2024-11-11 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (23,11,3484.14,'refund','2024-11-11 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (24,11,773.64,'payment','2024-11-16 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (25,12,2599.26,'milestone','2024-11-19 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (26,12,413.45,'refund','2024-11-03 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (27,13,1954.62,'payment','2024-11-02 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (28,13,1601.2,'milestone','2024-11-03 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (29,14,3484.15,'payment','2024-11-20 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (30,14,2457.5,'milestone','2024-11-15 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (31,14,2405.25,'refund','2024-11-02 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (32,15,3654.39,'refund','2024-11-21 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (33,15,915.31,'refund','2024-11-16 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (34,16,773.27,'payment','2024-11-15 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (35,16,593.31,'milestone','2024-11-23 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (36,16,520.45,'refund','2024-11-06 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (37,17,1141.43,'milestone','2024-11-15 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (38,18,2186.44,'payment','2024-11-12 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (39,18,1616.84,'milestone','2024-11-13 10:00:00');
-INSERT INTO transactions (id,contract_id,amount,type,created_at) VALUES (40,18,1753.32,'milestone','2024-11-22 10:00:00');
-
-INSERT INTO reviews (id,contract_id,reviewer_id,rating,comment) VALUES (1,1,11,3,'Great work, delivered on time and exceeded expectations.');
-INSERT INTO reviews (id,contract_id,reviewer_id,rating,comment) VALUES (2,3,13,4,'Great work, delivered on time and exceeded expectations.');
-INSERT INTO reviews (id,contract_id,reviewer_id,rating,comment) VALUES (3,5,20,3,'Great work, delivered on time and exceeded expectations.');
-INSERT INTO reviews (id,contract_id,reviewer_id,rating,comment) VALUES (4,7,5,4,'Great work, delivered on time and exceeded expectations.');
-INSERT INTO reviews (id,contract_id,reviewer_id,rating,comment) VALUES (5,9,13,3,'Great work, delivered on time and exceeded expectations.');
-INSERT INTO reviews (id,contract_id,reviewer_id,rating,comment) VALUES (6,10,3,4,'Great work, delivered on time and exceeded expectations.');
-INSERT INTO reviews (id,contract_id,reviewer_id,rating,comment) VALUES (7,11,11,3,'Great work, delivered on time and exceeded expectations.');
-INSERT INTO reviews (id,contract_id,reviewer_id,rating,comment) VALUES (8,12,17,3,'Great work, delivered on time and exceeded expectations.');
-INSERT INTO reviews (id,contract_id,reviewer_id,rating,comment) VALUES (9,13,14,5,'Great work, delivered on time and exceeded expectations.');
-INSERT INTO reviews (id,contract_id,reviewer_id,rating,comment) VALUES (10,14,12,4,'Great work, delivered on time and exceeded expectations.');
-INSERT INTO reviews (id,contract_id,reviewer_id,rating,comment) VALUES (11,17,16,3,'Great work, delivered on time and exceeded expectations.');
+-- Seed the reviews table with sample reviews for completed contracts.
+INSERT INTO reviews (contract_id, reviewer_id, rating, comment) VALUES
+    (1, 11, 3, 'Great work, delivered on time and exceeded expectations.'),
+    (3, 13, 4, 'Great work, delivered on time and exceeded expectations.'),
+    (5, 20, 3, 'Great work, delivered on time and exceeded expectations.'),
+    (7, 5, 4, 'Great work, delivered on time and exceeded expectations.'),
+    (9, 13, 3, 'Great work, delivered on time and exceeded expectations.'),
+    (10, 3, 4, 'Great work, delivered on time and exceeded expectations.'),
+    (11, 11, 3, 'Great work, delivered on time and exceeded expectations.'),
+    (12, 17, 3, 'Great work, delivered on time and exceeded expectations.'),
+    (13, 14, 5, 'Great work, delivered on time and exceeded expectations.'),
+    (14, 12, 4, 'Great work, delivered on time and exceeded expectations.'),
+    (17, 16, 3, 'Great work, delivered on time and exceeded expectations.');
